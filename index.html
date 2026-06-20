@@ -4,406 +4,404 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>La Roca Comercial | aquí comienza tu hogar — Comayagua</title>
-<meta name="description" content="La Roca Comercial en Comayagua. Salas, camas, motos, electrodomésticos. Venta al contado y crédito fácil aprobado el mismo día."/>
+<meta name="description" content="La Roca Comercial en Comayagua. Salas, camas, motos, electrodomésticos. Crédito fácil aprobado el mismo día."/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --pk:#E8195A;--pkd:#B8144A;--pkl:#FF4477;
-  --nv:#1B2F8A;--nvm:#243CA8;--nvl:#2D4EC8;
-  --gd:#F5A623;--gdl:#FFD166;
-  --wh:#fff;--lt:#F4F6FB;--bd:#E2E6F0;
-  --tx:#1A1A2E;--mu:#6B7280;
+  --nv:#1B2F8A;--nvm:#243CA8;
+  --cy:#00D4FF;
+  --gd:#F5A623;
+  --bg:#030618;--bg2:#070d25;
+  --bd:rgba(255,255,255,.08);--bdpk:rgba(232,25,90,.28);
+  --tx:#D8E0FF;--mu:#5B6B8A;
+  --gpk:0 0 18px rgba(232,25,90,.55);
+  --gcy:0 0 18px rgba(0,212,255,.55);
   --rad:14px;
-  --sh:0 2px 16px rgba(0,0,0,.07);
-  --shh:0 12px 40px rgba(0,0,0,.16);
-  --shpk:0 8px 28px rgba(232,25,90,.35);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;color:var(--tx);background:var(--lt);overflow-x:hidden}
+body{font-family:'Inter',sans-serif;color:var(--tx);background:var(--bg);overflow-x:hidden}
 a{text-decoration:none;color:inherit}ul{list-style:none}img{max-width:100%;display:block}
 input,button,select{font-family:inherit}
 
-/* ═══ PROMO BANNER ═══ */
-.pbanner{background:linear-gradient(90deg,var(--pkd),var(--pk),var(--pkl));color:#fff;text-align:center;font-size:.73rem;font-weight:700;padding:7px 20px;letter-spacing:.04em}
-.pbanner span{opacity:.75;margin:0 8px}
+/* ── STARFIELD ── */
+#sf{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-/* ═══ TOP TICKER ═══ */
-.ticker{background:var(--nv);color:rgba(255,255,255,.8);font-size:.72rem;padding:6px 0;overflow:hidden;white-space:nowrap}
+/* ── NEBULAS ── */
+.neb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;will-change:transform}
+.n1{width:700px;height:700px;background:radial-gradient(circle,rgba(232,25,90,.12),transparent 70%);top:-220px;left:-150px;animation:nd 15s ease-in-out infinite}
+.n2{width:900px;height:900px;background:radial-gradient(circle,rgba(27,47,138,.16),transparent 70%);bottom:-280px;right:-180px;animation:nd 19s ease-in-out infinite reverse}
+.n3{width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,.07),transparent 70%);top:45%;left:48%;animation:nd 12s ease-in-out infinite 5s}
+@keyframes nd{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(35px,-22px) scale(1.07)}70%{transform:translate(-18px,28px) scale(.93)}}
+body>*:not(#sf):not(.neb){position:relative;z-index:1}
+
+/* ── TICKER ── */
+.ticker{background:rgba(3,6,24,.96);border-bottom:1px solid var(--bdpk);color:rgba(216,224,255,.65);font-size:.72rem;padding:6px 0;overflow:hidden;white-space:nowrap}
 .ticker-track{display:inline-flex;gap:60px;animation:tick 30s linear infinite}
 .ticker-track span{display:inline-flex;align-items:center;gap:6px}
-.ticker-track i{color:var(--gd)}
+.ticker-track i{color:var(--pk)}
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ═══ MAIN HEADER ═══ */
-.mhdr{background:var(--wh);border-bottom:2px solid var(--bd);position:sticky;top:0;z-index:900;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.mhdr-in{max-width:1300px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+/* ── PROMO BANNER ── */
+.pbanner{background:linear-gradient(90deg,var(--pkd),var(--pk),#ff5588);color:#fff;text-align:center;font-size:.73rem;font-weight:700;padding:7px 20px;letter-spacing:.04em}
 
+/* ── HEADER ── */
+.mhdr{background:rgba(3,6,24,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bdpk);position:sticky;top:0;z-index:900;box-shadow:0 0 40px rgba(232,25,90,.08)}
+.mhdr-in{max-width:1300px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
 .lz{display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative;cursor:default}
-.lz-up{height:50px;width:auto;object-fit:contain;display:none}
-.lz-up.on{display:block}
-.lz-def{display:flex;align-items:center;gap:10px}
-.lz-def.off{display:none}
-.lz-mark{width:46px;height:46px;flex-shrink:0}
-.lz-txt{line-height:1.1}
-.lz-top{font-size:1.4rem;font-weight:900;color:var(--pk);letter-spacing:.02em}
-.lz-bot{font-size:.58rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--nv)}
-.lz-edit-hint{position:absolute;inset:0;background:rgba(27,47,138,.85);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:5px;color:#fff;font-size:.7rem;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none}
+.lz-up{height:50px;width:auto;object-fit:contain;display:none}.lz-up.on{display:block}
+.lz-def{display:flex;align-items:center;gap:10px}.lz-def.off{display:none}
+.lz-mark{width:46px;height:46px;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(232,25,90,.6))}
+.lz-top{font-size:1.4rem;font-weight:900;color:var(--pk);letter-spacing:.02em;text-shadow:var(--gpk)}
+.lz-bot{font-size:.58rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);text-shadow:var(--gcy)}
+.lz-edit-hint{position:absolute;inset:0;background:rgba(232,25,90,.88);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:5px;color:#fff;font-size:.7rem;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none}
 .edit-mode .lz:hover .lz-edit-hint{opacity:1}
 .edit-mode .lz{cursor:pointer}
-
-.srch{flex:1;max-width:520px;display:flex;border:2px solid var(--bd);border-radius:50px;overflow:hidden;transition:border-color .2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.srch:focus-within{border-color:var(--pk);box-shadow:0 2px 16px rgba(232,25,90,.15)}
-.srch input{flex:1;border:none;background:var(--lt);padding:11px 18px;font-size:.87rem;outline:none;color:var(--tx)}
-.srch button{background:var(--pk);border:none;color:#fff;padding:11px 20px;cursor:pointer;font-size:.9rem;transition:background .2s}
+.srch{flex:1;max-width:520px;display:flex;border:1px solid var(--bdpk);border-radius:50px;overflow:hidden;transition:all .2s;background:rgba(255,255,255,.03)}
+.srch:focus-within{border-color:var(--pk);box-shadow:0 0 20px rgba(232,25,90,.18)}
+.srch input{flex:1;border:none;background:transparent;padding:10px 18px;font-size:.87rem;outline:none;color:var(--tx)}
+.srch input::placeholder{color:var(--mu)}
+.srch button{background:var(--pk);border:none;color:#fff;padding:10px 20px;cursor:pointer;font-size:.9rem;transition:background .2s}
 .srch button:hover{background:var(--pkd)}
-
 .hdr-r{display:flex;align-items:center;gap:14px;margin-left:auto;flex-shrink:0}
-.hdr-ph{display:flex;align-items:center;gap:7px;font-weight:700;font-size:.88rem;color:var(--nv)}
+.hdr-ph{display:flex;align-items:center;gap:7px;font-weight:700;font-size:.88rem;color:var(--cy);text-shadow:var(--gcy)}
 .hdr-ph i{color:var(--pk)}
-.hdr-wa{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;padding:10px 20px;border-radius:50px;font-size:.83rem;font-weight:800;transition:all .2s;box-shadow:0 4px 14px rgba(37,211,102,.35)}
-.hdr-wa:hover{background:#1db954;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.45)}
-
-.catnav{background:var(--nv)}
+.hdr-wa{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;padding:10px 20px;border-radius:50px;font-size:.83rem;font-weight:800;transition:all .2s;box-shadow:0 0 20px rgba(37,211,102,.3)}
+.hdr-wa:hover{background:#1db954;transform:translateY(-2px);box-shadow:0 0 35px rgba(37,211,102,.55)}
+.catnav{background:rgba(7,13,37,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.04)}
 .catnav-in{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto;scrollbar-width:none}
 .catnav-in::-webkit-scrollbar{display:none}
-.cni{display:flex;align-items:center;gap:7px;padding:12px 18px;color:rgba(255,255,255,.75);font-size:.81rem;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s}
-.cni:hover,.cni.on{color:#fff;border-bottom-color:var(--pk);background:rgba(255,255,255,.08)}
+.cni{display:flex;align-items:center;gap:7px;padding:12px 18px;color:rgba(216,224,255,.55);font-size:.81rem;font-weight:600;white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s}
+.cni:hover,.cni.on{color:var(--pk);border-bottom-color:var(--pk);text-shadow:var(--gpk)}
 .cni i{font-size:.95rem}
 
-/* ═══ HERO SLIDER ═══ */
-.hero{position:relative;overflow:hidden;height:520px;background:#0d1740}
-.hero-slides{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
-.hslide{flex-shrink:0;width:100%;height:100%;display:flex;align-items:center;padding:50px 80px;position:relative;overflow:hidden}
-.hslide-1{background:linear-gradient(135deg,#0a1035 0%,#1b2f8a 50%,#1f3699 100%)}
-.hslide-2{background:linear-gradient(135deg,#6b0022 0%,#b8144a 50%,#e8195a 100%)}
-.hslide-3{background:linear-gradient(135deg,#0f2a0f 0%,#1a4a2e 50%,#2d6a4f 100%)}
-
-/* Hero decorative shapes */
-.hslide::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;opacity:.08;top:-100px;right:-100px;background:radial-gradient(circle,#fff,transparent)}
-.hslide::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;opacity:.06;bottom:-80px;left:40%;background:radial-gradient(circle,#fff,transparent)}
-.hshape{position:absolute;right:80px;top:50%;transform:translateY(-50%);z-index:1;pointer-events:none}
-.hshape-circle{width:280px;height:280px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:120px;animation:hfloat 4s ease-in-out infinite}
-.hslide-1 .hshape-circle{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.1)}
-.hslide-2 .hshape-circle{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.1)}
-.hslide-3 .hshape-circle{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.1)}
-@keyframes hfloat{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-54%) scale(1.04)}}
-
-.hslide-content{position:relative;z-index:2;max-width:560px}
-.h-eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:50px;margin-bottom:18px;border:1px solid rgba(255,255,255,.2)}
-.h-eyebrow i{color:var(--gd)}
-.hslide h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:14px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
-.hslide h2 em{font-style:normal;color:var(--gd)}
-.hslide p{color:rgba(255,255,255,.75);font-size:.97rem;margin-bottom:28px;line-height:1.65}
-.h-ctas{display:flex;gap:12px;flex-wrap:wrap}
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;min-height:600px;display:flex;align-items:center;padding:60px 0}
+.hero::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,212,255,.012) 3px,rgba(0,212,255,.012) 4px);pointer-events:none;z-index:0}
+.hero-in{max-width:1300px;margin:0 auto;padding:0 60px;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--cy);font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 14px;border-radius:50px;margin-bottom:12px}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--cy);box-shadow:var(--gcy);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,25,90,.1);border:1px solid rgba(232,25,90,.3);color:var(--pk);font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:50px;margin-bottom:18px;animation:bp 2.5s ease-in-out infinite}
+@keyframes bp{0%,100%{box-shadow:0 0 0 0 rgba(232,25,90,.0)}50%{box-shadow:0 0 0 6px rgba(232,25,90,.12)}}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:900;color:#fff;line-height:1.04;margin-bottom:16px;letter-spacing:-.02em}
+.gpk{color:var(--pk);text-shadow:0 0 28px rgba(232,25,90,.7),0 0 56px rgba(232,25,90,.35)}
+.hero-sub{color:rgba(216,224,255,.62);font-size:.96rem;line-height:1.72;margin-bottom:32px;max-width:430px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .h-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;font-weight:800;font-size:.88rem;transition:all .25s}
-.h-cta-main{background:#fff;color:var(--nv);box-shadow:0 4px 24px rgba(0,0,0,.25)}
-.h-cta-main:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(0,0,0,.32)}
-.hslide-2 .h-cta-main{color:var(--pkd)}
-.hslide-3 .h-cta-main{color:#1a4a2e}
-.h-cta-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px)}
-.h-cta-ghost:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+.h-main{background:var(--pk);color:#fff;box-shadow:0 0 28px rgba(232,25,90,.45)}
+.h-main:hover{background:var(--pkd);transform:translateY(-3px);box-shadow:0 0 48px rgba(232,25,90,.65)}
+.h-ghost{background:transparent;color:var(--cy);border:1px solid rgba(0,212,255,.35);box-shadow:0 0 12px rgba(0,212,255,.08)}
+.h-ghost:hover{background:rgba(0,212,255,.07);transform:translateY(-2px);box-shadow:0 0 24px rgba(0,212,255,.25)}
 
-.harrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.25);width:46px;height:46px;border-radius:50%;cursor:pointer;z-index:10;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.harrow:hover{background:rgba(255,255,255,.3)}
-.harrow.prev{left:18px}.harrow.next{right:18px}
-.hdots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-.hdot{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.35);cursor:pointer;transition:all .3s}
-.hdot.on{background:#fff;width:24px}
+/* Hero orbital sphere */
+.hero-vis{position:relative;display:flex;align-items:center;justify-content:center;height:360px}
+.orb{width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 33% 33%,rgba(232,25,90,.22),rgba(27,47,138,.18) 55%,transparent 80%);border:1px solid rgba(232,25,90,.18);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 60px rgba(232,25,90,.14),0 0 120px rgba(27,47,138,.08),inset 0 0 60px rgba(232,25,90,.04)}
+.orb-ring{position:absolute;inset:0;border-radius:50%}
+.orb-r1{border:1px dashed rgba(0,212,255,.18);animation:spin 10s linear infinite}
+.orb-r2{inset:20px;border:1px solid rgba(232,25,90,.1);animation:spin 7s linear infinite reverse}
+.orb-r3{inset:44px;border:1px dotted rgba(255,255,255,.06);animation:spin 14s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.orb-emoji{font-size:90px;position:relative;z-index:2;transition:opacity .35s;animation:orbfloat 4s ease-in-out infinite}
+@keyframes orbfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.orb-stat{position:absolute;background:rgba(7,13,37,.88);border:1px solid var(--bdpk);border-radius:12px;padding:12px 16px;backdrop-filter:blur(14px);text-align:center;box-shadow:var(--gpk)}
+.orb-stat-l{left:-30px;top:40px}
+.orb-stat-r{right:-30px;bottom:50px}
+.osn{font-size:1.3rem;font-weight:900;color:var(--pk);text-shadow:var(--gpk);line-height:1}
+.osl{font-size:.6rem;color:var(--mu);margin-top:3px;white-space:nowrap}
+.orb-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--pk);box-shadow:var(--gpk);animation:particle 6s linear infinite}
+.op1{top:10%;left:20%;animation-delay:0s;animation-duration:5s}
+.op2{top:70%;left:10%;animation-delay:1.5s;animation-duration:7s;background:var(--cy);box-shadow:var(--gcy)}
+.op3{top:20%;right:15%;animation-delay:3s;animation-duration:6s;background:var(--gd)}
+.op4{bottom:15%;right:20%;animation-delay:2s;animation-duration:8s}
+@keyframes particle{0%,100%{transform:translate(0,0) scale(1);opacity:.8}25%{transform:translate(12px,-8px) scale(1.3);opacity:1}50%{transform:translate(-6px,14px) scale(.7);opacity:.5}75%{transform:translate(18px,6px) scale(1.1);opacity:.9}}
 
-/* ═══ CATEGORY CHIPS ═══ */
-.cats{background:var(--wh);padding:20px 0;border-bottom:1px solid var(--bd)}
+/* ── CATEGORY CHIPS ── */
+.cats{background:rgba(7,13,37,.82);backdrop-filter:blur(12px);padding:18px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .cats-in{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.cat-chip{display:flex;align-items:center;gap:9px;padding:12px 20px;border-radius:50px;border:2px solid var(--bd);background:var(--wh);cursor:pointer;transition:all .22s;font-size:.82rem;font-weight:700;color:var(--nv)}
-.cat-chip:hover{border-color:var(--pk);box-shadow:var(--shpk);transform:translateY(-2px);color:var(--pk)}
-.cat-chip-icon{font-size:1.2rem;line-height:1}
+.cat-chip{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;border:1px solid var(--bd);background:rgba(255,255,255,.03);cursor:pointer;transition:all .22s;font-size:.82rem;font-weight:700;color:var(--tx)}
+.cat-chip:hover{border-color:var(--pk);color:var(--pk);text-shadow:var(--gpk);box-shadow:0 0 18px rgba(232,25,90,.18);background:rgba(232,25,90,.06)}
+.cat-chip-icon{font-size:1.1rem}
 
-/* ═══ BRANDS STRIP ═══ */
-.brands{background:var(--wh);border-bottom:2px solid var(--bd);padding:22px 0;overflow:hidden}
-.brands-hdr{max-width:1300px;margin:0 auto;padding:0 20px 14px;display:flex;align-items:center;gap:12px}
-.brands-hdr h3{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--mu)}
-.brands-hdr::after{content:'';flex:1;height:1px;background:var(--bd)}
-.brands-scroll{display:flex;gap:0;width:max-content;animation:bscroll 22s linear infinite}
-.brands-scroll:hover{animation-play-state:paused}
-.brand-item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 36px;border-right:1px solid var(--bd);gap:4px;transition:background .2s;cursor:default}
-.brand-item:hover{background:var(--lt)}
-.brand-name{font-size:1.05rem;font-weight:900;color:var(--nv);letter-spacing:.04em}
-.brand-cat{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mu)}
-@keyframes bscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* ── BRANDS ── */
+.brands{background:rgba(3,6,24,.96);border-bottom:1px solid rgba(255,255,255,.04);padding:20px 0;overflow:hidden}
+.brands-hdr{max-width:1300px;margin:0 auto;padding:0 20px 12px;display:flex;align-items:center;gap:12px}
+.brands-hdr h3{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--mu);white-space:nowrap}
+.brands-hdr::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bdpk),transparent)}
+.bscroll{display:flex;width:max-content;animation:bsc 24s linear infinite}
+.bscroll:hover{animation-play-state:paused}
+.brand-item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 40px;border-right:1px solid rgba(255,255,255,.05);gap:3px}
+.brand-name{font-size:1.1rem;font-weight:900;letter-spacing:.04em}
+.brand-cat{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mu)}
+@keyframes bsc{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ═══ SECTION WRAPPER ═══ */
-.sec{max-width:1300px;margin:0 auto;padding:44px 20px}
+/* ── SECTION ── */
+.sec{max-width:1300px;margin:0 auto;padding:48px 20px}
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .sec-ttl{display:flex;align-items:center;gap:10px}
-.sec-ttl h2{font-size:1.5rem;font-weight:900;color:var(--nv)}
-.sec-pill{background:var(--pk);color:#fff;font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 12px;border-radius:50px}
-.sec-more{display:flex;align-items:center;gap:5px;color:var(--pk);font-size:.82rem;font-weight:700;cursor:pointer;transition:gap .2s}
+.sec-ttl h2{font-size:1.5rem;font-weight:900;color:#fff}
+.sec-pill{background:var(--pk);color:#fff;font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 12px;border-radius:50px;box-shadow:var(--gpk)}
+.sec-more{display:flex;align-items:center;gap:5px;color:var(--cy);font-size:.82rem;font-weight:700;cursor:pointer;transition:gap .2s}
 .sec-more:hover{gap:9px}
-.sec-line{height:3px;background:linear-gradient(90deg,var(--pk) 0%,var(--nv) 55%,transparent 100%);border-radius:2px;width:80px;margin-bottom:28px}
+.sec-line{height:2px;background:linear-gradient(90deg,var(--pk),var(--cy) 60%,transparent);border-radius:2px;width:80px;margin-bottom:28px;box-shadow:0 0 10px rgba(232,25,90,.4)}
 
-/* ═══ PRODUCT GRID ═══ */
+/* ── PRODUCT GRID ── */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
-.pcard{background:var(--wh);border-radius:var(--rad);border:1px solid var(--bd);overflow:hidden;display:flex;flex-direction:column;position:relative;transition:box-shadow .28s,transform .28s;box-shadow:var(--sh)}
-.pcard:hover{box-shadow:var(--shh);transform:translateY(-6px)}
-
-.pcard-edit{position:absolute;top:8px;right:8px;background:var(--nv);color:#fff;border:none;width:32px;height:32px;border-radius:50%;font-size:.78rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:8;transition:background .2s}
-.pcard-edit:hover{background:var(--pk)}
+.pcard{background:rgba(7,13,37,.9);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:all .3s;backdrop-filter:blur(8px)}
+.pcard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,25,90,.05),transparent 50%,rgba(0,212,255,.03));opacity:0;transition:opacity .3s;z-index:0}
+.pcard:hover{border-color:var(--pk);box-shadow:0 0 28px rgba(232,25,90,.22),0 0 60px rgba(232,25,90,.07),0 20px 40px rgba(0,0,0,.5);transform:translateY(-7px)}
+.pcard:hover::before{opacity:1}
+.pcard-edit{position:absolute;top:8px;right:8px;background:rgba(27,47,138,.75);color:#fff;border:1px solid rgba(255,255,255,.12);width:32px;height:32px;border-radius:50%;font-size:.78rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:8;transition:all .2s}
+.pcard-edit:hover{background:var(--pk);box-shadow:var(--gpk)}
 .edit-mode .pcard-edit{display:flex}
-
-/* Discount % badge */
-.pdsc{position:absolute;top:10px;right:10px;background:var(--pk);color:#fff;font-size:.62rem;font-weight:900;padding:4px 8px;border-radius:6px;z-index:6;letter-spacing:.02em;box-shadow:0 2px 8px rgba(232,25,90,.4)}
+.pdsc{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;font-size:.62rem;font-weight:900;padding:4px 9px;border-radius:8px;z-index:6;box-shadow:0 0 12px rgba(232,25,90,.55)}
 .edit-mode .pdsc{right:46px}
-
-/* Badge */
 .pbadge{position:absolute;top:10px;left:10px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:50px;z-index:5}
-.bof{background:var(--pk);color:#fff}
-.bnw{background:var(--nv);color:#fff}
-.bpp{background:var(--gd);color:var(--nv)}
-.bpr{background:#7C3AED;color:#fff}
-.blc{background:#059669;color:#fff}
-
-.pimg{height:210px;display:flex;align-items:center;justify-content:center;background:var(--lt);position:relative;overflow:hidden}
-.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.pcard:hover .pimg img{transform:scale(1.07)}
-.pemoji{font-size:86px;user-select:none;opacity:.78;transition:transform .4s}
-.pcard:hover .pemoji{transform:scale(1.1) rotate(-4deg)}
-
-/* Hover overlay */
-.pov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,47,138,.0) 50%,rgba(27,47,138,.88) 100%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px}
+.bof{background:rgba(232,25,90,.15);color:var(--pk);border:1px solid rgba(232,25,90,.35);box-shadow:0 0 10px rgba(232,25,90,.25)}
+.bnw{background:rgba(0,212,255,.1);color:var(--cy);border:1px solid rgba(0,212,255,.3)}
+.bpp{background:rgba(245,166,35,.1);color:var(--gd);border:1px solid rgba(245,166,35,.28)}
+.bpr{background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.28)}
+.blc{background:rgba(5,150,105,.1);color:#34d399;border:1px solid rgba(5,150,105,.28)}
+.pimg{height:210px;display:flex;align-items:center;justify-content:center;background:rgba(3,6,24,.5);position:relative;overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s;opacity:.9}
+.pcard:hover .pimg img{transform:scale(1.08);opacity:1}
+.pemoji{font-size:86px;user-select:none;opacity:.85;transition:transform .4s,filter .4s;filter:drop-shadow(0 0 18px rgba(232,25,90,.25))}
+.pcard:hover .pemoji{transform:scale(1.1) rotate(-4deg);filter:drop-shadow(0 0 30px rgba(232,25,90,.55))}
+.pov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(7,13,37,.96) 100%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;z-index:2}
 .pcard:hover .pov{opacity:1}
-.pov-btn{display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;border:none;padding:8px 18px;border-radius:50px;font-size:.78rem;font-weight:800;cursor:pointer;transform:translateY(8px);transition:transform .3s .05s,box-shadow .2s;box-shadow:0 4px 16px rgba(37,211,102,.4)}
+.pov-btn{display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;border:none;padding:8px 18px;border-radius:50px;font-size:.78rem;font-weight:800;cursor:pointer;transform:translateY(8px);transition:transform .3s .05s;box-shadow:0 4px 20px rgba(37,211,102,.4)}
 .pcard:hover .pov-btn{transform:translateY(0)}
-.pov-btn:hover{background:#1db954}
-
-.pinfo{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:3px}
-.pname{font-size:.88rem;font-weight:700;color:var(--tx);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pinfo{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:3px;position:relative;z-index:1}
+.pname{font-size:.87rem;font-weight:700;color:var(--tx);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pold{font-size:.75rem;color:var(--mu);text-decoration:line-through;margin-top:3px}
-.pprice{font-size:1.3rem;font-weight:900;color:var(--pk);line-height:1.1;margin-top:2px}
+.pprice{font-size:1.3rem;font-weight:900;color:var(--pk);line-height:1.1;margin-top:2px;text-shadow:0 0 18px rgba(232,25,90,.35)}
 .pmonth{font-size:.71rem;color:var(--mu);margin-top:2px}
-.pmonth strong{color:var(--nv);font-weight:800}
-.pbtn{display:flex;align-items:center;justify-content:center;gap:7px;margin:0 14px 14px;padding:10px;background:var(--nv);color:#fff;border:none;border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s}
-.pbtn:hover{background:var(--pk);transform:translateY(-1px)}
+.pmonth strong{color:var(--cy);font-weight:800}
+.pbtn{display:flex;align-items:center;justify-content:center;gap:7px;margin:0 14px 14px;padding:10px;background:rgba(27,47,138,.38);color:var(--tx);border:1px solid rgba(232,25,90,.25);border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;position:relative;z-index:1}
+.pbtn:hover{background:var(--pk);border-color:var(--pk);color:#fff;box-shadow:0 0 20px rgba(232,25,90,.4)}
 
-/* ═══ PROMO BAR ═══ */
-.promobar{background:linear-gradient(135deg,var(--nv) 0%,var(--nvm) 100%);padding:22px 0}
+/* ── PROMO BAR ── */
+.promobar{background:rgba(7,13,37,.96);border-top:1px solid var(--bdpk);border-bottom:1px solid var(--bdpk);padding:22px 0}
 .promobar-in{max-width:1300px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .promo-item{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:12px;transition:background .2s}
-.promo-item:hover{background:rgba(255,255,255,.08)}
-.promo-ico-wrap{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.promo-item:hover{background:rgba(232,25,90,.06)}
+.promo-ico-w{width:48px;height:48px;border-radius:12px;background:rgba(232,25,90,.08);border:1px solid rgba(232,25,90,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
 .promo-txt h4{color:#fff;font-size:.88rem;font-weight:800;margin-bottom:2px}
-.promo-txt p{color:rgba(255,255,255,.65);font-size:.73rem}
+.promo-txt p{color:var(--mu);font-size:.73rem}
 
-/* ═══ TESTIMONIALS ═══ */
-.testi{background:var(--wh);padding:56px 0}
+/* ── TESTIMONIALS ── */
+.testi{background:rgba(3,6,24,.96);padding:56px 0;border-top:1px solid rgba(255,255,255,.04)}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.t-card{background:var(--lt);border-radius:var(--rad);padding:26px;border:1px solid var(--bd);position:relative;transition:box-shadow .25s,transform .25s}
-.t-card:hover{box-shadow:var(--shh);transform:translateY(-4px)}
-.t-quote{position:absolute;top:18px;right:20px;font-size:2.4rem;color:var(--pk);opacity:.15;font-family:Georgia,serif;line-height:1}
-.t-stars{display:flex;gap:3px;margin-bottom:12px}
-.t-stars i{color:var(--gd);font-size:.82rem}
-.t-text{font-size:.86rem;color:var(--tx);line-height:1.7;margin-bottom:18px}
+.t-card{background:rgba(7,13,37,.8);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:28px;position:relative;transition:all .28s;backdrop-filter:blur(12px)}
+.t-card:hover{border-color:var(--pk);box-shadow:0 0 28px rgba(232,25,90,.14);transform:translateY(-4px)}
+.t-quote{position:absolute;top:14px;right:18px;font-size:3.2rem;color:var(--pk);opacity:.1;font-family:Georgia,serif;line-height:1}
+.t-stars{display:flex;gap:3px;margin-bottom:14px}
+.t-stars i{color:var(--gd);font-size:.82rem;text-shadow:0 0 8px rgba(245,166,35,.45)}
+.t-text{font-size:.86rem;color:rgba(216,224,255,.72);line-height:1.7;margin-bottom:18px}
 .t-author{display:flex;align-items:center;gap:10px}
-.t-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;color:#fff;flex-shrink:0}
-.t-av1{background:linear-gradient(135deg,var(--pk),var(--pkd))}
-.t-av2{background:linear-gradient(135deg,var(--nv),var(--nvl))}
-.t-av3{background:linear-gradient(135deg,#059669,#10b981)}
-.t-name{font-size:.84rem;font-weight:700;color:var(--tx)}
-.t-src{font-size:.7rem;color:var(--mu);display:flex;align-items:center;gap:4px}
-.t-src i{color:#4285F4;font-size:.65rem}
+.t-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;color:#fff;flex-shrink:0;border:1px solid var(--bdpk)}
+.ta1{background:linear-gradient(135deg,var(--pk),var(--pkd));box-shadow:0 0 14px rgba(232,25,90,.3)}
+.ta2{background:linear-gradient(135deg,var(--nv),var(--nvm));box-shadow:0 0 14px rgba(27,47,138,.35)}
+.ta3{background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 0 14px rgba(5,150,105,.3)}
+.t-name{font-size:.84rem;font-weight:700;color:#fff}
+.t-src{font-size:.68rem;color:var(--mu);display:flex;align-items:center;gap:4px}
+.t-src i{color:#4285F4}
 
-/* ═══ FINANCING ═══ */
-.fin{background:linear-gradient(145deg,#080f2e 0%,#0d1740 50%,#1b2f8a 100%);padding:70px 0;position:relative;overflow:hidden}
-.fin::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,90,.12),transparent 70%);top:-200px;right:-100px;pointer-events:none}
-.fin::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.08),transparent 70%);bottom:-150px;left:5%;pointer-events:none}
+/* ── FINANCING ── */
+.fin{background:rgba(3,6,24,.99);padding:70px 0;border-top:1px solid var(--bdpk);position:relative;overflow:hidden}
+.fin::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(232,25,90,.012) 4px,rgba(232,25,90,.012) 5px);pointer-events:none}
 .fin-in{max-width:1300px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
-.fin-l h2{font-size:2.2rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px}
-.fin-l h2 span{color:var(--gd)}
-.fin-l>p{color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:32px;font-size:.93rem}
-.fin-steps{display:flex;flex-direction:column;gap:0}
+.fin-l h2{font-size:2.2rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px}
+.fin-l h2 span{color:var(--gd);text-shadow:0 0 18px rgba(245,166,35,.4)}
+.fin-l>p{color:rgba(216,224,255,.58);line-height:1.75;margin-bottom:30px;font-size:.93rem}
+.fin-steps{display:flex;flex-direction:column}
 .fin-step{display:flex;gap:16px;padding-bottom:24px;position:relative}
-.fin-step:last-child{padding-bottom:0}
-.fin-step:not(:last-child)::before{content:'';position:absolute;left:22px;top:48px;bottom:0;width:2px;background:linear-gradient(180deg,rgba(232,25,90,.5),rgba(232,25,90,.0));z-index:0}
-.fnum-wrap{width:46px;height:46px;flex-shrink:0;position:relative;z-index:1}
-.fnum{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;font-weight:900;font-size:.92rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(232,25,90,.4)}
-.fin-step-body{padding-top:8px}
-.fin-step-body h4{color:#fff;font-size:.9rem;font-weight:800;margin-bottom:3px}
-.fin-step-body p{color:rgba(255,255,255,.6);font-size:.81rem;line-height:1.5}
-
-.fin-perks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
-.fin-perk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px;text-align:center}
-.fin-perk i{font-size:1.3rem;color:var(--gd);margin-bottom:5px}
-.fin-perk p{color:rgba(255,255,255,.75);font-size:.72rem;font-weight:600;line-height:1.4}
-
-.calc-card{background:#fff;border-radius:22px;padding:32px;box-shadow:0 24px 64px rgba(0,0,0,.3)}
-.calc-ttl{font-size:1.15rem;font-weight:800;color:var(--nv);margin-bottom:22px;display:flex;align-items:center;gap:8px}
-.cg{margin-bottom:14px}
-.cg label{display:block;font-size:.73rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
-.cg input,.cg select{width:100%;padding:11px 14px;border:2px solid var(--bd);border-radius:10px;font-size:.88rem;outline:none;transition:border-color .2s;background:#fff;color:var(--tx)}
-.cg input:focus,.cg select:focus{border-color:var(--pk)}
-.calc-go{width:100%;padding:14px;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.93rem;cursor:pointer;transition:all .2s;margin-top:2px;box-shadow:var(--shpk)}
-.calc-go:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(232,25,90,.45)}
-.calc-res{margin-top:14px;background:var(--lt);border-radius:12px;padding:18px;display:none;text-align:center}
+.fin-step:not(:last-child)::before{content:'';position:absolute;left:22px;top:48px;bottom:0;width:1px;background:linear-gradient(180deg,rgba(232,25,90,.4),transparent)}
+.fnum{width:46px;height:46px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;font-weight:900;font-size:.92rem;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(232,25,90,.5);position:relative;z-index:1}
+.fstep-body{padding-top:8px}
+.fstep-body h4{color:#fff;font-size:.9rem;font-weight:800;margin-bottom:3px}
+.fstep-body p{color:rgba(216,224,255,.52);font-size:.81rem;line-height:1.5}
+.fin-perks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
+.fin-perk{background:rgba(232,25,90,.05);border:1px solid rgba(232,25,90,.14);border-radius:12px;padding:14px;text-align:center}
+.fin-perk i{font-size:1.3rem;color:var(--pk);margin-bottom:5px;text-shadow:var(--gpk)}
+.fin-perk p{color:rgba(216,224,255,.62);font-size:.7rem;font-weight:600;line-height:1.4}
+/* Holographic calculator */
+.calc-card{background:rgba(7,13,37,.88);border:1px solid rgba(0,212,255,.18);border-radius:22px;padding:32px;box-shadow:0 0 50px rgba(0,212,255,.06),inset 0 0 60px rgba(0,212,255,.015);backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.calc-card::before{content:'CRÉDITO // SISTEMA ACTIVO';position:absolute;top:12px;right:16px;font-size:.56rem;letter-spacing:.16em;color:rgba(0,212,255,.28);font-weight:700;font-family:'Courier New',monospace}
+.calc-card::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.01) 2px,rgba(0,212,255,.01) 3px);pointer-events:none}
+.calc-ttl{font-size:1.1rem;font-weight:800;color:var(--cy);margin-bottom:22px;display:flex;align-items:center;gap:8px;text-shadow:var(--gcy);position:relative;z-index:1}
+.cg{margin-bottom:14px;position:relative;z-index:1}
+.cg label{display:block;font-size:.7rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.cg input,.cg select{width:100%;padding:11px 14px;border:1px solid rgba(0,212,255,.18);border-radius:10px;font-size:.88rem;outline:none;transition:all .2s;background:rgba(0,20,40,.45);color:var(--tx)}
+.cg input::placeholder{color:var(--mu)}
+.cg input:focus,.cg select:focus{border-color:var(--cy);box-shadow:0 0 14px rgba(0,212,255,.18)}
+.cg select option{background:#070d25;color:var(--tx)}
+.calc-go{width:100%;padding:14px;background:linear-gradient(135deg,var(--pk),var(--pkd));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.93rem;cursor:pointer;transition:all .2s;box-shadow:0 0 28px rgba(232,25,90,.38);position:relative;z-index:1;letter-spacing:.03em}
+.calc-go:hover{transform:translateY(-2px);box-shadow:0 0 48px rgba(232,25,90,.6)}
+.calc-res{margin-top:14px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.14);border-radius:12px;padding:20px;display:none;text-align:center;position:relative;z-index:1}
 .calc-res.show{display:block}
-.calc-amt{font-size:2.2rem;font-weight:900;color:var(--nv)}
-.calc-lbl{font-size:.74rem;color:var(--mu);margin-top:3px}
-.calc-wa{margin-top:12px;width:100%;padding:11px;background:var(--nv);color:#fff;border:none;border-radius:9px;font-weight:700;cursor:pointer;font-size:.83rem;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
-.calc-wa:hover{background:var(--pk)}
+.calc-amt{font-size:2.4rem;font-weight:900;color:var(--cy);text-shadow:var(--gcy)}
+.calc-lbl{font-size:.74rem;color:var(--mu);margin-top:4px}
+.calc-wa{margin-top:12px;width:100%;padding:11px;background:rgba(27,47,138,.45);color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:9px;font-weight:700;cursor:pointer;font-size:.83rem;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s;position:relative;z-index:1}
+.calc-wa:hover{background:var(--pk);border-color:var(--pk);box-shadow:var(--gpk)}
 
-/* ═══ ABOUT ═══ */
-.about{background:var(--wh);padding:64px 0}
+/* ── ABOUT ── */
+.about{background:rgba(7,13,37,.96);padding:64px 0;border-top:1px solid rgba(255,255,255,.04)}
 .about-in{max-width:1300px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.about-l h2{font-size:2rem;font-weight:900;color:var(--nv);line-height:1.2;margin-bottom:16px}
-.about-l h2 span{color:var(--pk)}
-.about-l p{color:var(--mu);line-height:1.85;margin-bottom:16px;font-size:.91rem}
+.about-l h2{font-size:2rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:16px}
+.about-l h2 span{color:var(--pk);text-shadow:var(--gpk)}
+.about-l p{color:rgba(216,224,255,.58);line-height:1.85;margin-bottom:16px;font-size:.91rem}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-.astat{background:linear-gradient(135deg,var(--lt),var(--wh));border:1px solid var(--bd);border-radius:var(--rad);padding:20px;text-align:center;transition:box-shadow .2s,transform .2s}
-.astat:hover{box-shadow:var(--sh);transform:translateY(-2px)}
-.astat-n{font-size:2rem;font-weight:900;color:var(--pk)}
+.astat{background:rgba(3,6,24,.6);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px;text-align:center;transition:all .25s;backdrop-filter:blur(8px)}
+.astat:hover{border-color:var(--pk);box-shadow:0 0 18px rgba(232,25,90,.14)}
+.astat-n{font-size:2rem;font-weight:900;color:var(--pk);text-shadow:var(--gpk)}
 .astat-l{font-size:.72rem;color:var(--mu);font-weight:600;margin-top:4px}
-.about-r{border-radius:20px;overflow:hidden;box-shadow:var(--shh);background:linear-gradient(145deg,var(--nv),#0d1740);height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:32px;position:relative}
-.about-r::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,90,.2),transparent 70%);top:-80px;right:-60px;pointer-events:none}
-.about-r i{font-size:3rem;color:var(--pk);position:relative;z-index:1}
+.about-r{border-radius:20px;background:rgba(3,6,24,.82);border:1px solid var(--bdpk);height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:32px;position:relative;overflow:hidden;box-shadow:0 0 50px rgba(232,25,90,.08)}
+.about-r::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,90,.1),transparent 70%);top:-80px;right:-60px;pointer-events:none}
+.about-r i{font-size:3rem;color:var(--pk);text-shadow:var(--gpk);animation:lp 3s ease-in-out infinite;position:relative;z-index:1}
+@keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .about-r h4{font-size:1.1rem;font-weight:800;color:#fff;position:relative;z-index:1}
-.about-r p{font-size:.81rem;color:rgba(255,255,255,.65);max-width:220px;line-height:1.6;position:relative;z-index:1}
-.about-r .horario{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 20px;font-size:.78rem;color:rgba(255,255,255,.8);font-weight:600;position:relative;z-index:1}
-.map-btn{display:inline-flex;align-items:center;gap:7px;background:var(--pk);color:#fff;padding:11px 22px;border-radius:50px;font-weight:700;font-size:.82rem;transition:all .2s;box-shadow:var(--shpk);position:relative;z-index:1}
-.map-btn:hover{background:var(--pkd);transform:translateY(-2px)}
+.about-r p{font-size:.81rem;color:rgba(216,224,255,.52);max-width:220px;line-height:1.6;position:relative;z-index:1}
+.horario{background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:10px 20px;font-size:.78rem;color:var(--cy);font-weight:600;position:relative;z-index:1}
+.map-btn{display:inline-flex;align-items:center;gap:7px;background:var(--pk);color:#fff;padding:11px 22px;border-radius:50px;font-weight:700;font-size:.82rem;transition:all .2s;box-shadow:0 0 24px rgba(232,25,90,.4);position:relative;z-index:1}
+.map-btn:hover{background:var(--pkd);transform:translateY(-2px);box-shadow:0 0 40px rgba(232,25,90,.6)}
 
-/* ═══ FOOTER ═══ */
-footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
+/* ── FOOTER ── */
+footer{background:#020510;border-top:1px solid var(--bdpk);color:rgba(216,224,255,.55);padding:56px 0 28px}
 .ft-grid{max-width:1300px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .ft-brand h3{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:8px}
-.ft-brand h3 span{color:var(--pk)}
-.ft-brand p{font-size:.79rem;line-height:1.75;color:rgba(255,255,255,.45);margin-bottom:16px}
-.ft-logo-upload{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.55);padding:7px 14px;border-radius:8px;font-size:.73rem;font-weight:600;cursor:pointer;position:relative;overflow:hidden;transition:all .2s;margin-bottom:14px}
-.ft-logo-upload:hover{background:rgba(255,255,255,.14);color:#fff}
+.ft-brand h3 span{color:var(--pk);text-shadow:var(--gpk)}
+.ft-brand p{font-size:.79rem;line-height:1.75;color:rgba(216,224,255,.38);margin-bottom:16px}
+.ft-logo-upload{display:inline-flex;align-items:center;gap:6px;background:rgba(232,25,90,.07);border:1px solid rgba(232,25,90,.18);color:rgba(216,224,255,.45);padding:7px 14px;border-radius:8px;font-size:.73rem;font-weight:600;cursor:pointer;position:relative;overflow:hidden;transition:all .2s;margin-bottom:14px}
+.ft-logo-upload:hover{background:rgba(232,25,90,.14);color:#fff}
 .ft-logo-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.ft-logo-img{max-height:40px;margin-bottom:12px;display:none}
-.ft-logo-img.on{display:block}
+.ft-logo-img{max-height:40px;margin-bottom:12px;display:none}.ft-logo-img.on{display:block}
 .socials{display:flex;gap:8px}
-.soc{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:.85rem;transition:all .2s}
-.soc:hover{background:var(--pk);color:#fff;transform:translateY(-2px)}
-.ft-col h4{color:#fff;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.soc{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:rgba(216,224,255,.45);font-size:.85rem;transition:all .2s}
+.soc:hover{background:rgba(232,25,90,.14);border-color:var(--pk);color:var(--pk);box-shadow:0 0 14px rgba(232,25,90,.28)}
+.ft-col h4{color:#fff;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
 .ft-col ul{display:flex;flex-direction:column;gap:8px}
-.ft-col li{font-size:.78rem;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:7px;transition:color .2s;cursor:default}
-.ft-col li:hover{color:rgba(255,255,255,.85)}
-.ft-col li i{color:var(--pk);font-size:.68rem;flex-shrink:0}
-.ft-btm{max-width:1300px;margin:0 auto;padding:20px 20px 0;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.ft-btm p{font-size:.72rem;color:rgba(255,255,255,.3)}
+.ft-col li{font-size:.78rem;color:rgba(216,224,255,.38);display:flex;align-items:center;gap:7px;transition:color .2s;cursor:default}
+.ft-col li:hover{color:rgba(216,224,255,.82)}
+.ft-col li i{color:var(--pk);font-size:.65rem;flex-shrink:0}
+.ft-btm{max-width:1300px;margin:0 auto;padding:20px 20px 0;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ft-btm p{font-size:.72rem;color:rgba(255,255,255,.18)}
 .ft-stars{display:flex;align-items:center;gap:5px}
-.ft-stars i{color:var(--gd);font-size:.8rem}
-.ft-stars span{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:600}
+.ft-stars i{color:var(--gd);font-size:.8rem;text-shadow:0 0 8px rgba(245,166,35,.4)}
+.ft-stars span{font-size:.78rem;color:rgba(216,224,255,.38);font-weight:600}
 
-/* ═══ FLOATING BUTTONS ═══ */
-.fab-wa{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 24px rgba(37,211,102,.5);z-index:800;transition:all .3s;animation:wapulse 3s infinite}
+/* ── FABs ── */
+.fab-wa{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 28px rgba(37,211,102,.48);z-index:800;transition:all .3s;animation:wap 3s infinite}
 .fab-wa:hover{transform:scale(1.12)}
-@keyframes wapulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)}50%{box-shadow:0 4px 36px rgba(37,211,102,.75)}}
-.fab-ed{position:fixed;bottom:94px;right:24px;background:var(--nv);color:#fff;padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;box-shadow:0 4px 20px rgba(27,47,138,.35);z-index:800;cursor:pointer;border:none;transition:all .25s}
-.fab-ed:hover,.fab-ed.on{background:var(--pk)}
+@keyframes wap{0%,100%{box-shadow:0 0 20px rgba(37,211,102,.45)}50%{box-shadow:0 0 40px rgba(37,211,102,.72)}}
+.fab-ed{position:fixed;bottom:94px;right:24px;background:rgba(27,47,138,.82);color:#fff;padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;box-shadow:0 0 20px rgba(27,47,138,.38);z-index:800;cursor:pointer;border:1px solid rgba(255,255,255,.09);transition:all .25s;backdrop-filter:blur(8px)}
+.fab-ed:hover,.fab-ed.on{background:var(--pk);box-shadow:0 0 28px rgba(232,25,90,.5)}
 
-/* ═══ EDIT PANEL ═══ */
-.epanel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:#fff;box-shadow:-4px 0 40px rgba(0,0,0,.14);z-index:1000;display:flex;flex-direction:column;transition:right .35s cubic-bezier(.4,0,.2,1)}
+/* ── EDIT PANEL ── */
+.epanel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:rgba(7,13,37,.97);backdrop-filter:blur(24px);border-left:1px solid var(--bdpk);box-shadow:-4px 0 60px rgba(232,25,90,.08);z-index:1000;display:flex;flex-direction:column;transition:right .35s cubic-bezier(.4,0,.2,1)}
 .epanel.open{right:0}
-.ep-hdr{padding:18px 22px;background:var(--nv);color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.ep-hdr h3{font-size:.97rem;font-weight:800}
-.ep-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center}
-.ep-body{padding:20px 22px;flex:1;overflow-y:auto}
+.ep-hdr{padding:18px 22px;background:rgba(232,25,90,.08);border-bottom:1px solid var(--bdpk);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ep-hdr h3{font-size:.97rem;font-weight:800;color:var(--pk);text-shadow:var(--gpk)}
+.ep-close{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(216,224,255,.6);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.ep-body{padding:20px 22px;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pk) transparent}
 .ep-sec{margin-bottom:26px}
-.ep-sec h4{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--nv);margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid var(--bd);display:flex;align-items:center;gap:6px}
-.logo-slot{border:2px dashed var(--bd);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;margin-bottom:10px}
-.logo-slot:hover{border-color:var(--pk);background:rgba(232,25,90,.03)}
+.ep-sec h4{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--cy);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(0,212,255,.14);display:flex;align-items:center;gap:6px}
+.logo-slot{border:1px dashed rgba(232,25,90,.28);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;margin-bottom:10px;background:rgba(232,25,90,.025)}
+.logo-slot:hover{border-color:var(--pk);background:rgba(232,25,90,.07)}
 .logo-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .logo-slot img{max-height:44px;margin:0 auto 6px;object-fit:contain}
-.logo-slot strong{display:block;font-size:.76rem;color:var(--nv);margin-bottom:3px}
+.logo-slot strong{display:block;font-size:.76rem;color:var(--tx);margin-bottom:3px}
 .logo-slot p{font-size:.72rem;color:var(--mu)}
-.logo-slot .rm{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:.68rem;color:var(--pk);font-weight:700;background:rgba(232,25,90,.08);padding:3px 8px;border-radius:20px;pointer-events:all;cursor:pointer;z-index:2;position:relative}
+.logo-slot .rm{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:.68rem;color:var(--pk);font-weight:700;background:rgba(232,25,90,.1);padding:3px 8px;border-radius:20px;pointer-events:all;cursor:pointer;z-index:2;position:relative}
 .ep-pl{display:flex;flex-direction:column;gap:7px;max-height:340px;overflow-y:auto}
-.ep-pi{display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--lt);border-radius:8px;cursor:pointer;transition:background .2s}
-.ep-pi:hover{background:var(--bd)}
+.ep-pi{display:flex;align-items:center;gap:9px;padding:9px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:8px;cursor:pointer;transition:all .2s}
+.ep-pi:hover{background:rgba(232,25,90,.08);border-color:rgba(232,25,90,.2)}
 .ep-pi-em{font-size:1.3rem;flex-shrink:0}
-.ep-pi-nm{font-size:.79rem;font-weight:600;flex:1}
+.ep-pi-nm{font-size:.79rem;font-weight:600;flex:1;color:var(--tx)}
 .ep-pi-pr{font-size:.79rem;color:var(--pk);font-weight:700}
 .ep-pi-ic{color:var(--mu);font-size:.72rem}
-.ep-acts{padding:14px 22px;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.ep-acts{padding:14px 22px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
 .epbtn{width:100%;padding:11px;border:none;border-radius:9px;font-weight:700;font-size:.83rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
-.epbtn-p{background:var(--pk);color:#fff}.epbtn-p:hover{background:var(--pkd)}
-.epbtn-s{background:var(--nv);color:#fff}.epbtn-s:hover{background:var(--nvm)}
-.epbtn-o{background:transparent;color:var(--mu);border:2px solid var(--bd)}.epbtn-o:hover{border-color:var(--pk);color:var(--pk)}
+.epbtn-p{background:var(--pk);color:#fff;box-shadow:0 0 18px rgba(232,25,90,.3)}.epbtn-p:hover{background:var(--pkd)}
+.epbtn-o{background:transparent;color:var(--mu);border:1px solid rgba(255,255,255,.1)}.epbtn-o:hover{border-color:var(--pk);color:var(--pk)}
 
-/* ═══ PRODUCT EDIT MODAL ═══ */
-.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s}
+/* ── MODAL ── */
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);z-index:1100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s}
 .moverlay.open{opacity:1;pointer-events:all}
-.mcard{background:#fff;border-radius:20px;width:100%;max-width:470px;max-height:92vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.28);transform:translateY(18px);transition:transform .25s}
+.mcard{background:rgba(7,13,37,.97);border:1px solid var(--bdpk);border-radius:20px;width:100%;max-width:470px;max-height:92vh;overflow-y:auto;box-shadow:0 0 60px rgba(232,25,90,.18);transform:translateY(18px);transition:transform .25s}
 .moverlay.open .mcard{transform:translateY(0)}
-.mhd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
-.mhd h3{font-size:.97rem;font-weight:800;color:var(--nv)}
-.mhd-cls{background:var(--lt);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.85rem;color:var(--mu);display:flex;align-items:center;justify-content:center}
+.mhd{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.mhd h3{font-size:.97rem;font-weight:800;color:var(--cy)}
+.mhd-cls{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.85rem;color:var(--mu);display:flex;align-items:center;justify-content:center}
 .mbody{padding:22px}
-.mimg-zone{border:2px dashed var(--bd);border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden;margin-bottom:18px}
-.mimg-zone:hover{border-color:var(--pk)}
+.mimg-zone{border:1px dashed rgba(0,212,255,.22);border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;margin-bottom:18px;background:rgba(0,212,255,.02)}
+.mimg-zone:hover{border-color:var(--cy);box-shadow:0 0 18px rgba(0,212,255,.1)}
 .mimg-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.mimg-prev{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;display:none}
-.mimg-prev.on{display:block}
-.mimg-ico{font-size:1.9rem;opacity:.35}
+.mimg-prev{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;display:none}.mimg-prev.on{display:block}
+.mimg-ico{font-size:1.9rem;opacity:.3;color:var(--cy)}
 .mimg-lbl{font-size:.75rem;color:var(--mu)}
 .mfield{margin-bottom:13px}
-.mfield label{display:block;font-size:.73rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.mfield input,.mfield select{width:100%;padding:9px 13px;border:2px solid var(--bd);border-radius:8px;font-size:.88rem;outline:none;transition:border-color .2s}
-.mfield input:focus,.mfield select:focus{border-color:var(--pk)}
+.mfield label{display:block;font-size:.72rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.mfield input,.mfield select{width:100%;padding:9px 13px;border:1px solid rgba(255,255,255,.08);border-radius:8px;font-size:.88rem;outline:none;transition:all .2s;background:rgba(255,255,255,.04);color:var(--tx)}
+.mfield input::placeholder{color:var(--mu)}
+.mfield input:focus,.mfield select:focus{border-color:var(--cy);box-shadow:0 0 12px rgba(0,212,255,.14)}
+.mfield select option{background:#070d25}
 .mrow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.mft{padding:14px 22px;border-top:1px solid var(--bd);display:flex;gap:9px}
-.msave{flex:1;padding:11px;background:var(--pk);color:#fff;border:none;border-radius:9px;font-weight:800;font-size:.88rem;cursor:pointer;transition:background .2s}
+.mft{padding:14px 22px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:9px}
+.msave{flex:1;padding:11px;background:var(--pk);color:#fff;border:none;border-radius:9px;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .2s;box-shadow:0 0 18px rgba(232,25,90,.28)}
 .msave:hover{background:var(--pkd)}
-.mcancel{padding:11px 18px;background:var(--lt);color:var(--mu);border:none;border-radius:9px;font-weight:700;font-size:.88rem;cursor:pointer}
+.mcancel{padding:11px 18px;background:rgba(255,255,255,.04);color:var(--mu);border:1px solid rgba(255,255,255,.08);border-radius:9px;font-weight:700;font-size:.88rem;cursor:pointer}
 
-/* ═══ TOAST ═══ */
-.toast{position:fixed;bottom:168px;right:24px;background:var(--nv);color:#fff;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.82rem;z-index:2000;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:toastin .3s ease,toastout .35s ease 2.1s forwards}
-@keyframes toastin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes toastout{from{opacity:1}to{opacity:0}}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:168px;right:24px;background:rgba(7,13,37,.96);border:1px solid var(--bdpk);color:#fff;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.82rem;z-index:2000;box-shadow:0 0 28px rgba(232,25,90,.18);animation:ti .3s ease,to .35s ease 2.1s forwards;backdrop-filter:blur(14px)}
+@keyframes ti{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes to{from{opacity:1}to{opacity:0}}
 
-/* ═══ SCROLL REVEAL ═══ */
+/* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ═══ RESPONSIVE ═══ */
+/* ── RESPONSIVE ── */
 @media(max-width:1024px){
+  .hero-in{grid-template-columns:1fr;padding:0 32px}
+  .hero-vis{display:none}
   .promobar-in{grid-template-columns:repeat(2,1fr)}
   .testi-grid{grid-template-columns:repeat(2,1fr)}
   .fin-in,.about-in{grid-template-columns:1fr;gap:40px}
   .ft-grid{grid-template-columns:1fr 1fr}
-  .hshape{right:40px}
-  .hshape-circle{width:200px;height:200px;font-size:86px}
+  .hero{min-height:460px}
 }
 @media(max-width:768px){
-  .hero{height:380px}
-  .hslide{padding:28px 28px}
   .testi-grid{grid-template-columns:1fr}
   .hdr-ph{display:none}
   .fin-perks{grid-template-columns:1fr}
-  .hshape{display:none}
 }
 @media(max-width:640px){
   .pgrid{grid-template-columns:1fr 1fr}
   .ft-grid{grid-template-columns:1fr}
-  .srch{max-width:none;flex:1}
+  .srch{flex:1}
   .mrow{grid-template-columns:1fr}
   .epanel{width:100%}
   .promobar-in{grid-template-columns:1fr}
-  .about-stats{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
 </style>
 </head>
 <body>
 
-<!-- Promo Banner -->
-<div class="pbanner">
-  🎉 ¡Crédito aprobado el mismo día! <span>·</span> Entrega a domicilio en Comayagua <span>·</span> Llámanos: <strong>2772-2660</strong>
-</div>
+<canvas id="sf"></canvas>
+<div class="neb n1"></div>
+<div class="neb n2"></div>
+<div class="neb n3"></div>
 
-<!-- Ticker -->
+<div class="pbanner">🎉 ¡Crédito aprobado el mismo día! &nbsp;·&nbsp; Entrega en Comayagua &nbsp;·&nbsp; <strong>2772-2660</strong></div>
+
 <div class="ticker" aria-hidden="true">
-  <div class="ticker-track" id="tt">
+  <div class="ticker-track">
     <span><i class="fas fa-map-marker-alt"></i>Barrio Arriba, 4 cuadras al este del Liceo Jesús de Nazareth, Comayagua</span>
     <span><i class="fas fa-phone"></i>2772-2660</span>
     <span><i class="fas fa-star"></i>4.8★ en Google · 120 reseñas</span>
@@ -417,16 +415,15 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
   </div>
 </div>
 
-<!-- Main Header -->
 <header class="mhdr">
   <div class="mhdr-in">
     <div class="lz" id="lz" onclick="lzClick()">
-      <img class="lz-up" id="lz-img" src="" alt="Logo La Roca"/>
+      <img class="lz-up" id="lz-img" src="" alt="Logo"/>
       <div class="lz-def" id="lz-def">
         <svg class="lz-mark" viewBox="0 0 46 46" fill="none">
           <rect width="46" height="46" rx="12" fill="#1B2F8A"/>
           <path d="M9 33 L23 14 L37 33" stroke="#E8195A" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15 33 L23 24 L31 33" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+          <path d="M15 33 L23 24 L31 33" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
           <circle cx="23" cy="14" r="3" fill="#F5A623"/>
         </svg>
         <div class="lz-txt">
@@ -436,20 +433,15 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
       </div>
       <div class="lz-edit-hint"><i class="fas fa-camera"></i> Cambiar logo</div>
     </div>
-
     <div class="srch">
-      <input type="text" placeholder="Buscar salas, camas, motos, electrodomésticos..." id="searchInput" oninput="doSearch()"/>
+      <input type="text" placeholder="Buscar salas, camas, motos..." id="searchInput" oninput="doSearch()"/>
       <button><i class="fas fa-search"></i></button>
     </div>
-
     <div class="hdr-r">
       <div class="hdr-ph"><i class="fas fa-phone-alt"></i> 2772-2660</div>
-      <a class="hdr-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank">
-        <i class="fab fa-whatsapp"></i> WhatsApp
-      </a>
+      <a class="hdr-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
     </div>
   </div>
-
   <nav class="catnav">
     <div class="catnav-in">
       <div class="cni on" onclick="filterCat('all',this)"><i class="fas fa-th"></i> Todo</div>
@@ -463,260 +455,147 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
   </nav>
 </header>
 
-<!-- Hero Slider -->
 <section class="hero" id="inicio">
-  <div class="hero-slides" id="hslides">
-
-    <div class="hslide hslide-1">
-      <div class="hslide-content">
-        <div class="h-eyebrow"><i class="fas fa-home"></i> aquí comienza tu hogar</div>
-        <h2>Salas y Camas<br/><em>de Calidad Premium</em></h2>
-        <p>Distribuidores oficiales MOVESA y Olympia en Comayagua. Llévate hoy con crédito aprobado el mismo día.</p>
-        <div class="h-ctas">
-          <a class="h-cta h-cta-main" href="https://wa.me/50427722660?text=Hola!%20Quiero%20ver%20salas%20y%20camas" target="_blank">
-            <i class="fab fa-whatsapp"></i> Cotizar ahora
-          </a>
-          <a class="h-cta h-cta-ghost" href="#credito" onclick="navTo('#credito');return false">
-            <i class="fas fa-calculator"></i> Ver cuotas
-          </a>
-        </div>
+  <div class="hero-in">
+    <div>
+      <div class="hero-tag"><div class="hero-dot"></div> EN LÍNEA AHORA — COMAYAGUA, HN</div>
+      <div class="hero-badge"><i class="fas fa-home"></i> aquí comienza tu hogar</div>
+      <h1>Tu hogar del<br/><span class="gpk">futuro</span><br/>comienza aquí</h1>
+      <p class="hero-sub">Salas MOVESA, camas Olympia, motos y electrodomésticos. Crédito aprobado el mismo día, sin fiadores, sin complicaciones.</p>
+      <div class="hero-ctas">
+        <a class="h-cta h-main" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank"><i class="fab fa-whatsapp"></i> Cotizar ahora</a>
+        <a class="h-cta h-ghost" href="#credito" onclick="navTo('#credito');return false"><i class="fas fa-calculator"></i> Calcular cuota</a>
       </div>
-      <div class="hshape"><div class="hshape-circle">🛋️</div></div>
     </div>
-
-    <div class="hslide hslide-2">
-      <div class="hslide-content">
-        <div class="h-eyebrow"><i class="fas fa-bolt"></i> Financiamiento express</div>
-        <h2>Crédito Fácil<br/><em>Aprobación Inmediata</em></h2>
-        <p>Para asalariados, emprendedores y agricultores. Solo traes tu identidad y te vas con tu producto.</p>
-        <div class="h-ctas">
-          <a class="h-cta h-cta-main" href="#credito" onclick="navTo('#credito');return false">
-            <i class="fas fa-calculator"></i> Calcular mi cuota
-          </a>
-          <a class="h-cta h-cta-ghost" href="https://wa.me/50427722660?text=Quiero%20información%20sobre%20crédito" target="_blank">
-            <i class="fab fa-whatsapp"></i> Consultar
-          </a>
-        </div>
+    <div class="hero-vis">
+      <div class="orb-particle op1"></div>
+      <div class="orb-particle op2"></div>
+      <div class="orb-particle op3"></div>
+      <div class="orb-particle op4"></div>
+      <div class="orb-stat orb-stat-l"><div class="osn">4.8★</div><div class="osl">Google Reviews</div></div>
+      <div class="orb">
+        <div class="orb-ring orb-r1"></div>
+        <div class="orb-ring orb-r2"></div>
+        <div class="orb-ring orb-r3"></div>
+        <span class="orb-emoji" id="orb-emoji">🛋️</span>
       </div>
-      <div class="hshape"><div class="hshape-circle">💳</div></div>
+      <div class="orb-stat orb-stat-r"><div class="osn">20+</div><div class="osl">Años en Comayagua</div></div>
     </div>
-
-    <div class="hslide hslide-3">
-      <div class="hslide-content">
-        <div class="h-eyebrow"><i class="fas fa-motorcycle"></i> Movilízate con La Roca</div>
-        <h2>Motos y Trimotos<br/><em>al Mejor Precio</em></h2>
-        <p>150cc y 200cc disponibles. Ideales para trabajo y recreación en toda Honduras.</p>
-        <div class="h-ctas">
-          <a class="h-cta h-cta-main" href="https://wa.me/50427722660?text=Hola!%20Quiero%20información%20de%20motos" target="_blank">
-            <i class="fab fa-whatsapp"></i> Ver disponibilidad
-          </a>
-          <a class="h-cta h-cta-ghost" href="#" onclick="filterCat('motos');return false">
-            <i class="fas fa-arrow-right"></i> Ver catálogo
-          </a>
-        </div>
-      </div>
-      <div class="hshape"><div class="hshape-circle">🏍️</div></div>
-    </div>
-
   </div>
-  <button class="harrow prev" onclick="hNav(-1)"><i class="fas fa-chevron-left"></i></button>
-  <button class="harrow next" onclick="hNav(1)"><i class="fas fa-chevron-right"></i></button>
-  <div class="hdots" id="hdots"></div>
 </section>
 
-<!-- Category Shortcuts -->
 <div class="cats">
   <div class="cats-in">
-    <div class="cat-chip" onclick="filterCat('salas')"><div class="cat-chip-icon">🛋️</div> Salas</div>
-    <div class="cat-chip" onclick="filterCat('camas')"><div class="cat-chip-icon">🛏️</div> Camas</div>
-    <div class="cat-chip" onclick="filterCat('motos')"><div class="cat-chip-icon">🏍️</div> Motos</div>
-    <div class="cat-chip" onclick="filterCat('electro')"><div class="cat-chip-icon">🧊</div> Electrodomésticos</div>
-    <div class="cat-chip" onclick="filterCat('tech')"><div class="cat-chip-icon">📺</div> Tecnología</div>
-    <div class="cat-chip" onclick="navTo('#credito')"><div class="cat-chip-icon">💰</div> Crédito Fácil</div>
+    <div class="cat-chip" onclick="filterCat('salas')"><span class="cat-chip-icon">🛋️</span> Salas</div>
+    <div class="cat-chip" onclick="filterCat('camas')"><span class="cat-chip-icon">🛏️</span> Camas</div>
+    <div class="cat-chip" onclick="filterCat('motos')"><span class="cat-chip-icon">🏍️</span> Motos</div>
+    <div class="cat-chip" onclick="filterCat('electro')"><span class="cat-chip-icon">🧊</span> Electrodomésticos</div>
+    <div class="cat-chip" onclick="filterCat('tech')"><span class="cat-chip-icon">📺</span> Tecnología</div>
+    <div class="cat-chip" onclick="navTo('#credito')"><span class="cat-chip-icon">💰</span> Crédito Fácil</div>
   </div>
 </div>
 
-<!-- Brands Strip -->
 <div class="brands">
   <div class="brands-hdr"><h3>Marcas que distribuimos</h3></div>
   <div style="overflow:hidden">
-    <div class="brands-scroll" id="bscroll">
-      <div class="brand-item"><div class="brand-name" style="color:var(--nv)">MOVESA</div><div class="brand-cat">Salas de estar</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:var(--pk)">Olympia</div><div class="brand-cat">Camas &amp; colchones</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#059669">Honda</div><div class="brand-cat">Motos &amp; trimotos</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#7C3AED">Samsung</div><div class="brand-cat">Smart TV</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#0f766e">Mabe</div><div class="brand-cat">Electrodomésticos</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#b45309">LG</div><div class="brand-cat">Lavadoras</div></div>
-      <!-- Duplicate for seamless loop -->
-      <div class="brand-item"><div class="brand-name" style="color:var(--nv)">MOVESA</div><div class="brand-cat">Salas de estar</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:var(--pk)">Olympia</div><div class="brand-cat">Camas &amp; colchones</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#059669">Honda</div><div class="brand-cat">Motos &amp; trimotos</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#7C3AED">Samsung</div><div class="brand-cat">Smart TV</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#0f766e">Mabe</div><div class="brand-cat">Electrodomésticos</div></div>
-      <div class="brand-item"><div class="brand-name" style="color:#b45309">LG</div><div class="brand-cat">Lavadoras</div></div>
+    <div class="bscroll">
+      <div class="brand-item"><div class="brand-name" style="color:#4488ff;text-shadow:0 0 18px rgba(68,136,255,.6)">MOVESA</div><div class="brand-cat">Salas de estar</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:var(--pk);text-shadow:var(--gpk)">Olympia</div><div class="brand-cat">Camas &amp; colchones</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#34d399;text-shadow:0 0 18px rgba(52,211,153,.5)">Honda</div><div class="brand-cat">Motos &amp; trimotos</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:var(--cy);text-shadow:var(--gcy)">Samsung</div><div class="brand-cat">Smart TV</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#fbbf24;text-shadow:0 0 18px rgba(251,191,36,.4)">Mabe</div><div class="brand-cat">Electrodomésticos</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#a78bfa;text-shadow:0 0 18px rgba(167,139,250,.4)">LG</div><div class="brand-cat">Lavadoras</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#4488ff;text-shadow:0 0 18px rgba(68,136,255,.6)">MOVESA</div><div class="brand-cat">Salas de estar</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:var(--pk);text-shadow:var(--gpk)">Olympia</div><div class="brand-cat">Camas &amp; colchones</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#34d399;text-shadow:0 0 18px rgba(52,211,153,.5)">Honda</div><div class="brand-cat">Motos &amp; trimotos</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:var(--cy);text-shadow:var(--gcy)">Samsung</div><div class="brand-cat">Smart TV</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#fbbf24;text-shadow:0 0 18px rgba(251,191,36,.4)">Mabe</div><div class="brand-cat">Electrodomésticos</div></div>
+      <div class="brand-item"><div class="brand-name" style="color:#a78bfa;text-shadow:0 0 18px rgba(167,139,250,.4)">LG</div><div class="brand-cat">Lavadoras</div></div>
     </div>
   </div>
 </div>
 
-<!-- Products Section -->
-<div id="prods-wrap" style="background:var(--lt)">
+<div id="prods-wrap">
   <div class="sec">
     <div class="sec-hd">
-      <div class="sec-ttl">
-        <h2 id="sec-ttl-txt">Todos los Productos</h2>
-        <span class="sec-pill" id="sec-pill">🔥 Ofertas</span>
-      </div>
+      <div class="sec-ttl"><h2 id="sec-ttl-txt">Todos los Productos</h2><span class="sec-pill" id="sec-pill">🔥 Ofertas</span></div>
       <div class="sec-more" onclick="filterCat('all')">Ver todo <i class="fas fa-arrow-right"></i></div>
     </div>
     <div class="sec-line"></div>
     <div class="pgrid" id="pgrid"></div>
     <div id="no-results" style="display:none;text-align:center;padding:48px;color:var(--mu)">
-      <i class="fas fa-search" style="font-size:2.5rem;margin-bottom:14px;display:block;opacity:.4"></i>
-      No se encontraron productos. Intenta con otro término.
+      <i class="fas fa-search" style="font-size:2.5rem;margin-bottom:14px;display:block;opacity:.3"></i>
+      No se encontraron productos.
     </div>
   </div>
 </div>
 
-<!-- Promo Bar -->
 <div class="promobar">
   <div class="promobar-in">
-    <div class="promo-item reveal">
-      <div class="promo-ico-wrap">🚚</div>
-      <div class="promo-txt"><h4>Entrega a domicilio</h4><p>En toda el área de Comayagua</p></div>
-    </div>
-    <div class="promo-item reveal">
-      <div class="promo-ico-wrap">✅</div>
-      <div class="promo-txt"><h4>Crédito aprobado hoy</h4><p>Proceso rápido y sencillo</p></div>
-    </div>
-    <div class="promo-item reveal">
-      <div class="promo-ico-wrap">🤝</div>
-      <div class="promo-txt"><h4>20+ años de confianza</h4><p>La tienda favorita de Comayagua</p></div>
-    </div>
-    <div class="promo-item reveal">
-      <div class="promo-ico-wrap">🔒</div>
-      <div class="promo-txt"><h4>Garantía incluida</h4><p>Respaldados por las mejores marcas</p></div>
-    </div>
+    <div class="promo-item reveal"><div class="promo-ico-w">🚚</div><div class="promo-txt"><h4>Entrega a domicilio</h4><p>En toda el área de Comayagua</p></div></div>
+    <div class="promo-item reveal"><div class="promo-ico-w">✅</div><div class="promo-txt"><h4>Crédito aprobado hoy</h4><p>Proceso rápido y sencillo</p></div></div>
+    <div class="promo-item reveal"><div class="promo-ico-w">🤝</div><div class="promo-txt"><h4>20+ años de confianza</h4><p>La tienda favorita de Comayagua</p></div></div>
+    <div class="promo-item reveal"><div class="promo-ico-w">🔒</div><div class="promo-txt"><h4>Garantía incluida</h4><p>Respaldados por las mejores marcas</p></div></div>
   </div>
 </div>
 
-<!-- Testimonials -->
 <section class="testi">
   <div class="sec" style="padding-top:44px;padding-bottom:44px">
-    <div class="sec-hd">
-      <div class="sec-ttl">
-        <h2>Lo que dicen nuestros clientes</h2>
-        <span class="sec-pill">⭐ Google</span>
-      </div>
-    </div>
+    <div class="sec-hd"><div class="sec-ttl"><h2>Lo que dicen nuestros clientes</h2><span class="sec-pill">⭐ Google</span></div></div>
     <div class="sec-line"></div>
     <div class="testi-grid">
       <div class="t-card reveal">
         <div class="t-quote">"</div>
         <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="t-text">Excelente atención desde el primer momento. Conseguí mi sala en crédito y me la entregaron ese mismo día. El proceso fue rapidísimo, solo llevé mi identidad.</p>
-        <div class="t-author">
-          <div class="t-avatar t-av1">RM</div>
-          <div>
-            <div class="t-name">Rosa M.</div>
-            <div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div>
-          </div>
-        </div>
+        <p class="t-text">Excelente atención desde el primer momento. Conseguí mi sala en crédito y me la entregaron ese mismo día. El proceso fue rapidísimo.</p>
+        <div class="t-author"><div class="t-avatar ta1">RM</div><div><div class="t-name">Rosa M.</div><div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div></div></div>
       </div>
       <div class="t-card reveal">
         <div class="t-quote">"</div>
         <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="t-text">Las camas Olympia son de primera calidad. Llevo comprando en La Roca más de 10 años y siempre me han atendido muy bien. Los recomiendo ampliamente.</p>
-        <div class="t-author">
-          <div class="t-avatar t-av2">CA</div>
-          <div>
-            <div class="t-name">Carlos A.</div>
-            <div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div>
-          </div>
-        </div>
+        <p class="t-text">Las camas Olympia son de primera calidad. Llevo comprando en La Roca más de 10 años y siempre me han atendido muy bien.</p>
+        <div class="t-author"><div class="t-avatar ta2">CA</div><div><div class="t-name">Carlos A.</div><div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div></div></div>
       </div>
       <div class="t-card reveal">
         <div class="t-quote">"</div>
         <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-        <p class="t-text">Siempre compro aquí. Los mejores precios de Comayagua y el crédito es muy accesible. Mi esposo compró su moto aquí y quedó encantado con el trato.</p>
-        <div class="t-author">
-          <div class="t-avatar t-av3">ML</div>
-          <div>
-            <div class="t-name">María L.</div>
-            <div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div>
-          </div>
-        </div>
+        <p class="t-text">Los mejores precios de Comayagua y el crédito es muy accesible. Mi esposo compró su moto aquí y quedó encantado.</p>
+        <div class="t-author"><div class="t-avatar ta3">ML</div><div><div class="t-name">María L.</div><div class="t-src"><i class="fab fa-google"></i> Reseña en Google</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Financing -->
 <section class="fin" id="credito">
   <div class="fin-in">
     <div class="fin-l">
       <h2>Crédito Fácil<br/><span>para tu familia</span></h2>
-      <p>En La Roca Comercial queremos que tengas lo que necesitas hoy. Financiamiento accesible para asalariados, emprendedores y agricultores de la región.</p>
+      <p>Financiamiento accesible para asalariados, emprendedores y agricultores. Sin fiadores, sin trámites complicados.</p>
       <div class="fin-steps">
-        <div class="fin-step reveal">
-          <div class="fnum-wrap"><div class="fnum">1</div></div>
-          <div class="fin-step-body">
-            <h4>Ven a la tienda</h4>
-            <p>Solo necesitas tu documento de identidad. Sin fiadores, sin trámites complicados.</p>
-          </div>
-        </div>
-        <div class="fin-step reveal">
-          <div class="fnum-wrap"><div class="fnum">2</div></div>
-          <div class="fin-step-body">
-            <h4>Elige tu producto</h4>
-            <p>Selecciona lo que necesitas y define el plazo que más te convenga.</p>
-          </div>
-        </div>
-        <div class="fin-step reveal">
-          <div class="fnum-wrap"><div class="fnum">3</div></div>
-          <div class="fin-step-body">
-            <h4>Aprobación inmediata</h4>
-            <p>Evaluamos tu solicitud en minutos. Te llevas tu producto ese mismo día.</p>
-          </div>
-        </div>
-        <div class="fin-step reveal">
-          <div class="fnum-wrap"><div class="fnum">4</div></div>
-          <div class="fin-step-body">
-            <h4>Paga cómodamente</h4>
-            <p>Cuotas mensuales fijas y accesibles. Sin sorpresas, sin letras pequeñas.</p>
-          </div>
-        </div>
+        <div class="fin-step reveal"><div class="fnum">1</div><div class="fstep-body"><h4>Ven a la tienda</h4><p>Solo tu documento de identidad. Sin requisitos extras.</p></div></div>
+        <div class="fin-step reveal"><div class="fnum">2</div><div class="fstep-body"><h4>Elige tu producto</h4><p>Selecciona lo que necesitas y el plazo que más te convenga.</p></div></div>
+        <div class="fin-step reveal"><div class="fnum">3</div><div class="fstep-body"><h4>Aprobación inmediata</h4><p>Evaluamos en minutos. Te llevas tu producto ese mismo día.</p></div></div>
+        <div class="fin-step reveal"><div class="fnum">4</div><div class="fstep-body"><h4>Paga cómodamente</h4><p>Cuotas mensuales fijas. Sin sorpresas.</p></div></div>
       </div>
-      <div class="fin-perks" style="margin-top:28px">
+      <div class="fin-perks">
         <div class="fin-perk reveal"><i class="fas fa-id-card"></i><p>Solo tu<br/>identidad</p></div>
-        <div class="fin-perk reveal"><i class="fas fa-clock"></i><p>Aprobación<br/>el mismo día</p></div>
+        <div class="fin-perk reveal"><i class="fas fa-clock"></i><p>Mismo día<br/>aprobado</p></div>
         <div class="fin-perk reveal"><i class="fas fa-shield-alt"></i><p>Sin<br/>fiadores</p></div>
       </div>
     </div>
-
     <div class="calc-card">
-      <div class="calc-ttl"><i class="fas fa-calculator" style="color:var(--pk)"></i> Simulador de Cuotas</div>
-      <div class="cg">
-        <label>Precio del producto (L.)</label>
-        <input type="number" id="cm" placeholder="Ej: 10,000" oninput="calcQ()"/>
-      </div>
-      <div class="cg">
-        <label>Enganche inicial (%)</label>
+      <div class="calc-ttl"><i class="fas fa-satellite-dish"></i> Simulador de Cuotas</div>
+      <div class="cg"><label>Precio del producto (L.)</label><input type="number" id="cm" placeholder="Ej: 10,000" oninput="calcQ()"/></div>
+      <div class="cg"><label>Enganche inicial (%)</label>
         <select id="ce" onchange="calcQ()">
-          <option value="0">Sin enganche — 0%</option>
-          <option value="10">10%</option>
-          <option value="20" selected>20%</option>
-          <option value="30">30%</option>
-          <option value="40">40%</option>
+          <option value="0">Sin enganche — 0%</option><option value="10">10%</option>
+          <option value="20" selected>20%</option><option value="30">30%</option><option value="40">40%</option>
         </select>
       </div>
-      <div class="cg">
-        <label>Plazo de pago</label>
+      <div class="cg"><label>Plazo de pago</label>
         <select id="cp" onchange="calcQ()">
-          <option value="6">6 meses</option>
-          <option value="12">12 meses</option>
-          <option value="18">18 meses</option>
-          <option value="24" selected>24 meses</option>
-          <option value="36">36 meses</option>
+          <option value="6">6 meses</option><option value="12">12 meses</option>
+          <option value="18">18 meses</option><option value="24" selected>24 meses</option><option value="36">36 meses</option>
         </select>
       </div>
       <button class="calc-go" onclick="calcQ()"><i class="fas fa-calculator"></i> Calcular mi cuota mensual</button>
@@ -729,16 +608,15 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
   </div>
 </section>
 
-<!-- About -->
 <section class="about" id="tienda">
   <div class="about-in">
     <div class="about-l">
       <h2>Tu tienda de <span>confianza</span><br/>en Comayagua</h2>
-      <p>La Roca Comercial lleva más de 20 años sirviendo a las familias de Comayagua con los mejores productos para el hogar. Somos distribuidores oficiales de MOVESA y Olympia.</p>
-      <p>Trabajamos con asalariados, emprendedores y agricultores porque creemos que todos merecen tener un hogar bien equipado.</p>
+      <p>La Roca Comercial lleva más de 20 años sirviendo a las familias de Comayagua. Distribuidores oficiales de MOVESA y Olympia.</p>
+      <p>Trabajamos con asalariados, emprendedores y agricultores porque creemos que todos merecen un hogar bien equipado.</p>
       <div class="about-stats">
         <div class="astat reveal"><div class="astat-n" data-count="120">0+</div><div class="astat-l">Reseñas en Google</div></div>
-        <div class="astat reveal"><div class="astat-n" style="color:var(--pk)">4.8★</div><div class="astat-l">Calificación promedio</div></div>
+        <div class="astat reveal"><div class="astat-n" style="color:var(--pk);text-shadow:var(--gpk)">4.8★</div><div class="astat-l">Calificación promedio</div></div>
         <div class="astat reveal"><div class="astat-n" data-count="20">0+</div><div class="astat-l">Años de experiencia</div></div>
         <div class="astat reveal"><div class="astat-n" data-count="5000">0+</div><div class="astat-l">Familias atendidas</div></div>
       </div>
@@ -747,117 +625,63 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
       <i class="fas fa-map-marker-alt"></i>
       <h4>Barrio Arriba, Comayagua</h4>
       <p>4 cuadras al este del Liceo Jesús de Nazareth, Comayagua, Honduras</p>
-      <div class="horario"><i class="fas fa-clock" style="margin-right:6px;color:var(--gd)"></i> Lun–Sáb 8:00am – 6:00pm</div>
-      <a class="map-btn" href="https://wa.me/50427722660?text=¿Cómo%20llego%20a%20La%20Roca%20Comercial?" target="_blank">
-        <i class="fab fa-whatsapp"></i> ¿Cómo llegar?
-      </a>
+      <div class="horario"><i class="fas fa-clock" style="margin-right:6px"></i> Lun–Sáb 8:00am – 6:00pm</div>
+      <a class="map-btn" href="https://wa.me/50427722660?text=¿Cómo%20llego%20a%20La%20Roca%20Comercial?" target="_blank"><i class="fab fa-whatsapp"></i> ¿Cómo llegar?</a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="ft-grid">
     <div class="ft-brand">
       <h3><span>LA ROCA</span> COMERCIAL</h3>
-      <p>aquí comienza tu hogar — Barrio Arriba, Comayagua, Honduras. Distribuidores MOVESA y Olympia.</p>
-      <div class="ft-logo-upload">
-        <input type="file" accept="image/*" onchange="uploadLogo(event,'footer')"/>
-        <i class="fas fa-image"></i> <span id="ft-logo-lbl">Subir logo al pie</span>
-      </div>
-      <img class="ft-logo-img" id="ft-logo-img" src="" alt="Logo footer"/>
+      <p>aquí comienza tu hogar — Barrio Arriba, Comayagua, Honduras.</p>
+      <div class="ft-logo-upload"><input type="file" accept="image/*" onchange="uploadLogo(event,'footer')"/><i class="fas fa-image"></i> <span id="ft-logo-lbl">Subir logo al pie</span></div>
+      <img class="ft-logo-img" id="ft-logo-img" src="" alt=""/>
       <div class="socials">
         <a class="soc" href="#"><i class="fab fa-facebook-f"></i></a>
         <a class="soc" href="#"><i class="fab fa-instagram"></i></a>
         <a class="soc" href="https://wa.me/50427722660" target="_blank"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
-    <div class="ft-col">
-      <h4>Productos</h4>
-      <ul>
-        <li><i class="fas fa-chevron-right"></i>Salas de estar</li>
-        <li><i class="fas fa-chevron-right"></i>Camas y colchones</li>
-        <li><i class="fas fa-chevron-right"></i>Motos 150–200cc</li>
-        <li><i class="fas fa-chevron-right"></i>Electrodomésticos</li>
-        <li><i class="fas fa-chevron-right"></i>Tecnología</li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h4>Financiamiento</h4>
-      <ul>
-        <li><i class="fas fa-chevron-right"></i>Crédito fácil</li>
-        <li><i class="fas fa-chevron-right"></i>Simulador de cuotas</li>
-        <li><i class="fas fa-chevron-right"></i>Requisitos mínimos</li>
-        <li><i class="fas fa-chevron-right"></i>Venta al contado</li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h4>Contacto</h4>
-      <ul>
-        <li><i class="fas fa-phone"></i>2772-2660</li>
-        <li><i class="fab fa-whatsapp"></i>+504 2772-2660</li>
-        <li><i class="fas fa-map-marker-alt"></i>Barrio Arriba, Comayagua</li>
-        <li><i class="fas fa-clock"></i>Lun–Sáb 8am–6pm</li>
-      </ul>
-    </div>
+    <div class="ft-col"><h4>Productos</h4><ul>
+      <li><i class="fas fa-chevron-right"></i>Salas de estar</li>
+      <li><i class="fas fa-chevron-right"></i>Camas y colchones</li>
+      <li><i class="fas fa-chevron-right"></i>Motos 150–200cc</li>
+      <li><i class="fas fa-chevron-right"></i>Electrodomésticos</li>
+      <li><i class="fas fa-chevron-right"></i>Tecnología</li>
+    </ul></div>
+    <div class="ft-col"><h4>Financiamiento</h4><ul>
+      <li><i class="fas fa-chevron-right"></i>Crédito fácil</li>
+      <li><i class="fas fa-chevron-right"></i>Simulador de cuotas</li>
+      <li><i class="fas fa-chevron-right"></i>Requisitos mínimos</li>
+      <li><i class="fas fa-chevron-right"></i>Venta al contado</li>
+    </ul></div>
+    <div class="ft-col"><h4>Contacto</h4><ul>
+      <li><i class="fas fa-phone"></i>2772-2660</li>
+      <li><i class="fab fa-whatsapp"></i>+504 2772-2660</li>
+      <li><i class="fas fa-map-marker-alt"></i>Barrio Arriba, Comayagua</li>
+      <li><i class="fas fa-clock"></i>Lun–Sáb 8am–6pm</li>
+    </ul></div>
   </div>
   <div class="ft-btm">
     <p>© 2024 La Roca Comercial. Todos los derechos reservados.</p>
-    <div class="ft-stars">
-      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-      <span>4.8 · 120 reseñas en Google</span>
-    </div>
+    <div class="ft-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>4.8 · 120 reseñas</span></div>
   </div>
 </footer>
 
-<!-- WhatsApp FAB -->
-<a class="fab-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank" title="Chateá con nosotros">
-  <i class="fab fa-whatsapp"></i>
-</a>
+<a class="fab-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<button class="fab-ed" id="fab-ed" onclick="toggleEdit()"><i class="fas fa-pencil-alt"></i> Editar sitio</button>
 
-<!-- Edit mode FAB -->
-<button class="fab-ed" id="fab-ed" onclick="toggleEdit()">
-  <i class="fas fa-pencil-alt"></i> Editar sitio
-</button>
-
-<!-- Edit Panel -->
 <div class="epanel" id="epanel">
-  <div class="ep-hdr">
-    <h3><i class="fas fa-paint-brush" style="margin-right:7px"></i>Panel de Edición</h3>
-    <button class="ep-close" onclick="toggleEdit()"><i class="fas fa-times"></i></button>
-  </div>
+  <div class="ep-hdr"><h3><i class="fas fa-satellite" style="margin-right:7px"></i>Panel de Edición</h3><button class="ep-close" onclick="toggleEdit()"><i class="fas fa-times"></i></button></div>
   <div class="ep-body">
-    <div class="ep-sec">
-      <h4><i class="fas fa-image"></i> Logos</h4>
-      <div class="logo-slot" id="ls-header">
-        <input type="file" accept="image/*" onchange="uploadLogo(event,'header')"/>
-        <img id="ls-header-img" src="" style="display:none"/>
-        <strong>Logo Principal (encabezado)</strong>
-        <p><i class="fas fa-upload"></i> Haz clic para subir tu logo</p>
-        <div class="rm" id="ls-header-rm" style="display:none" onclick="removeLogo('header')"><i class="fas fa-trash"></i> Quitar logo</div>
-      </div>
-      <div class="logo-slot" id="ls-footer">
-        <input type="file" accept="image/*" onchange="uploadLogo(event,'footer')"/>
-        <img id="ls-footer-img" src="" style="display:none"/>
-        <strong>Logo Pie de página</strong>
-        <p><i class="fas fa-upload"></i> Haz clic para subir imagen</p>
-        <div class="rm" id="ls-footer-rm" style="display:none" onclick="removeLogo('footer')"><i class="fas fa-trash"></i> Quitar logo</div>
-      </div>
+    <div class="ep-sec"><h4><i class="fas fa-image"></i> Logos</h4>
+      <div class="logo-slot" id="ls-header"><input type="file" accept="image/*" onchange="uploadLogo(event,'header')"/><img id="ls-header-img" src="" style="display:none"/><strong>Logo Principal</strong><p><i class="fas fa-upload"></i> Clic para subir</p><div class="rm" id="ls-header-rm" style="display:none" onclick="removeLogo('header')"><i class="fas fa-trash"></i> Quitar</div></div>
+      <div class="logo-slot" id="ls-footer"><input type="file" accept="image/*" onchange="uploadLogo(event,'footer')"/><img id="ls-footer-img" src="" style="display:none"/><strong>Logo Pie de página</strong><p><i class="fas fa-upload"></i> Clic para subir</p><div class="rm" id="ls-footer-rm" style="display:none" onclick="removeLogo('footer')"><i class="fas fa-trash"></i> Quitar</div></div>
     </div>
-    <div class="ep-sec">
-      <h4><i class="fas fa-box"></i> Productos</h4>
-      <p style="font-size:.73rem;color:var(--mu);margin-bottom:9px">Toca un producto para editar su foto, nombre y precio.</p>
-      <div class="ep-pl" id="ep-pl"></div>
-    </div>
-    <div class="ep-sec">
-      <h4><i class="fas fa-info-circle"></i> Cómo usar</h4>
-      <p style="font-size:.73rem;color:var(--mu);line-height:1.7">
-        <strong>1.</strong> Sube tu logo desde este panel.<br/>
-        <strong>2.</strong> Toca cualquier producto para editar su foto, nombre y precio.<br/>
-        <strong>3.</strong> Los cambios se guardan automáticamente.<br/>
-        <strong>4.</strong> Usa <em>Exportar sitio</em> para descargar con tus cambios.
-      </p>
-    </div>
+    <div class="ep-sec"><h4><i class="fas fa-box"></i> Productos</h4><p style="font-size:.73rem;color:var(--mu);margin-bottom:9px">Toca un producto para editar.</p><div class="ep-pl" id="ep-pl"></div></div>
+    <div class="ep-sec"><h4><i class="fas fa-info-circle"></i> Cómo usar</h4><p style="font-size:.73rem;color:var(--mu);line-height:1.7"><strong>1.</strong> Sube tu logo.<br/><strong>2.</strong> Toca un producto para editar.<br/><strong>3.</strong> Cambios se guardan automáticamente.<br/><strong>4.</strong> Exporta para descargar con tus cambios.</p></div>
   </div>
   <div class="ep-acts">
     <button class="epbtn epbtn-p" onclick="exportSite()"><i class="fas fa-download"></i> Exportar sitio actualizado</button>
@@ -865,51 +689,29 @@ footer{background:#080f2e;color:rgba(255,255,255,.75);padding:56px 0 28px}
   </div>
 </div>
 
-<!-- Product Edit Modal -->
 <div class="moverlay" id="moverlay" onclick="mOverlayClick(event)">
   <div class="mcard">
-    <div class="mhd">
-      <h3 id="m-title">Editar producto</h3>
-      <button class="mhd-cls" onclick="closeM()"><i class="fas fa-times"></i></button>
-    </div>
+    <div class="mhd"><h3 id="m-title">Editar producto</h3><button class="mhd-cls" onclick="closeM()"><i class="fas fa-times"></i></button></div>
     <div class="mbody">
-      <div class="mimg-zone" id="mimg-zone">
-        <input type="file" id="m-img-file" accept="image/*" onchange="previewM(event)"/>
-        <img class="mimg-prev" id="m-img-prev" src="" alt=""/>
-        <i class="fas fa-camera mimg-ico"></i>
-        <p class="mimg-lbl">Haz clic para subir foto del producto</p>
-      </div>
-      <div class="mfield"><label>Nombre del producto</label><input type="text" id="m-name" placeholder="Ej: Sala Medellín 3 Piezas"/></div>
+      <div class="mimg-zone"><input type="file" id="m-img-file" accept="image/*" onchange="previewM(event)"/><img class="mimg-prev" id="m-img-prev" src="" alt=""/><i class="fas fa-camera mimg-ico"></i><p class="mimg-lbl">Clic para subir foto</p></div>
+      <div class="mfield"><label>Nombre</label><input type="text" id="m-name"/></div>
       <div class="mrow">
-        <div class="mfield"><label>Precio actual (L.)</label><input type="number" id="m-price" placeholder="8900"/></div>
-        <div class="mfield"><label>Precio anterior (L.)</label><input type="number" id="m-old" placeholder="Dejar vacío"/></div>
+        <div class="mfield"><label>Precio (L.)</label><input type="number" id="m-price"/></div>
+        <div class="mfield"><label>Precio anterior</label><input type="number" id="m-old"/></div>
       </div>
       <div class="mrow">
-        <div class="mfield"><label>Cuota mensual (L.)</label><input type="number" id="m-monthly" placeholder="371"/></div>
-        <div class="mfield"><label>Número de cuotas</label><select id="m-months"><option value="6">6</option><option value="12">12</option><option value="18">18</option><option value="24" selected>24</option><option value="36">36</option></select></div>
+        <div class="mfield"><label>Cuota/mes (L.)</label><input type="number" id="m-monthly"/></div>
+        <div class="mfield"><label>Cuotas</label><select id="m-months"><option value="6">6</option><option value="12">12</option><option value="18">18</option><option value="24" selected>24</option><option value="36">36</option></select></div>
       </div>
-      <div class="mfield">
-        <label>Etiqueta</label>
-        <select id="m-badge">
-          <option value="">Sin etiqueta</option>
-          <option value="OFERTA">OFERTA</option>
-          <option value="NUEVO">NUEVO</option>
-          <option value="POPULAR">POPULAR</option>
-          <option value="PREMIUM">PREMIUM</option>
-          <option value="LOCAL">LOCAL</option>
-        </select>
-      </div>
+      <div class="mfield"><label>Etiqueta</label><select id="m-badge"><option value="">Sin etiqueta</option><option value="OFERTA">OFERTA</option><option value="NUEVO">NUEVO</option><option value="POPULAR">POPULAR</option><option value="PREMIUM">PREMIUM</option><option value="LOCAL">LOCAL</option></select></div>
     </div>
-    <div class="mft">
-      <button class="mcancel" onclick="closeM()">Cancelar</button>
-      <button class="msave" onclick="saveProduct()"><i class="fas fa-check"></i> Guardar cambios</button>
-    </div>
+    <div class="mft"><button class="mcancel" onclick="closeM()">Cancelar</button><button class="msave" onclick="saveProduct()"><i class="fas fa-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <script>
 // <!--SITE_DATA_START-->
-const DEFAULT_PRODS = [
+const DEFAULT_PRODS=[
   {id:'s1',cat:'salas',name:'Sala Medellín 3 Piezas',price:8900,priceOld:null,monthly:371,months:24,img:null,badge:'POPULAR',emoji:'🛋️'},
   {id:'s2',cat:'salas',name:'Sala Emperador Imperial',price:12500,priceOld:15000,monthly:521,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
   {id:'s3',cat:'salas',name:'Sala Italia Moderna',price:10200,priceOld:null,monthly:425,months:24,img:null,badge:'',emoji:'🛋️'},
@@ -929,43 +731,48 @@ const DEFAULT_PRODS = [
   {id:'t1',cat:'tech',name:'Smart TV 55" 4K',price:19800,priceOld:22000,monthly:825,months:24,img:null,badge:'OFERTA',emoji:'📺'},
   {id:'t2',cat:'tech',name:'Tablet 10" + Teclado',price:6500,priceOld:null,monthly:271,months:24,img:null,badge:'',emoji:'💻'}
 ];
-const DEFAULT_LOGOS = {header:null,footer:null};
+const DEFAULT_LOGOS={header:null,footer:null};
 // <!--SITE_DATA_END-->
 
-let prods = JSON.parse(localStorage.getItem('lr5_prods')||'null') || deepCopy(DEFAULT_PRODS);
-let logos = JSON.parse(localStorage.getItem('lr5_logos')||'null') || {...DEFAULT_LOGOS};
-
+let prods=JSON.parse(localStorage.getItem('lr6_prods')||'null')||deepCopy(DEFAULT_PRODS);
+let logos=JSON.parse(localStorage.getItem('lr6_logos')||'null')||{...DEFAULT_LOGOS};
 let editMode=false,curEditId=null,curModalImg=null,curCat='all',searchTerm='';
 
 function deepCopy(o){return JSON.parse(JSON.stringify(o))}
 function fmtL(n){return 'L. '+Number(n).toLocaleString('es-HN')}
-function save(){localStorage.setItem('lr5_prods',JSON.stringify(prods));localStorage.setItem('lr5_logos',JSON.stringify(logos))}
+function save(){localStorage.setItem('lr6_prods',JSON.stringify(prods));localStorage.setItem('lr6_logos',JSON.stringify(logos))}
 
-document.addEventListener('DOMContentLoaded',()=>{
-  renderProds();renderPanel();applyLogos();initSlider();initReveal();initCounters();
-});
+// Starfield
+(function(){
+  const c=document.getElementById('sf'),x=c.getContext('2d');let W,H,S=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  function init(){S=[];for(let i=0;i<240;i++)S.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.1,op:Math.random(),sp:(Math.random()*.018+.004)*(Math.random()>.5?1:-1),col:Math.random()>.88?'rgba(0,212,255,':'rgba(255,255,255,'})}
+  function draw(){x.clearRect(0,0,W,H);S.forEach(s=>{s.op+=s.sp;if(s.op>1||s.op<.06)s.sp=-s.sp;x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=s.col+s.op+')';x.fill()});requestAnimationFrame(draw)}
+  resize();init();draw();window.addEventListener('resize',()=>{resize();init()});
+})();
+
+// Orb emoji cycle
+const orbE=['🛋️','🛏️','🏍️','🧊','📺','💰'];let orbI=0;
+setInterval(()=>{const el=document.getElementById('orb-emoji');if(!el)return;el.style.opacity='0';setTimeout(()=>{orbI=(orbI+1)%orbE.length;el.textContent=orbE[orbI];el.style.opacity='1'},300)},3200);
+
+document.addEventListener('DOMContentLoaded',()=>{renderProds();renderPanel();applyLogos();initReveal();initCounters()});
 
 const badgeCls={OFERTA:'bof',NUEVO:'bnw',POPULAR:'bpp',PREMIUM:'bpr',LOCAL:'blc'};
 
 function renderProds(cat=curCat,search=searchTerm){
-  const grid=document.getElementById('pgrid');
-  const noRes=document.getElementById('no-results');
+  const grid=document.getElementById('pgrid'),noRes=document.getElementById('no-results');
   let list=cat==='all'?prods:prods.filter(p=>p.cat===cat);
-  if(search){const q=search.toLowerCase();list=list.filter(p=>p.name.toLowerCase().includes(q));}
-  if(!list.length){grid.innerHTML='';noRes.style.display='block';return;}
+  if(search){const q=search.toLowerCase();list=list.filter(p=>p.name.toLowerCase().includes(q))}
+  if(!list.length){grid.innerHTML='';noRes.style.display='block';return}
   noRes.style.display='none';
   grid.innerHTML=list.map(p=>{
-    const discPct=p.priceOld?Math.round((1-p.price/p.priceOld)*100):0;
-    return `
-    <div class="pcard reveal" data-id="${p.id}">
-      <button class="pcard-edit" onclick="openModal('${p.id}')" title="Editar producto">✏️</button>
-      ${discPct>0?`<div class="pdsc">-${discPct}%</div>`:''}
+    const dsc=p.priceOld?Math.round((1-p.price/p.priceOld)*100):0;
+    return`<div class="pcard reveal" data-id="${p.id}">
+      <button class="pcard-edit" onclick="openModal('${p.id}')">✏️</button>
+      ${dsc>0?`<div class="pdsc">-${dsc}%</div>`:''}
       ${p.badge?`<div class="pbadge ${badgeCls[p.badge]||''}">${p.badge}</div>`:''}
-      <div class="pimg">
-        ${p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy"/>`:`<span class="pemoji">${p.emoji}</span>`}
-        <div class="pov">
-          <button class="pov-btn" onclick="cotizar('${p.name}')"><i class="fab fa-whatsapp"></i> Cotizar</button>
-        </div>
+      <div class="pimg">${p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy"/>`:`<span class="pemoji">${p.emoji}</span>`}
+        <div class="pov"><button class="pov-btn" onclick="cotizar('${p.name}')"><i class="fab fa-whatsapp"></i> Cotizar</button></div>
       </div>
       <div class="pinfo">
         <div class="pname">${p.name}</div>
@@ -973,216 +780,99 @@ function renderProds(cat=curCat,search=searchTerm){
         <div class="pprice">${fmtL(p.price)}</div>
         <div class="pmonth">desde <strong>${fmtL(p.monthly)}/mes</strong> · ${p.months} cuotas</div>
       </div>
-      <button class="pbtn" onclick="cotizar('${p.name}')">
-        <i class="fab fa-whatsapp"></i> Cotizar por WhatsApp
-      </button>
+      <button class="pbtn" onclick="cotizar('${p.name}')"><i class="fab fa-whatsapp"></i> Cotizar por WhatsApp</button>
     </div>`;
   }).join('');
   setTimeout(()=>document.querySelectorAll('.pcard.reveal:not(.visible)').forEach(el=>revObs.observe(el)),50);
 }
 
-function cotizar(name){
-  const msg=encodeURIComponent(`Hola La Roca Comercial! Me interesa: *${name}*. ¿Me pueden dar más información y precio?`);
-  window.open(`https://wa.me/50427722660?text=${msg}`,'_blank');
-}
-
+function cotizar(n){window.open(`https://wa.me/50427722660?text=${encodeURIComponent('Hola La Roca Comercial! Me interesa: *'+n+'*. ¿Me pueden dar más información?')}`,'_blank')}
 function filterCat(cat,el){
-  curCat=cat;searchTerm='';
-  document.getElementById('searchInput').value='';
-  document.querySelectorAll('.cni').forEach(n=>n.classList.remove('on'));
-  if(el)el.classList.add('on');
-  const labels={all:'Todos los Productos',salas:'Salas de Estar',camas:'Camas y Colchones',motos:'Motos y Trimotos',electro:'Electrodomésticos',tech:'Tecnología'};
-  document.getElementById('sec-ttl-txt').textContent=labels[cat]||'Productos';
-  document.getElementById('prods-wrap').scrollIntoView({behavior:'smooth',block:'start'});
-  renderProds();
+  curCat=cat;searchTerm='';document.getElementById('searchInput').value='';
+  document.querySelectorAll('.cni').forEach(n=>n.classList.remove('on'));if(el)el.classList.add('on');
+  const L={all:'Todos los Productos',salas:'Salas de Estar',camas:'Camas y Colchones',motos:'Motos y Trimotos',electro:'Electrodomésticos',tech:'Tecnología'};
+  document.getElementById('sec-ttl-txt').textContent=L[cat]||'Productos';
+  document.getElementById('prods-wrap').scrollIntoView({behavior:'smooth',block:'start'});renderProds();
 }
-
 function doSearch(){
-  const v=document.getElementById('searchInput').value.trim();
-  searchTerm=v;curCat='all';
+  const v=document.getElementById('searchInput').value.trim();searchTerm=v;curCat='all';
   document.querySelectorAll('.cni').forEach(n=>n.classList.remove('on'));
-  document.getElementById('sec-ttl-txt').textContent=v?`Resultados para "${v}"`:'Todos los Productos';
-  renderProds('all',v);
+  document.getElementById('sec-ttl-txt').textContent=v?`Resultados para "${v}"`:'Todos los Productos';renderProds('all',v);
 }
-
-function renderPanel(){
-  document.getElementById('ep-pl').innerHTML=prods.map(p=>`
-    <div class="ep-pi" onclick="openModal('${p.id}')">
-      <span class="ep-pi-em">${p.emoji}</span>
-      <span class="ep-pi-nm">${p.name}</span>
-      <span class="ep-pi-pr">${fmtL(p.price)}</span>
-      <i class="fas fa-chevron-right ep-pi-ic"></i>
-    </div>
-  `).join('');
-}
-
-function uploadLogo(event,zone){
-  const file=event.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{logos[zone]=e.target.result;save();applyLogos();toast('✅ Logo actualizado');};
-  reader.readAsDataURL(file);
-}
-function removeLogo(zone){logos[zone]=null;save();applyLogos();toast('🗑️ Logo eliminado');}
+function renderPanel(){document.getElementById('ep-pl').innerHTML=prods.map(p=>`<div class="ep-pi" onclick="openModal('${p.id}')"><span class="ep-pi-em">${p.emoji}</span><span class="ep-pi-nm">${p.name}</span><span class="ep-pi-pr">${fmtL(p.price)}</span><i class="fas fa-chevron-right ep-pi-ic"></i></div>`).join('')}
+function uploadLogo(e,z){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{logos[z]=ev.target.result;save();applyLogos();toast('✅ Logo actualizado')};r.readAsDataURL(f)}
+function removeLogo(z){logos[z]=null;save();applyLogos();toast('🗑️ Logo eliminado')}
 function applyLogos(){
   const img=document.getElementById('lz-img'),def=document.getElementById('lz-def');
   const rm=document.getElementById('ls-header-rm'),prev=document.getElementById('ls-header-img');
-  if(logos.header){
-    img.src=logos.header;img.classList.add('on');def.classList.add('off');
-    if(rm)rm.style.display='inline-flex';if(prev){prev.src=logos.header;prev.style.display='block';}
-  } else {
-    img.classList.remove('on');def.classList.remove('off');
-    if(rm)rm.style.display='none';if(prev)prev.style.display='none';
-  }
-  const fImg=document.getElementById('ft-logo-img'),fLbl=document.getElementById('ft-logo-lbl');
-  const fRm=document.getElementById('ls-footer-rm'),fPrev=document.getElementById('ls-footer-img');
-  if(logos.footer){
-    if(fImg){fImg.src=logos.footer;fImg.classList.add('on');}
-    if(fLbl)fLbl.textContent='Logo subido ✓';
-    if(fRm)fRm.style.display='inline-flex';
-    if(fPrev){fPrev.src=logos.footer;fPrev.style.display='block';}
-  } else {
-    if(fImg)fImg.classList.remove('on');
-    if(fLbl)fLbl.textContent='Subir logo al pie';
-    if(fRm)fRm.style.display='none';
-    if(fPrev)fPrev.style.display='none';
-  }
+  if(logos.header){img.src=logos.header;img.classList.add('on');def.classList.add('off');if(rm)rm.style.display='inline-flex';if(prev){prev.src=logos.header;prev.style.display='block'}}
+  else{img.classList.remove('on');def.classList.remove('off');if(rm)rm.style.display='none';if(prev)prev.style.display='none'}
+  const fI=document.getElementById('ft-logo-img'),fL=document.getElementById('ft-logo-lbl');
+  const fR=document.getElementById('ls-footer-rm'),fP=document.getElementById('ls-footer-img');
+  if(logos.footer){if(fI){fI.src=logos.footer;fI.classList.add('on')}if(fL)fL.textContent='Logo subido ✓';if(fR)fR.style.display='inline-flex';if(fP){fP.src=logos.footer;fP.style.display='block'}}
+  else{if(fI)fI.classList.remove('on');if(fL)fL.textContent='Subir logo al pie';if(fR)fR.style.display='none';if(fP)fP.style.display='none'}
 }
-function lzClick(){if(!editMode)return;const inp=document.querySelector('#ls-header input[type=file]');if(inp)inp.click();}
-
+function lzClick(){if(!editMode)return;const i=document.querySelector('#ls-header input[type=file]');if(i)i.click()}
 function openModal(id){
-  const p=prods.find(x=>x.id===id);if(!p)return;
-  curEditId=id;curModalImg=p.img;
+  const p=prods.find(x=>x.id===id);if(!p)return;curEditId=id;curModalImg=p.img;
   document.getElementById('m-title').textContent='Editar: '+p.name;
-  document.getElementById('m-name').value=p.name;
-  document.getElementById('m-price').value=p.price;
-  document.getElementById('m-old').value=p.priceOld||'';
-  document.getElementById('m-monthly').value=p.monthly;
-  document.getElementById('m-months').value=p.months;
-  document.getElementById('m-badge').value=p.badge||'';
+  document.getElementById('m-name').value=p.name;document.getElementById('m-price').value=p.price;
+  document.getElementById('m-old').value=p.priceOld||'';document.getElementById('m-monthly').value=p.monthly;
+  document.getElementById('m-months').value=p.months;document.getElementById('m-badge').value=p.badge||'';
   const prev=document.getElementById('m-img-prev'),ico=document.querySelector('.mimg-ico'),lbl=document.querySelector('.mimg-lbl');
-  if(p.img){prev.src=p.img;prev.classList.add('on');ico.style.display='none';lbl.style.display='none';}
-  else{prev.classList.remove('on');ico.style.display='';lbl.style.display='';}
-  document.getElementById('m-img-file').value='';
-  document.getElementById('moverlay').classList.add('open');
+  if(p.img){prev.src=p.img;prev.classList.add('on');ico.style.display='none';lbl.style.display='none'}
+  else{prev.classList.remove('on');ico.style.display='';lbl.style.display=''}
+  document.getElementById('m-img-file').value='';document.getElementById('moverlay').classList.add('open');
   if(!editMode)toggleEdit();
 }
-function closeM(){document.getElementById('moverlay').classList.remove('open');curEditId=null;curModalImg=null;}
-function mOverlayClick(e){if(e.target.id==='moverlay')closeM();}
-function previewM(event){
-  const file=event.target.files[0];if(!file)return;
-  const r=new FileReader();
-  r.onload=e=>{
-    curModalImg=e.target.result;
-    const prev=document.getElementById('m-img-prev');
-    prev.src=curModalImg;prev.classList.add('on');
-    document.querySelector('.mimg-ico').style.display='none';
-    document.querySelector('.mimg-lbl').style.display='none';
-  };
-  r.readAsDataURL(file);
-}
+function closeM(){document.getElementById('moverlay').classList.remove('open');curEditId=null;curModalImg=null}
+function mOverlayClick(e){if(e.target.id==='moverlay')closeM()}
+function previewM(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{curModalImg=ev.target.result;const p=document.getElementById('m-img-prev');p.src=curModalImg;p.classList.add('on');document.querySelector('.mimg-ico').style.display='none';document.querySelector('.mimg-lbl').style.display='none'};r.readAsDataURL(f)}
 function saveProduct(){
-  if(!curEditId)return;
-  const p=prods.find(x=>x.id===curEditId);if(!p)return;
-  p.name=document.getElementById('m-name').value||p.name;
-  p.price=parseFloat(document.getElementById('m-price').value)||p.price;
-  const op=document.getElementById('m-old').value;
-  p.priceOld=op?parseFloat(op):null;
-  p.monthly=parseFloat(document.getElementById('m-monthly').value)||p.monthly;
-  p.months=parseInt(document.getElementById('m-months').value)||p.months;
-  p.badge=document.getElementById('m-badge').value;
-  if(curModalImg)p.img=curModalImg;
+  if(!curEditId)return;const p=prods.find(x=>x.id===curEditId);if(!p)return;
+  p.name=document.getElementById('m-name').value||p.name;p.price=parseFloat(document.getElementById('m-price').value)||p.price;
+  const op=document.getElementById('m-old').value;p.priceOld=op?parseFloat(op):null;
+  p.monthly=parseFloat(document.getElementById('m-monthly').value)||p.monthly;p.months=parseInt(document.getElementById('m-months').value)||p.months;
+  p.badge=document.getElementById('m-badge').value;if(curModalImg)p.img=curModalImg;
   save();renderProds();renderPanel();closeM();toast('✅ Producto guardado');
 }
-
 function toggleEdit(){
-  editMode=!editMode;
-  document.body.classList.toggle('edit-mode',editMode);
-  const fab=document.getElementById('fab-ed');
-  fab.classList.toggle('on',editMode);
+  editMode=!editMode;document.body.classList.toggle('edit-mode',editMode);
+  const fab=document.getElementById('fab-ed');fab.classList.toggle('on',editMode);
   fab.innerHTML=editMode?'<i class="fas fa-times"></i> Salir de edición':'<i class="fas fa-pencil-alt"></i> Editar sitio';
   document.getElementById('epanel').classList.toggle('open',editMode);
 }
-
 function exportSite(){
   const html=document.documentElement.outerHTML;
-  const dataBlock=`const DEFAULT_PRODS = ${JSON.stringify(prods,null,2)};\nconst DEFAULT_LOGOS = ${JSON.stringify(logos)};`;
-  const updated=html.replace(
-    /\/\/ <!--SITE_DATA_START-->[\s\S]*?\/\/ <!--SITE_DATA_END-->/,
-    '// <!--SITE_DATA_START-->\n'+dataBlock+'\n// <!--SITE_DATA_END-->'
-  );
-  const blob=new Blob([updated],{type:'text/html;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='laroca-comercial-v5.html';a.click();
-  URL.revokeObjectURL(url);
-  toast('📥 Sitio exportado — revisa tus descargas');
+  const blk=`const DEFAULT_PRODS=${JSON.stringify(prods,null,2)};\nconst DEFAULT_LOGOS=${JSON.stringify(logos)};`;
+  const upd=html.replace(/\/\/ <!--SITE_DATA_START-->[\s\S]*?\/\/ <!--SITE_DATA_END-->/,'// <!--SITE_DATA_START-->\n'+blk+'\n// <!--SITE_DATA_END-->');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([upd],{type:'text/html;charset=utf-8'}));a.download='laroca-v6.html';a.click();toast('📥 Sitio exportado');
 }
-function resetAll(){
-  if(!confirm('¿Restaurar todos los cambios al original? Se perderán logos y precios editados.'))return;
-  localStorage.removeItem('lr5_prods');localStorage.removeItem('lr5_logos');
-  prods=deepCopy(DEFAULT_PRODS);logos={...DEFAULT_LOGOS};
-  renderProds();renderPanel();applyLogos();toast('🔄 Sitio restaurado al original');
-}
-
-let hIdx=0,hTotal=3,hTimer;
-function initSlider(){
-  const dots=document.getElementById('hdots');
-  for(let i=0;i<hTotal;i++){
-    const d=document.createElement('div');d.className='hdot'+(i===0?' on':'');d.onclick=()=>gSlide(i);dots.appendChild(d);
-  }
-  hTimer=setInterval(()=>hNav(1),6000);
-}
-function hNav(dir){hIdx=(hIdx+dir+hTotal)%hTotal;gSlide(hIdx);}
-function gSlide(i){
-  hIdx=i;
-  document.getElementById('hslides').style.transform=`translateX(-${i*100}%)`;
-  document.querySelectorAll('.hdot').forEach((d,j)=>d.classList.toggle('on',j===i));
-  clearInterval(hTimer);hTimer=setInterval(()=>hNav(1),6000);
-}
-
+function resetAll(){if(!confirm('¿Restaurar todos los cambios al original?'))return;localStorage.removeItem('lr6_prods');localStorage.removeItem('lr6_logos');prods=deepCopy(DEFAULT_PRODS);logos={...DEFAULT_LOGOS};renderProds();renderPanel();applyLogos();toast('🔄 Sitio restaurado')}
 function calcQ(){
   const m=parseFloat(document.getElementById('cm').value)||0;
-  if(!m){document.getElementById('calc-res').classList.remove('show');return;}
-  const e=parseInt(document.getElementById('ce').value)/100;
-  const p=parseInt(document.getElementById('cp').value);
-  const cap=m*(1-e),r=0.02;
-  const q=cap>0?cap*(r*Math.pow(1+r,p))/(Math.pow(1+r,p)-1):0;
+  if(!m){document.getElementById('calc-res').classList.remove('show');return}
+  const e=parseInt(document.getElementById('ce').value)/100,p=parseInt(document.getElementById('cp').value);
+  const cap=m*(1-e),r=.02,q=cap>0?cap*(r*Math.pow(1+r,p))/(Math.pow(1+r,p)-1):0;
   document.getElementById('calc-amt').textContent=fmtL(Math.round(q));
   document.getElementById('calc-lbl').textContent=`${p} cuotas mensuales · Enganche: ${fmtL(Math.round(m*e))}`;
   document.getElementById('calc-res').classList.add('show');
 }
 function sendCalcWA(){
-  const m=document.getElementById('cm').value,e=document.getElementById('ce').value,p=document.getElementById('cp').value;
-  const amt=document.getElementById('calc-amt').textContent;
-  const msg=encodeURIComponent(`Hola La Roca Comercial! Simulé mi crédito:\n*Precio:* L. ${m}\n*Enganche:* ${e}%\n*Plazo:* ${p} meses\n*Cuota estimada:* ${amt}/mes\n¿Puedo solicitar el crédito?`);
-  window.open(`https://wa.me/50427722660?text=${msg}`,'_blank');
+  const m=document.getElementById('cm').value,e=document.getElementById('ce').value,p=document.getElementById('cp').value,a=document.getElementById('calc-amt').textContent;
+  window.open(`https://wa.me/50427722660?text=${encodeURIComponent('Hola La Roca Comercial! Simulé mi crédito:\n*Precio:* L. '+m+'\n*Enganche:* '+e+'%\n*Plazo:* '+p+' meses\n*Cuota estimada:* '+a+'/mes\n¿Puedo solicitar el crédito?')}`,'_blank');
 }
-
 let revObs;
 function initReveal(){
-  revObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});
-  },{threshold:0.1});
+  revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target)}})},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 }
 function initCounters(){
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const el=e.target,target=parseInt(el.dataset.count);if(isNaN(target))return;
-        let cur=0;const step=target/55;
-        const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=Math.round(cur).toLocaleString('es-HN')+'+';if(cur>=target)clearInterval(t);},22);
-        obs.unobserve(el);
-      }
-    });
-  },{threshold:0.5});
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target,t=parseInt(el.dataset.count);if(isNaN(t))return;let c=0;const s=t/55,int=setInterval(()=>{c=Math.min(c+s,t);el.textContent=Math.round(c).toLocaleString('es-HN')+'+';if(c>=t)clearInterval(int)},22);obs.unobserve(el)}})},{threshold:.5});
   document.querySelectorAll('[data-count]').forEach(el=>obs.observe(el));
 }
-
-function navTo(sel){const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'});}
-function toast(msg){
-  const t=document.createElement('div');t.className='toast';t.textContent=msg;
-  document.body.appendChild(t);setTimeout(()=>t.remove(),2600);
-}
+function navTo(sel){const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'})}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 </script>
 </body>
 </html>
