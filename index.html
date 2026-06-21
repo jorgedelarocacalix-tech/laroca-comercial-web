@@ -795,27 +795,29 @@ footer{background:#000;border-top:1px solid var(--ln);padding:60px 0 28px}
 <script>
 // <!--SITE_DATA_START-->
 const DEFAULT_PRODS=[
-  // SALAS (fotos pendientes de proveedor Grupo UMA)
-  {id:'s1',cat:'salas',name:'Sala Medellín 3 Piezas',price:8900,priceOld:null,monthly:371,months:24,img:null,badge:'POPULAR',emoji:'🛋️'},
-  {id:'s2',cat:'salas',name:'Sala Emperador Imperial',price:12500,priceOld:15000,monthly:521,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
-  {id:'s3',cat:'salas',name:'Sala Italia Moderna',price:10200,priceOld:null,monthly:425,months:24,img:null,badge:'',emoji:'🛋️'},
-  {id:'s4',cat:'salas',name:'Sala Bogotá Luxury',price:14800,priceOld:null,monthly:617,months:24,img:null,badge:'NUEVO',emoji:'🛋️'},
-  {id:'s5',cat:'salas',name:'Sala Sofía Elegance',price:11600,priceOld:13000,monthly:483,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
-  {id:'s6',cat:'salas',name:'Sala Maya Paris',price:9800,priceOld:null,monthly:408,months:24,img:null,badge:'',emoji:'🛋️'},
-  // CAMAS (fotos pendientes de proveedor)
-  {id:'c1',cat:'camas',name:'Cama Catracha Queen',price:6800,priceOld:null,monthly:283,months:24,img:null,badge:'LOCAL',emoji:'🛏️'},
-  {id:'c2',cat:'camas',name:'Antiestrés Doble Pillow',price:9200,priceOld:11000,monthly:383,months:24,img:null,badge:'OFERTA',emoji:'🛏️'},
-  {id:'c3',cat:'camas',name:'Renova Extra Sense',price:10800,priceOld:null,monthly:450,months:24,img:null,badge:'PREMIUM',emoji:'🛏️'},
-  {id:'c4',cat:'camas',name:'Siesta Estándar Plus',price:5600,priceOld:null,monthly:233,months:24,img:null,badge:'',emoji:'🛏️'},
-  {id:'c5',cat:'camas',name:'Perfect Balance Queen',price:8400,priceOld:9500,monthly:350,months:24,img:null,badge:'OFERTA',emoji:'🛏️'},
-  {id:'c6',cat:'camas',name:'Doble Box Top La H',price:12200,priceOld:null,monthly:508,months:24,img:null,badge:'NUEVO',emoji:'🛏️'},
-  // MOTOS — imágenes reales de MOVESA
+  // SALAS — catálogo La Roca (fotos pendientes de UMA)
+  {id:'s1',cat:'salas',name:'Juego de Sala Turquía',price:8900,priceOld:null,monthly:371,months:24,img:null,badge:'POPULAR',emoji:'🛋️'},
+  {id:'s2',cat:'salas',name:'Juego de Sala Indonesia',price:10200,priceOld:null,monthly:425,months:24,img:null,badge:'',emoji:'🛋️'},
+  {id:'s3',cat:'salas',name:'Sala Bogotá Luxury',price:14800,priceOld:null,monthly:617,months:24,img:null,badge:'NUEVO',emoji:'🛋️'},
+  {id:'s4',cat:'salas',name:'Sala Sofía Elegance',price:11600,priceOld:13000,monthly:483,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
+  {id:'s5',cat:'salas',name:'Sala Maya Paris',price:9800,priceOld:null,monthly:408,months:24,img:null,badge:'',emoji:'🛋️'},
+  {id:'s6',cat:'salas',name:'Sala Emperatriz 3 Piezas',price:12500,priceOld:15000,monthly:521,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
+  // CAMAS — Olympia Honduras (imágenes reales)
+  {id:'c1',cat:'camas',name:'Cama Catracha EE',price:6800,priceOld:null,monthly:283,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2025/03/hn-catracha-ene26-set-300x300.jpg',badge:'LOCAL',emoji:'🛏️'},
+  {id:'c2',cat:'camas',name:'Antiestrés Doble Pillow',price:9200,priceOld:11000,monthly:383,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-DOBLEPILLOW-BENEFICIOS-300x300.jpg',badge:'OFERTA',emoji:'🛏️'},
+  {id:'c3',cat:'camas',name:'Renova Extra Sense Plus',price:10800,priceOld:null,monthly:450,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-RENOVA-EXTRASENSEPLUS-BENEFICIOS-300x300.jpg',badge:'PREMIUM',emoji:'🛏️'},
+  {id:'c4',cat:'camas',name:'Siesta Estándar Plus',price:5600,priceOld:null,monthly:233,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2024/04/HN-ESTANDARD-PLUS-BENEFICIOS-2-1-300x300.jpg',badge:'',emoji:'🛏️'},
+  {id:'c5',cat:'camas',name:'Antiestrés Ortopédico',price:8400,priceOld:9500,monthly:350,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-ORTOPEDICA-BENEFICIOS-300x300.jpg',badge:'OFERTA',emoji:'🛏️'},
+  {id:'c6',cat:'camas',name:'Siesta Estrella',price:5200,priceOld:null,monthly:217,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/05/HN-SIESTAESTRELLA-BENEFICIOS-300x300.jpg',badge:'NUEVO',emoji:'🛏️'},
+  // MOTOS — MOVESA (imágenes reales)
   {id:'m1',cat:'motos',name:'MOVESA Nitro 150S',price:32000,priceOld:null,monthly:1353,months:24,img:'https://grupomovesa.com/wp-content/uploads/2025/01/MY25_Nitro150S_Lateral-DerechoPNG.png',badge:'POPULAR',emoji:'🏍️'},
   {id:'m2',cat:'motos',name:'MOVESA CR5 Revo Deportiva',price:38000,priceOld:null,monthly:1607,months:24,img:'https://grupomovesa.com/wp-content/uploads/2026/02/CR5-Revo-Negra-Lateral-derecha_WEB.png',badge:'NUEVO',emoji:'🏍️'},
   {id:'m3',cat:'motos',name:'MOVESA Scrambler 250',price:48000,priceOld:null,monthly:2030,months:24,img:'https://grupomovesa.com/wp-content/uploads/2025/02/SCRAMBLER250-LATERAL-DERECHO_PNG.png',badge:'',emoji:'🏍️'},
   {id:'m4',cat:'motos',name:'MOVESA Runga 250 Moto Cargo',price:52000,priceOld:null,monthly:2199,months:24,img:'https://grupomovesa.com/wp-content/uploads/2021/12/Runga-250-Lado-1024x652.jpg',badge:'',emoji:'🛺'},
   {id:'m5',cat:'motos',name:'MOVESA PRO300 Todo Terreno',price:65000,priceOld:null,monthly:2749,months:24,img:'https://grupomovesa.com/wp-content/uploads/2024/01/PRO300-NARANJA_PNG.png',badge:'PREMIUM',emoji:'🏍️'},
-  // ELECTRO — Refrigeradoras GRS con precios reales
+  {id:'m6',cat:'motos',name:'KTM 200 Duke',price:72000,priceOld:null,monthly:3044,months:24,img:'https://grupomovesa.com/wp-content/uploads/2026/02/MY26_KTM-200-Duke_45Front-Right_STUDIO_VERSION-MOVESA_WEB.png',badge:'',emoji:'🏍️'},
+  {id:'m7',cat:'motos',name:'KTM 250 Duke',price:88000,priceOld:null,monthly:3721,months:24,img:'https://grupomovesa.com/wp-content/uploads/2024/01/554750_MY24_KTM-250-DUKE_US_90-Left_USA.png',badge:'NUEVO',emoji:'🏍️'},
+  // ELECTRO — Refrigeradoras GRS
   {id:'e1',cat:'electro',name:'Refrigeradora GRS 7 pies³',price:7297,priceOld:null,monthly:309,months:24,img:'https://hn.grsenlinea.com/cdn/shop/products/GRD176-1P-VCM_350x.png?v=1661784438',badge:'',emoji:'🧊'},
   {id:'e2',cat:'electro',name:'Refrigeradora GRS 9 pies³ Titanium',price:11999,priceOld:null,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD_252FF-TTI-1_350x.png?v=1743381740',badge:'POPULAR',emoji:'🧊'},
   {id:'e3',cat:'electro',name:'Refrigeradora GRS 11 pies³',price:12499,priceOld:null,monthly:529,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD11TAI_1_350x.jpg?v=1754488363',badge:'',emoji:'🧊'},
