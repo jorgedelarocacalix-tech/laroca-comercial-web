@@ -541,18 +541,19 @@ footer{background:#000;border-top:1px solid var(--ln);padding:60px 0 28px}
     <div class="brands-label">Marcas oficiales</div>
     <div class="bscroll-wrap">
       <div class="bscroll">
-        <div class="brand-item"><div class="bn" style="color:#7ab4ff">MOVESA</div><div class="bc">Salas de estar</div></div>
+        <div class="brand-item"><div class="bn" style="color:#E8195A">MOVESA</div><div class="bc">Motos &amp; trimotos</div></div>
+        <div class="brand-item"><div class="bn" style="color:#34d399">GRS</div><div class="bc">Refrigeradoras &amp; lavadoras</div></div>
         <div class="brand-item"><div class="bn" style="color:#E8195A">Olympia</div><div class="bc">Camas &amp; colchones</div></div>
-        <div class="brand-item"><div class="bn" style="color:#34d399">Honda</div><div class="bc">Motos &amp; trimotos</div></div>
         <div class="brand-item"><div class="bn" style="color:#60b4ff">Samsung</div><div class="bc">Smart TV</div></div>
         <div class="brand-item"><div class="bn" style="color:#fbbf24">Mabe</div><div class="bc">Electrodomésticos</div></div>
         <div class="brand-item"><div class="bn" style="color:#a78bfa">LG</div><div class="bc">Lavadoras</div></div>
-        <div class="brand-item"><div class="bn" style="color:#7ab4ff">MOVESA</div><div class="bc">Salas de estar</div></div>
+        <div class="brand-item"><div class="bn" style="color:#7ab4ff">Grupo UMA</div><div class="bc">Salas de estar</div></div>
+        <div class="brand-item"><div class="bn" style="color:#E8195A">MOVESA</div><div class="bc">Motos &amp; trimotos</div></div>
+        <div class="brand-item"><div class="bn" style="color:#34d399">GRS</div><div class="bc">Refrigeradoras &amp; lavadoras</div></div>
         <div class="brand-item"><div class="bn" style="color:#E8195A">Olympia</div><div class="bc">Camas &amp; colchones</div></div>
-        <div class="brand-item"><div class="bn" style="color:#34d399">Honda</div><div class="bc">Motos &amp; trimotos</div></div>
         <div class="brand-item"><div class="bn" style="color:#60b4ff">Samsung</div><div class="bc">Smart TV</div></div>
         <div class="brand-item"><div class="bn" style="color:#fbbf24">Mabe</div><div class="bc">Electrodomésticos</div></div>
-        <div class="brand-item"><div class="bn" style="color:#a78bfa">LG</div><div class="bc">Lavadoras</div></div>
+        <div class="brand-item"><div class="bn" style="color:#7ab4ff">Grupo UMA</div><div class="bc">Salas de estar</div></div>
       </div>
     </div>
   </div>
@@ -794,23 +795,37 @@ footer{background:#000;border-top:1px solid var(--ln);padding:60px 0 28px}
 <script>
 // <!--SITE_DATA_START-->
 const DEFAULT_PRODS=[
+  // SALAS (fotos pendientes de proveedor Grupo UMA)
   {id:'s1',cat:'salas',name:'Sala Medellín 3 Piezas',price:8900,priceOld:null,monthly:371,months:24,img:null,badge:'POPULAR',emoji:'🛋️'},
   {id:'s2',cat:'salas',name:'Sala Emperador Imperial',price:12500,priceOld:15000,monthly:521,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
   {id:'s3',cat:'salas',name:'Sala Italia Moderna',price:10200,priceOld:null,monthly:425,months:24,img:null,badge:'',emoji:'🛋️'},
   {id:'s4',cat:'salas',name:'Sala Bogotá Luxury',price:14800,priceOld:null,monthly:617,months:24,img:null,badge:'NUEVO',emoji:'🛋️'},
   {id:'s5',cat:'salas',name:'Sala Sofía Elegance',price:11600,priceOld:13000,monthly:483,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
   {id:'s6',cat:'salas',name:'Sala Maya Paris',price:9800,priceOld:null,monthly:408,months:24,img:null,badge:'',emoji:'🛋️'},
+  // CAMAS (fotos pendientes de proveedor)
   {id:'c1',cat:'camas',name:'Cama Catracha Queen',price:6800,priceOld:null,monthly:283,months:24,img:null,badge:'LOCAL',emoji:'🛏️'},
   {id:'c2',cat:'camas',name:'Antiestrés Doble Pillow',price:9200,priceOld:11000,monthly:383,months:24,img:null,badge:'OFERTA',emoji:'🛏️'},
   {id:'c3',cat:'camas',name:'Renova Extra Sense',price:10800,priceOld:null,monthly:450,months:24,img:null,badge:'PREMIUM',emoji:'🛏️'},
   {id:'c4',cat:'camas',name:'Siesta Estándar Plus',price:5600,priceOld:null,monthly:233,months:24,img:null,badge:'',emoji:'🛏️'},
   {id:'c5',cat:'camas',name:'Perfect Balance Queen',price:8400,priceOld:9500,monthly:350,months:24,img:null,badge:'OFERTA',emoji:'🛏️'},
   {id:'c6',cat:'camas',name:'Doble Box Top La H',price:12200,priceOld:null,monthly:508,months:24,img:null,badge:'NUEVO',emoji:'🛏️'},
-  {id:'m1',cat:'motos',name:'Moto 150cc Sport',price:32000,priceOld:null,monthly:1333,months:24,img:null,badge:'POPULAR',emoji:'🏍️'},
-  {id:'m2',cat:'motos',name:'Tricimoto Carga 200cc',price:48000,priceOld:null,monthly:2000,months:24,img:null,badge:'',emoji:'🛺'},
-  {id:'e1',cat:'electro',name:'Refrigeradora 14 Pies',price:14500,priceOld:16000,monthly:604,months:24,img:null,badge:'OFERTA',emoji:'🧊'},
-  {id:'e2',cat:'electro',name:'Lavadora 17 Libras',price:8200,priceOld:null,monthly:342,months:24,img:null,badge:'',emoji:'🫧'},
-  {id:'t1',cat:'tech',name:'Smart TV 55" 4K',price:19800,priceOld:22000,monthly:825,months:24,img:null,badge:'OFERTA',emoji:'📺'},
+  // MOTOS — imágenes reales de MOVESA
+  {id:'m1',cat:'motos',name:'MOVESA Nitro 150S',price:32000,priceOld:null,monthly:1353,months:24,img:'https://grupomovesa.com/wp-content/uploads/2025/01/MY25_Nitro150S_Lateral-DerechoPNG.png',badge:'POPULAR',emoji:'🏍️'},
+  {id:'m2',cat:'motos',name:'MOVESA CR5 Revo Deportiva',price:38000,priceOld:null,monthly:1607,months:24,img:'https://grupomovesa.com/wp-content/uploads/2026/02/CR5-Revo-Negra-Lateral-derecha_WEB.png',badge:'NUEVO',emoji:'🏍️'},
+  {id:'m3',cat:'motos',name:'MOVESA Scrambler 250',price:48000,priceOld:null,monthly:2030,months:24,img:'https://grupomovesa.com/wp-content/uploads/2025/02/SCRAMBLER250-LATERAL-DERECHO_PNG.png',badge:'',emoji:'🏍️'},
+  {id:'m4',cat:'motos',name:'MOVESA Runga 250 Moto Cargo',price:52000,priceOld:null,monthly:2199,months:24,img:'https://grupomovesa.com/wp-content/uploads/2021/12/Runga-250-Lado-1024x652.jpg',badge:'',emoji:'🛺'},
+  {id:'m5',cat:'motos',name:'MOVESA PRO300 Todo Terreno',price:65000,priceOld:null,monthly:2749,months:24,img:'https://grupomovesa.com/wp-content/uploads/2024/01/PRO300-NARANJA_PNG.png',badge:'PREMIUM',emoji:'🏍️'},
+  // ELECTRO — Refrigeradoras GRS con precios reales
+  {id:'e1',cat:'electro',name:'Refrigeradora GRS 7 pies³',price:7297,priceOld:null,monthly:309,months:24,img:'https://hn.grsenlinea.com/cdn/shop/products/GRD176-1P-VCM_350x.png?v=1661784438',badge:'',emoji:'🧊'},
+  {id:'e2',cat:'electro',name:'Refrigeradora GRS 9 pies³ Titanium',price:11999,priceOld:null,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD_252FF-TTI-1_350x.png?v=1743381740',badge:'POPULAR',emoji:'🧊'},
+  {id:'e3',cat:'electro',name:'Refrigeradora GRS 11 pies³',price:12499,priceOld:null,monthly:529,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD11TAI_1_350x.jpg?v=1754488363',badge:'',emoji:'🧊'},
+  {id:'e4',cat:'electro',name:'Refrigeradora GRS 15 pies³ Titanium',price:16499,priceOld:null,monthly:698,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD425FF-TTICERRADA_350x.png?v=1713738544',badge:'PREMIUM',emoji:'🧊'},
+  // ELECTRO — Lavadoras GRS
+  {id:'e5',cat:'electro',name:'Lavadora GRS Semi Auto 13 kg',price:6999,priceOld:7999,monthly:296,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/IMG_0014_350x.png?v=1755872558',badge:'OFERTA',emoji:'🫧'},
+  {id:'e6',cat:'electro',name:'Lavadora GRS Automática 16 kg',price:9599,priceOld:9999,monthly:406,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/DSC6783_2_350x.png?v=1767880821',badge:'OFERTA',emoji:'🫧'},
+  {id:'e7',cat:'electro',name:'Lavadora GRS Automática 22 kg',price:13599,priceOld:null,monthly:575,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/LAVADORA221_206a77ce-b9d9-453b-a381-472ed19fcb6b_350x.png?v=1755024535',badge:'',emoji:'🫧'},
+  // TECH — TV GRS
+  {id:'t1',cat:'tech',name:'Smart TV GRS 65" 4K Google TV',price:11999,priceOld:17399,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/TELEVISOR32_dc5eac55-f4a8-40c0-9fdf-3185abe9aecf_350x.png?v=1742687572',badge:'OFERTA',emoji:'📺'},
   {id:'t2',cat:'tech',name:'Tablet 10" + Teclado',price:6500,priceOld:null,monthly:271,months:24,img:null,badge:'',emoji:'💻'}
 ];
 const DEFAULT_LOGOS={header:null,footer:null};
