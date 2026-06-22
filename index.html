@@ -349,6 +349,45 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
 .epbtn-p{background:var(--pk);color:#fff}.epbtn-p:hover{background:var(--pkd)}
 .epbtn-o{background:transparent;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12)}.epbtn-o:hover{border-color:rgba(255,255,255,.3);color:#fff}
 
+/* ── BANNER EDIT BLOCKS ── */
+.bn-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px;margin-bottom:10px}
+.bn-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.bn-header span{font-size:.76rem;font-weight:700;color:#fff}
+.bn-vis{display:flex;align-items:center;gap:6px;font-size:.68rem;color:rgba(255,255,255,.45);cursor:pointer}
+.bn-vis input[type=checkbox]{accent-color:var(--pk);width:14px;height:14px;cursor:pointer}
+.bn-img-row{display:grid;grid-template-columns:72px 1fr;gap:8px;margin-bottom:8px;align-items:center}
+.bn-thumb{width:72px;height:72px;border-radius:6px;border:1px dashed rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;flex-shrink:0;transition:border-color .2s}
+.bn-thumb:hover{border-color:rgba(255,255,255,.35)}
+.bn-thumb input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.bn-thumb img{width:100%;height:100%;object-fit:cover}
+.bn-thumb i{font-size:1.3rem;color:rgba(255,255,255,.25)}
+.bn-inp{width:100%;background:#1e1e1e;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:7px 10px;color:#fff;font-size:.78rem;margin-bottom:6px;outline:none;font-family:inherit;transition:border-color .2s;box-sizing:border-box}
+.bn-inp:focus{border-color:rgba(255,255,255,.3)}
+.bn-inp::placeholder{color:rgba(255,255,255,.25)}
+.bn-del{width:100%;padding:7px;background:rgba(232,25,90,.08);color:var(--pk);border:1px solid rgba(232,25,90,.2);border-radius:6px;font-size:.73rem;font-weight:700;cursor:pointer;margin-top:4px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.bn-del:hover{background:var(--pk);color:#fff;border-color:var(--pk)}
+.bn-del-all{width:100%;padding:10px;background:rgba(232,25,90,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08);border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;margin-top:6px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.bn-del-all:hover{background:rgba(232,25,90,.18);color:var(--pk);border-color:rgba(232,25,90,.3)}
+
+/* ── SIDE BANNERS ── */
+.side-banner{position:fixed;top:50%;transform:translateY(-50%);width:148px;background:#111;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;z-index:199;box-shadow:0 8px 32px rgba(0,0,0,.4);display:flex;flex-direction:column;transition:opacity .3s,transform .3s}
+.sb-left{left:6px}
+.sb-right{right:6px}
+.side-banner.sb-hidden{opacity:0;pointer-events:none}
+.sb-img{height:200px;position:relative;background:#1a1a1a;overflow:hidden}
+.sb-img img{width:100%;height:100%;object-fit:cover}
+.sb-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px}
+.sb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.2) 100%)}
+.sb-badge-pos{position:absolute;top:8px;left:8px;background:var(--pk);color:#fff;font-size:.56rem;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.05em;z-index:2}
+.sb-body{padding:10px 11px 12px;background:#111}
+.sb-title{font-size:.78rem;font-weight:800;color:#fff;line-height:1.25;margin-bottom:3px}
+.sb-sub{font-size:.69rem;color:rgba(255,255,255,.5);line-height:1.4;margin-bottom:9px}
+.sb-cta{width:100%;padding:8px 6px;background:var(--pk);color:#fff;border:none;border-radius:6px;font-size:.7rem;font-weight:700;cursor:pointer;transition:background .2s}
+.sb-cta:hover{background:var(--pkd)}
+.sb-close{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:.58rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .18s}
+.sb-close:hover{background:var(--pk);border-color:var(--pk);color:#fff}
+@media(max-width:1380px){.side-banner{display:none}}
+
 /* ── MODAL (stays dark) ── */
 .moverlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:1100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
 .moverlay.open{opacity:1;pointer-events:all}
@@ -845,30 +884,123 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
 </footer>
 
 <a class="fab-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<!-- SIDE BANNERS -->
+<div class="side-banner sb-left" id="sb-left">
+  <div class="sb-img">
+    <img id="sb-left-img" src="" alt="" style="display:none"/>
+    <div class="sb-img-placeholder" id="sb-left-emoji">🛋️</div>
+    <div class="sb-overlay"></div>
+    <div class="sb-badge-pos" id="sb-left-badge">OFERTA</div>
+  </div>
+  <div class="sb-body">
+    <div class="sb-title" id="sb-left-title">Salas desde</div>
+    <div class="sb-sub" id="sb-left-sub">L. 8,900 · 24 cuotas · Crédito mismo día</div>
+    <button class="sb-cta" onclick="cotizar('Salas')">📲 Cotizar ya</button>
+  </div>
+  <button class="sb-close" onclick="hideBanner('left')" title="Cerrar">✕</button>
+</div>
+
+<div class="side-banner sb-right" id="sb-right">
+  <div class="sb-img">
+    <img id="sb-right-img" src="" alt="" style="display:none"/>
+    <div class="sb-img-placeholder" id="sb-right-emoji">🏍️</div>
+    <div class="sb-overlay"></div>
+    <div class="sb-badge-pos" id="sb-right-badge">POPULAR</div>
+  </div>
+  <div class="sb-body">
+    <div class="sb-title" id="sb-right-title">Motos desde</div>
+    <div class="sb-sub" id="sb-right-sub">L. 26,000 · Bajaj · MOVESA · KTM</div>
+    <button class="sb-cta" onclick="cotizar('Motos')">📲 Cotizar ya</button>
+  </div>
+  <button class="sb-close" onclick="hideBanner('right')" title="Cerrar">✕</button>
+</div>
+
 <button class="fab-ed" id="fab-ed" onclick="toggleEdit()"><i class="fas fa-pencil-alt"></i> Editar</button>
 
 <!-- EDIT PANEL -->
 <div class="epanel" id="epanel">
-  <div class="ep-hdr"><h3>Panel de Edición</h3><button class="ep-close" onclick="toggleEdit()"><i class="fas fa-times"></i></button></div>
+  <div class="ep-hdr"><h3>⚙️ Panel de Edición</h3><button class="ep-close" onclick="toggleEdit()"><i class="fas fa-times"></i></button></div>
   <div class="ep-body">
+
+    <!-- LOGOS -->
     <div class="ep-sec">
-      <div class="ep-stitle">Logos</div>
+      <div class="ep-stitle">🖼 Logos</div>
       <div class="logo-slot" id="ls-header"><input type="file" accept="image/*" onchange="uploadLogo(event,'header')"/><img id="ls-header-img" src="" style="display:none"/><strong>Logo Principal</strong><p><i class="fas fa-upload"></i> Clic para subir</p><div class="rm" id="ls-header-rm" style="display:none" onclick="removeLogo('header')"><i class="fas fa-trash"></i> Quitar</div></div>
       <div class="logo-slot" id="ls-footer"><input type="file" accept="image/*" onchange="uploadLogo(event,'footer')"/><img id="ls-footer-img" src="" style="display:none"/><strong>Logo Pie de página</strong><p><i class="fas fa-upload"></i> Clic para subir</p><div class="rm" id="ls-footer-rm" style="display:none" onclick="removeLogo('footer')"><i class="fas fa-trash"></i> Quitar</div></div>
     </div>
+
+    <!-- BANNERS LATERALES -->
     <div class="ep-sec">
-      <div class="ep-stitle">Productos</div>
-      <p style="font-size:.72rem;color:var(--t3);margin-bottom:9px">Toca un producto para editarlo.</p>
+      <div class="ep-stitle">📢 Banners Laterales</div>
+      <p style="font-size:.68rem;color:var(--t3);margin-bottom:10px">Aparecen a los costados en pantallas grandes. Pasa el cursor encima para editar.</p>
+
+      <!-- BANNER IZQUIERDO -->
+      <div class="bn-block">
+        <div class="bn-header">
+          <span>◀ Banner Izquierdo</span>
+          <label class="bn-vis"><input type="checkbox" id="bn-left-vis" onchange="setBannerVisible('left',this.checked)" checked> Visible</label>
+        </div>
+        <div class="bn-img-row">
+          <div class="bn-thumb" onclick="document.getElementById('bn-left-file').click()">
+            <input type="file" id="bn-left-file" accept="image/*" onchange="uploadBannerImg('left',event)"/>
+            <img id="bn-left-thumb" src="" style="display:none"/>
+            <i class="fas fa-image" id="bn-left-ico"></i>
+          </div>
+          <div>
+            <input class="bn-inp" type="url" id="bn-left-url" placeholder="URL de imagen..." oninput="setBannerUrl('left',this.value)"/>
+            <input class="bn-inp" type="text" id="bn-left-badge-ep" placeholder="Badge: OFERTA, 20% OFF..." oninput="setBannerField('left','badge',this.value)"/>
+          </div>
+        </div>
+        <input class="bn-inp" type="text" id="bn-left-title-ep" placeholder="Título: Salas desde" oninput="setBannerField('left','title',this.value)"/>
+        <input class="bn-inp" type="text" id="bn-left-sub-ep" placeholder="Subtítulo: L. 8,900 · 24 cuotas" oninput="setBannerField('left','sub',this.value)"/>
+        <button class="bn-del" onclick="clearBanner('left')"><i class="fas fa-trash"></i> Borrar banner izquierdo</button>
+      </div>
+
+      <!-- BANNER DERECHO -->
+      <div class="bn-block">
+        <div class="bn-header">
+          <span>Banner Derecho ▶</span>
+          <label class="bn-vis"><input type="checkbox" id="bn-right-vis" onchange="setBannerVisible('right',this.checked)" checked> Visible</label>
+        </div>
+        <div class="bn-img-row">
+          <div class="bn-thumb" onclick="document.getElementById('bn-right-file').click()">
+            <input type="file" id="bn-right-file" accept="image/*" onchange="uploadBannerImg('right',event)"/>
+            <img id="bn-right-thumb" src="" style="display:none"/>
+            <i class="fas fa-image" id="bn-right-ico"></i>
+          </div>
+          <div>
+            <input class="bn-inp" type="url" id="bn-right-url" placeholder="URL de imagen..." oninput="setBannerUrl('right',this.value)"/>
+            <input class="bn-inp" type="text" id="bn-right-badge-ep" placeholder="Badge: POPULAR, NUEVO..." oninput="setBannerField('right','badge',this.value)"/>
+          </div>
+        </div>
+        <input class="bn-inp" type="text" id="bn-right-title-ep" placeholder="Título: Motos desde" oninput="setBannerField('right','title',this.value)"/>
+        <input class="bn-inp" type="text" id="bn-right-sub-ep" placeholder="Subtítulo: L. 26,000 · Bajaj · KTM" oninput="setBannerField('right','sub',this.value)"/>
+        <button class="bn-del" onclick="clearBanner('right')"><i class="fas fa-trash"></i> Borrar banner derecho</button>
+      </div>
+
+      <button class="bn-del-all" onclick="clearAllBanners()"><i class="fas fa-trash-alt"></i> Borrar AMBOS banners</button>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="ep-sec">
+      <div class="ep-stitle">📦 Productos</div>
+      <p style="font-size:.72rem;color:var(--t3);margin-bottom:9px">Toca un producto para editarlo (foto, precio, descripción).</p>
       <div class="ep-pl" id="ep-pl"></div>
     </div>
+
+    <!-- BORRAR TODO -->
     <div class="ep-sec">
-      <div class="ep-stitle">Instrucciones</div>
-      <p style="font-size:.72rem;color:var(--t3);line-height:1.7"><strong style="color:#fff">1.</strong> Sube tu logo.<br/><strong style="color:#fff">2.</strong> Toca un producto para editar.<br/><strong style="color:#fff">3.</strong> Cambios se guardan automáticamente.<br/><strong style="color:#fff">4.</strong> Exporta para descargar.</p>
+      <div class="ep-stitle">🗑 Borrar contenido</div>
+      <p style="font-size:.68rem;color:var(--t3);margin-bottom:10px;line-height:1.6">Elimina imágenes o textos personalizados que hayas subido.</p>
+      <button class="bn-del" onclick="clearAllImages()" style="margin-bottom:7px"><i class="fas fa-images"></i> Borrar todas las fotos subidas</button>
+      <button class="bn-del" onclick="clearAllPromos()" style="margin-bottom:7px"><i class="fas fa-tags"></i> Restaurar promociones al original</button>
+      <button class="bn-del" onclick="clearAllBanners()"><i class="fas fa-columns"></i> Quitar banners laterales</button>
     </div>
+
   </div>
   <div class="ep-acts">
     <button class="epbtn epbtn-p" onclick="exportSite()"><i class="fas fa-download"></i> Exportar sitio actualizado</button>
-    <button class="epbtn epbtn-o" onclick="resetAll()"><i class="fas fa-undo"></i> Restaurar al original</button>
+    <button class="epbtn epbtn-o" onclick="resetAll()"><i class="fas fa-undo"></i> Restaurar TODO al original</button>
   </div>
 </div>
 
@@ -999,7 +1131,7 @@ function initCounters(){
   document.querySelectorAll('[data-count]').forEach(el=>obs.observe(el));
 }
 
-document.addEventListener('DOMContentLoaded',()=>{renderProds();renderPanel();renderPromos();applyLogos();initReveal();initCounters()});
+document.addEventListener('DOMContentLoaded',()=>{renderProds();renderPanel();renderPromos();applyLogos();applyBanners();loadBannerPanel();initReveal();initCounters()});
 
 function switchTab(btn,panelId){
   document.querySelectorAll('.vid-tab').forEach(t=>t.classList.remove('active'));
@@ -1164,7 +1296,79 @@ function exportSite(){
   const upd=html.replace(/\/\/ <!--SITE_DATA_START-->[\s\S]*?\/\/ <!--SITE_DATA_END-->/,'// <!--SITE_DATA_START-->\n'+blk+'\n// <!--SITE_DATA_END-->');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([upd],{type:'text/html;charset=utf-8'}));a.download='laroca-v8.html';a.click();toast('✓ Sitio exportado');
 }
-function resetAll(){if(!confirm('¿Restaurar todos los cambios al original?'))return;localStorage.removeItem('lr8_prods');localStorage.removeItem('lr8_logos');localStorage.removeItem('lr8_promos');prods=deepCopy(DEFAULT_PRODS);logos={...DEFAULT_LOGOS};promos=deepCopy(DEFAULT_PROMOS);renderProds();renderPanel();renderPromos();applyLogos();toast('Sitio restaurado')}
+function resetAll(){if(!confirm('¿Restaurar TODO al original?'))return;localStorage.removeItem('lr8_prods');localStorage.removeItem('lr8_logos');localStorage.removeItem('lr8_promos');localStorage.removeItem('lr8_banners');prods=deepCopy(DEFAULT_PRODS);logos={...DEFAULT_LOGOS};promos=deepCopy(DEFAULT_PROMOS);banners=deepCopy(DEFAULT_BANNERS);renderProds();renderPanel();renderPromos();applyLogos();applyBanners();loadBannerPanel();toast('Sitio restaurado al original')}
+
+// ── BANNERS LATERALES ────────────────────────────────────────
+const DEFAULT_BANNERS={
+  left:{visible:true,img:null,emoji:'🛋️',badge:'OFERTA',title:'Salas desde',sub:'L. 8,900 · 24 cuotas · Crédito mismo día'},
+  right:{visible:true,img:null,emoji:'🏍️',badge:'POPULAR',title:'Motos desde',sub:'L. 26,000 · Bajaj · MOVESA · KTM'}
+};
+let banners=JSON.parse(localStorage.getItem('lr8_banners')||'null')||deepCopy(DEFAULT_BANNERS);
+
+function saveBanners(){localStorage.setItem('lr8_banners',JSON.stringify(banners))}
+
+function applyBanners(){
+  ['left','right'].forEach(side=>{
+    const b=banners[side];
+    const el=document.getElementById('sb-'+side);if(!el)return;
+    // visibility
+    el.classList.toggle('sb-hidden',!b.visible);
+    // image
+    const img=document.getElementById('sb-'+side+'-img');
+    const ph=document.getElementById('sb-'+side+'-emoji');
+    if(b.img){img.src=b.img;img.style.display='block';if(ph)ph.style.display='none'}
+    else{img.style.display='none';if(ph){ph.style.display='flex';ph.textContent=b.emoji||''}}
+    // text
+    const bd=document.getElementById('sb-'+side+'-badge');if(bd)bd.textContent=b.badge||'';
+    const tt=document.getElementById('sb-'+side+'-title');if(tt)tt.textContent=b.title||'';
+    const sb=document.getElementById('sb-'+side+'-sub');if(sb)sb.textContent=b.sub||'';
+  });
+}
+
+function loadBannerPanel(){
+  ['left','right'].forEach(side=>{
+    const b=banners[side];
+    const visEl=document.getElementById('bn-'+side+'-vis');if(visEl)visEl.checked=b.visible;
+    const urlEl=document.getElementById('bn-'+side+'-url');if(urlEl)urlEl.value=b.img&&b.img.startsWith('http')?b.img:'';
+    const badgeEl=document.getElementById('bn-'+side+'-badge-ep');if(badgeEl)badgeEl.value=b.badge||'';
+    const titleEl=document.getElementById('bn-'+side+'-title-ep');if(titleEl)titleEl.value=b.title||'';
+    const subEl=document.getElementById('bn-'+side+'-sub-ep');if(subEl)subEl.value=b.sub||'';
+    // thumb preview
+    const thumb=document.getElementById('bn-'+side+'-thumb');
+    const ico=document.getElementById('bn-'+side+'-ico');
+    if(thumb&&ico){if(b.img){thumb.src=b.img;thumb.style.display='block';ico.style.display='none'}else{thumb.style.display='none';ico.style.display='block'}}
+  });
+}
+
+function hideBanner(side){banners[side].visible=false;saveBanners();applyBanners();const vis=document.getElementById('bn-'+side+'-vis');if(vis)vis.checked=false}
+function setBannerVisible(side,val){banners[side].visible=val;saveBanners();applyBanners()}
+function setBannerField(side,field,val){banners[side][field]=val;saveBanners();applyBanners()}
+function setBannerUrl(side,val){if(!val.trim())return;banners[side].img=val.trim();saveBanners();applyBanners();const t=document.getElementById('bn-'+side+'-thumb');const i=document.getElementById('bn-'+side+'-ico');if(t&&i){t.src=val;t.style.display='block';i.style.display='none'}}
+function uploadBannerImg(side,e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{
+    banners[side].img=ev.target.result;saveBanners();applyBanners();
+    const t=document.getElementById('bn-'+side+'-thumb');const i=document.getElementById('bn-'+side+'-ico');
+    if(t&&i){t.src=ev.target.result;t.style.display='block';i.style.display='none'}
+    const urlEl=document.getElementById('bn-'+side+'-url');if(urlEl)urlEl.value='';
+    toast('✓ Imagen del banner actualizada');
+  };r.readAsDataURL(f);
+}
+function clearBanner(side){
+  banners[side]=deepCopy(DEFAULT_BANNERS[side]);banners[side].visible=false;
+  saveBanners();applyBanners();loadBannerPanel();toast('Banner borrado');
+}
+function clearAllBanners(){
+  banners=deepCopy(DEFAULT_BANNERS);banners.left.visible=false;banners.right.visible=false;
+  saveBanners();applyBanners();loadBannerPanel();toast('Banners eliminados');
+}
+function clearAllImages(){
+  prods.forEach(p=>{const orig=DEFAULT_PRODS.find(x=>x.id===p.id);if(orig)p.img=orig.img});
+  banners.left.img=null;banners.right.img=null;
+  logos={...DEFAULT_LOGOS};save();saveBanners();renderProds();applyLogos();applyBanners();loadBannerPanel();toast('Fotos restauradas al original');
+}
+function clearAllPromos(){promos=deepCopy(DEFAULT_PROMOS);savePromos();renderPromos();toast('Promociones restauradas');}
+
 function calcQ(){
   const m=parseFloat(document.getElementById('cm').value)||0;
   if(!m){document.getElementById('calc-res').classList.remove('show');return}
