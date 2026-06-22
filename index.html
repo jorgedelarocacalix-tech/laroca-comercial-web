@@ -85,14 +85,15 @@ input,button,select{font-family:inherit}
 /* cat cards stay dark — scoped vars */
 .cat-card{--t2:rgba(255,255,255,.7);--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.12)}
 .cat-card-bg{position:absolute;inset:0}
-.cc-color{position:absolute;inset:0}
+.cc-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 6s ease-in-out}
+.cat-card:hover .cc-photo{transform:scale(1.06)}
+.cc-color{position:absolute;inset:0;opacity:.55}
 .cc-salas .cc-color{background:linear-gradient(145deg,#1B2F8A 0%,#152470 100%)}
 .cc-camas .cc-color{background:linear-gradient(145deg,#0D1E6E 0%,#1B2F8A 100%)}
-.cc-motos .cc-color{background:linear-gradient(145deg,#c4124a 0%,#E8195A 100%)}
+.cc-motos .cc-color{background:linear-gradient(145deg,#8B0030 0%,#E8195A 100%)}
 .cc-electro .cc-color{background:linear-gradient(145deg,#0B1852 0%,#152470 100%)}
-.cc-emoji-bg{position:absolute;font-size:260px;opacity:.16;top:50%;left:50%;transform:translate(-50%,-56%);user-select:none;transition:transform 6s ease-in-out,opacity .4s}
-.cat-card:hover .cc-emoji-bg{opacity:.26;transform:translate(-50%,-52%) scale(1.06)}
-.cc-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 30%,rgba(0,0,0,.05) 100%)}
+.cc-emoji-bg{display:none}
+.cc-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.1) 100%)}
 .cat-card-content{position:relative;z-index:2}
 .cc-tag{font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;opacity:.7;margin-bottom:10px}
 .cat-card h2{font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:10px;color:#fff}
@@ -453,8 +454,8 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
   <!-- SALAS -->
   <div class="cat-card cc-salas" id="cat-salas">
     <div class="cat-card-bg">
+      <img class="cc-photo" src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Sala moderna" loading="lazy">
       <div class="cc-color"></div>
-      <div class="cc-emoji-bg">🛋️</div>
       <div class="cc-gradient"></div>
     </div>
     <div class="cat-card-content">
@@ -471,8 +472,8 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
   <!-- CAMAS -->
   <div class="cat-card cc-camas" id="cat-camas">
     <div class="cat-card-bg">
+      <img class="cc-photo" src="https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Descanso cama" loading="lazy">
       <div class="cc-color"></div>
-      <div class="cc-emoji-bg">🛏️</div>
       <div class="cc-gradient"></div>
     </div>
     <div class="cat-card-content">
@@ -489,8 +490,8 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
   <!-- MOTOS -->
   <div class="cat-card cc-motos" id="cat-motos">
     <div class="cat-card-bg">
+      <img class="cc-photo" src="https://images.pexels.com/photos/2611686/pexels-photo-2611686.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Moto en carretera" loading="lazy">
       <div class="cc-color"></div>
-      <div class="cc-emoji-bg">🏍️</div>
       <div class="cc-gradient"></div>
     </div>
     <div class="cat-card-content">
@@ -507,8 +508,8 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
   <!-- ELECTRO -->
   <div class="cat-card cc-electro" id="cat-electro">
     <div class="cat-card-bg">
+      <img class="cc-photo" src="https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Cocina moderna" loading="lazy">
       <div class="cc-color"></div>
-      <div class="cc-emoji-bg">🧊</div>
       <div class="cc-gradient"></div>
     </div>
     <div class="cat-card-content">
@@ -544,7 +545,7 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
     <!-- Panel 1: KTM Duke 200 review -->
     <div class="vid-panel active reveal" id="vt1">
       <div class="vid-frame">
-        <iframe src="https://www.youtube.com/embed/jYG5Ztc_nyk?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="KTM Duke 200 NG Prueba"></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/jYG5Ztc_nyk?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="KTM Duke 200 NG Prueba"></iframe>
       </div>
       <p class="vid-caption">KTM 200 Duke NG — Prueba y reseña completa · 56 mil vistas</p>
     </div>
@@ -552,7 +553,7 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
     <!-- Panel 2: Bajaj Pulsar N250 test drive -->
     <div class="vid-panel" id="vt2">
       <div class="vid-frame">
-        <iframe src="https://www.youtube.com/embed/9Fc2BW4oG-0?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Bajaj Pulsar N250 Test Drive"></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/9Fc2BW4oG-0?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Bajaj Pulsar N250 Test Drive"></iframe>
       </div>
       <p class="vid-caption">Bajaj Pulsar N250 — Test drive completo &amp; Top Speed · 57 mil vistas</p>
     </div>
@@ -560,7 +561,7 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
     <!-- Panel 3: GRS refrigeradoras -->
     <div class="vid-panel" id="vt3">
       <div class="vid-frame">
-        <iframe src="https://www.youtube.com/embed/ZCFfQ4Ftll4?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Vitrinas y Congeladores GRS"></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/ZCFfQ4Ftll4?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Vitrinas y Congeladores GRS"></iframe>
       </div>
       <p class="vid-caption">Vitrinas y Congeladores GRS — La marca que vendemos en La Roca · 186 mil vistas</p>
     </div>
@@ -568,7 +569,7 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
     <!-- Panel 4: Muebles y camas Honduras -->
     <div class="vid-panel" id="vt4">
       <div class="vid-frame">
-        <iframe src="https://www.youtube.com/embed/Yb74Q_A8STE?rel=0&modestbranding=1" allowfullscreen loading="lazy" title="Camas y Muebles Honduras"></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/Yb74Q_A8STE?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Camas y Muebles Honduras"></iframe>
       </div>
       <p class="vid-caption">Camas y Muebles para el hogar — Estilo y comodidad en Honduras · 81 mil vistas</p>
     </div>
@@ -849,12 +850,12 @@ const DEFAULT_PRODS=[
   {id:'s5',cat:'salas',name:'Sala Maya Paris',price:9800,priceOld:null,monthly:408,months:24,img:null,badge:'',emoji:'🛋️'},
   {id:'s6',cat:'salas',name:'Sala Emperatriz 3 Piezas',price:12500,priceOld:15000,monthly:521,months:24,img:null,badge:'OFERTA',emoji:'🛋️'},
   // CAMAS — Olympia Honduras (imágenes reales)
-  {id:'c1',cat:'camas',name:'Cama Catracha EE',price:6800,priceOld:null,monthly:283,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2025/03/hn-catracha-ene26-set-300x300.jpg',badge:'LOCAL',emoji:'🛏️'},
-  {id:'c2',cat:'camas',name:'Antiestrés Doble Pillow',price:9200,priceOld:11000,monthly:383,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-DOBLEPILLOW-BENEFICIOS-300x300.jpg',badge:'OFERTA',emoji:'🛏️'},
-  {id:'c3',cat:'camas',name:'Renova Extra Sense Plus',price:10800,priceOld:null,monthly:450,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-RENOVA-EXTRASENSEPLUS-BENEFICIOS-300x300.jpg',badge:'PREMIUM',emoji:'🛏️'},
-  {id:'c4',cat:'camas',name:'Siesta Estándar Plus',price:5600,priceOld:null,monthly:233,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2024/04/HN-ESTANDARD-PLUS-BENEFICIOS-2-1-300x300.jpg',badge:'',emoji:'🛏️'},
-  {id:'c5',cat:'camas',name:'Antiestrés Ortopédico',price:8400,priceOld:9500,monthly:350,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-ORTOPEDICA-BENEFICIOS-300x300.jpg',badge:'OFERTA',emoji:'🛏️'},
-  {id:'c6',cat:'camas',name:'Siesta Estrella',price:5200,priceOld:null,monthly:217,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/05/HN-SIESTAESTRELLA-BENEFICIOS-300x300.jpg',badge:'NUEVO',emoji:'🛏️'},
+  {id:'c1',cat:'camas',name:'Cama Catracha EE',price:6800,priceOld:null,monthly:283,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2025/03/hn-catracha-ene26-set.jpg',badge:'LOCAL',emoji:'🛏️'},
+  {id:'c2',cat:'camas',name:'Antiestrés Doble Pillow',price:9200,priceOld:11000,monthly:383,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-DOBLEPILLOW-BENEFICIOS.jpg',badge:'OFERTA',emoji:'🛏️'},
+  {id:'c3',cat:'camas',name:'Renova Extra Sense Plus',price:10800,priceOld:null,monthly:450,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-RENOVA-EXTRASENSEPLUS-BENEFICIOS.jpg',badge:'PREMIUM',emoji:'🛏️'},
+  {id:'c4',cat:'camas',name:'Siesta Estándar Plus',price:5600,priceOld:null,monthly:233,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2024/04/HN-ESTANDARD-PLUS-BENEFICIOS-2-1.jpg',badge:'',emoji:'🛏️'},
+  {id:'c5',cat:'camas',name:'Antiestrés Ortopédico',price:8400,priceOld:9500,monthly:350,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/03/HN-ANTIES-ORTOPEDICA-BENEFICIOS.jpg',badge:'OFERTA',emoji:'🛏️'},
+  {id:'c6',cat:'camas',name:'Siesta Estrella',price:5200,priceOld:null,monthly:217,months:24,img:'https://camasolympiaonline.com/hn/wp-content/uploads/2023/05/HN-SIESTAESTRELLA-BENEFICIOS.jpg',badge:'NUEVO',emoji:'🛏️'},
   // MOTOS — MOVESA (imágenes reales)
   {id:'m1',cat:'motos',name:'MOVESA Nitro 150S',price:32000,priceOld:null,monthly:1353,months:24,img:'https://grupomovesa.com/wp-content/uploads/2025/01/MY25_Nitro150S_Lateral-DerechoPNG.png',badge:'POPULAR',emoji:'🏍️'},
   {id:'m2',cat:'motos',name:'MOVESA CR5 Revo Deportiva',price:38000,priceOld:null,monthly:1607,months:24,img:'https://grupomovesa.com/wp-content/uploads/2026/02/CR5-Revo-Negra-Lateral-derecha_WEB.png',badge:'NUEVO',emoji:'🏍️'},
@@ -864,23 +865,23 @@ const DEFAULT_PRODS=[
   {id:'m6',cat:'motos',name:'KTM 200 Duke',price:72000,priceOld:null,monthly:3044,months:24,img:'https://grupomovesa.com/wp-content/uploads/2026/02/MY26_KTM-200-Duke_45Front-Right_STUDIO_VERSION-MOVESA_WEB.png',badge:'',emoji:'🏍️'},
   {id:'m7',cat:'motos',name:'KTM 250 Duke',price:88000,priceOld:null,monthly:3721,months:24,img:'https://grupomovesa.com/wp-content/uploads/2024/01/554750_MY24_KTM-250-DUKE_US_90-Left_USA.png',badge:'NUEVO',emoji:'🏍️'},
   // MOTOS — Bajaj / UMA Honduras (imágenes reales)
-  {id:'m8',cat:'motos',name:'Bajaj Boxer 150X',price:28500,priceOld:null,monthly:1206,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-hn-boxer-150x-mini.png',badge:'POPULAR',emoji:'🏍️'},
-  {id:'m9',cat:'motos',name:'Bajaj Discover 125 5G',price:26000,priceOld:null,monthly:1100,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-discover-125-5g-mini.png',badge:'',emoji:'🏍️'},
-  {id:'m10',cat:'motos',name:'Bajaj Pulsar N160',price:42000,priceOld:null,monthly:1777,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2024/08/grupouma-pulsar-n160-mini.png',badge:'NUEVO',emoji:'🏍️'},
-  {id:'m11',cat:'motos',name:'Bajaj Pulsar N250',price:58000,priceOld:null,monthly:2453,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2023/03/grupouma-pulsar-N250-negro-mini.png',badge:'PREMIUM',emoji:'🏍️'},
-  {id:'m12',cat:'motos',name:'Bajaj Dominar 400',price:75000,priceOld:null,monthly:3172,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-dominar-400-verde-mini.png',badge:'PREMIUM',emoji:'🏍️'},
+  {id:'m8',cat:'motos',name:'Bajaj Boxer 150X',price:28500,priceOld:null,monthly:1206,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-hn-boxer-150x-mini.webp',badge:'POPULAR',emoji:'🏍️'},
+  {id:'m9',cat:'motos',name:'Bajaj Discover 125 5G',price:26000,priceOld:null,monthly:1100,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-discover-125-5g-min.webp',badge:'',emoji:'🏍️'},
+  {id:'m10',cat:'motos',name:'Bajaj Pulsar N160',price:42000,priceOld:null,monthly:1777,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2024/08/grupouma-pulsar-n160-mini.webp',badge:'NUEVO',emoji:'🏍️'},
+  {id:'m11',cat:'motos',name:'Bajaj Pulsar N250',price:58000,priceOld:null,monthly:2453,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2023/03/grupouma-pulsar-N250-negro-miniatura.webp',badge:'PREMIUM',emoji:'🏍️'},
+  {id:'m12',cat:'motos',name:'Bajaj Dominar 400',price:75000,priceOld:null,monthly:3172,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2021/07/grupouma-dominar-400-verde-miniatura.webp',badge:'PREMIUM',emoji:'🏍️'},
   {id:'m13',cat:'motos',name:'UMA Torito Trimoto Cargo',price:48000,priceOld:null,monthly:2030,months:24,img:'https://grupouma.com/honduras/wp-content/uploads/sites/13/2022/05/torito-roja-1.png',badge:'',emoji:'🛺'},
   // ELECTRO — Refrigeradoras GRS
-  {id:'e1',cat:'electro',name:'Refrigeradora GRS 7 pies³',price:7297,priceOld:null,monthly:309,months:24,img:'https://hn.grsenlinea.com/cdn/shop/products/GRD176-1P-VCM_350x.png?v=1661784438',badge:'',emoji:'🧊'},
+  {id:'e1',cat:'electro',name:'Refrigeradora GRS 7 pies³',price:7297,priceOld:null,monthly:309,months:24,img:'https://hn.grsenlinea.com/cdn/shop/products/GRD176-1P-VCM_700x.png?v=1661784438',badge:'',emoji:'🧊'},
   {id:'e2',cat:'electro',name:'Refrigeradora GRS 9 pies³ Titanium',price:11999,priceOld:null,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD_252FF-TTI-1_350x.png?v=1743381740',badge:'POPULAR',emoji:'🧊'},
-  {id:'e3',cat:'electro',name:'Refrigeradora GRS 11 pies³',price:12499,priceOld:null,monthly:529,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD11TAI_1_350x.jpg?v=1754488363',badge:'',emoji:'🧊'},
-  {id:'e4',cat:'electro',name:'Refrigeradora GRS 15 pies³ Titanium',price:16499,priceOld:null,monthly:698,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD425FF-TTICERRADA_350x.png?v=1713738544',badge:'PREMIUM',emoji:'🧊'},
+  {id:'e3',cat:'electro',name:'Refrigeradora GRS 11 pies³',price:12499,priceOld:null,monthly:529,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD11TAI_1.jpg?v=1754488363',badge:'',emoji:'🧊'},
+  {id:'e4',cat:'electro',name:'Refrigeradora GRS 15 pies³ Titanium',price:16499,priceOld:null,monthly:698,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/GRD425FF-TTICERRADA_700x.png?v=1713738544',badge:'PREMIUM',emoji:'🧊'},
   // ELECTRO — Lavadoras GRS
-  {id:'e5',cat:'electro',name:'Lavadora GRS Semi Auto 13 kg',price:6999,priceOld:7999,monthly:296,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/IMG_0014_350x.png?v=1755872558',badge:'OFERTA',emoji:'🫧'},
-  {id:'e6',cat:'electro',name:'Lavadora GRS Automática 16 kg',price:9599,priceOld:9999,monthly:406,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/DSC6783_2_350x.png?v=1767880821',badge:'OFERTA',emoji:'🫧'},
-  {id:'e7',cat:'electro',name:'Lavadora GRS Automática 22 kg',price:13599,priceOld:null,monthly:575,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/LAVADORA221_206a77ce-b9d9-453b-a381-472ed19fcb6b_350x.png?v=1755024535',badge:'',emoji:'🫧'},
+  {id:'e5',cat:'electro',name:'Lavadora GRS Semi Auto 13 kg',price:6999,priceOld:7999,monthly:296,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/IMG_0014_700x.png?v=1755872558',badge:'OFERTA',emoji:'🫧'},
+  {id:'e6',cat:'electro',name:'Lavadora GRS Automática 16 kg',price:9599,priceOld:9999,monthly:406,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/DSC6783_2_700x.png?v=1767880821',badge:'OFERTA',emoji:'🫧'},
+  {id:'e7',cat:'electro',name:'Lavadora GRS Automática 22 kg',price:13599,priceOld:null,monthly:575,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/LAVADORA221_206a77ce-b9d9-453b-a381-472ed19fcb6b_700x.png?v=1755024535',badge:'',emoji:'🫧'},
   // TECH — TV GRS
-  {id:'t1',cat:'tech',name:'Smart TV GRS 65" 4K Google TV',price:11999,priceOld:17399,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/TELEVISOR32_dc5eac55-f4a8-40c0-9fdf-3185abe9aecf_350x.png?v=1742687572',badge:'OFERTA',emoji:'📺'},
+  {id:'t1',cat:'tech',name:'Smart TV GRS 65" 4K Google TV',price:11999,priceOld:17399,monthly:508,months:24,img:'https://hn.grsenlinea.com/cdn/shop/files/TELEVISOR32_dc5eac55-f4a8-40c0-9fdf-3185abe9aecf_700x.png?v=1742687572',badge:'OFERTA',emoji:'📺'},
   {id:'t2',cat:'tech',name:'Tablet 10" + Teclado',price:6500,priceOld:null,monthly:271,months:24,img:null,badge:'',emoji:'💻'}
 ];
 const DEFAULT_LOGOS={header:null,footer:null};
