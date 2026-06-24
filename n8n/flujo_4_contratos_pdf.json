@@ -1,0 +1,142 @@
+{
+  "name": "La Roca CRM — Flujo 4: Generación y Envío de Contratos PDF",
+  "nodes": [
+    {
+      "id": "f4a00001-0000-0000-0000-000000000001",
+      "name": "Webhook Kanban Entregado",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "path": "kanban-entregado",
+        "httpMethod": "POST",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "notes": "Este webhook es llamado desde el CRM frontend cuando una tarjeta se mueve a 'entregado'. También puede ser llamado desde el Flujo 1 al confirmar venta. Payload: { contacto_id, vendedor_id, producto, pago }"
+    },
+    {
+      "id": "f4a00002-0000-0000-0000-000000000002",
+      "name": "Supabase Obtener Datos Completos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/kanban_tarjetas",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "contacto_id", "value": "=eq.{{ $json.body.contacto_id || $json.contacto_id }}" },
+            { "name": "select", "value": "id,columna,detalles_ia,actualizado_en,contactos(id,nombre,telefono,interes_principal,tipo_pago_preferido,created_at),vendedores(nombre,sucursal)" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f4a00003-0000-0000-0000-000000000003",
+      "name": "Generar HTML Contrato",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "parameters": {
+        "jsCode": "const data = $json[0];\nconst ct = data.contactos || {};\nconst vd = data.vendedores || {};\nconst ia = data.detalles_ia || {};\nconst fecha = new Date().toLocaleDateString('es-HN', { year:'numeric', month:'long', day:'numeric' });\nconst folio = 'LRC-' + Date.now().toString().slice(-6);\n\nconst producto = ia.producto || ct.interes_principal || 'Producto';\nconst pago = ia.pago || ct.tipo_pago_preferido || 'A convenir';\n\nconst htmlContent = `<!DOCTYPE html>\n<html lang='es'>\n<head>\n<meta charset='UTF-8'/>\n<style>\n  body { font-family: Arial, sans-serif; color: #111; max-width: 680px; margin: 0 auto; padding: 40px; }\n  .header { text-align: center; border-bottom: 3px solid #E8195A; padding-bottom: 20px; margin-bottom: 30px; }\n  .logo-name { font-size: 28px; font-weight: 900; color: #1B2F8A; }\n  .logo-name span { color: #E8195A; }\n  .folio { font-size: 12px; color: #666; margin-top: 6px; }\n  .title { font-size: 16px; font-weight: 700; text-align: center; margin: 20px 0; text-transform: uppercase; letter-spacing: 2px; }\n  .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }\n  .label { font-weight: 700; color: #444; font-size: 13px; }\n  .value { color: #111; font-size: 13px; }\n  .footer { margin-top: 40px; text-align: center; font-size: 11px; color: #888; }\n  .seal { margin-top: 30px; padding: 20px; background: #f7f7f5; border-radius: 8px; text-align: center; font-size: 12px; color: #666; }\n</style>\n</head>\n<body>\n  <div class='header'>\n    <div class='logo-name'><span>LA ROCA</span> COMERCIAL</div>\n    <div style='font-size:13px;color:#666;margin-top:4px'>Barrio Arriba, Comayagua, Honduras · Tel: 2772-2660</div>\n    <div class='folio'>Folio: ${folio} · ${fecha}</div>\n  </div>\n  <div class='title'>Comprobante Digital de Transacción</div>\n  <div class='row'><span class='label'>Cliente:</span><span class='value'>${ct.nombre || 'N/A'}</span></div>\n  <div class='row'><span class='label'>Teléfono:</span><span class='value'>${ct.telefono || 'N/A'}</span></div>\n  <div class='row'><span class='label'>Producto:</span><span class='value'>${producto}</span></div>\n  <div class='row'><span class='label'>Modalidad de pago:</span><span class='value'>${pago}</span></div>\n  <div class='row'><span class='label'>Asesor:</span><span class='value'>${vd.nombre || 'N/A'}</span></div>\n  <div class='row'><span class='label'>Sucursal:</span><span class='value'>${vd.sucursal || 'Comayagua'}</span></div>\n  <div class='row'><span class='label'>Fecha de venta:</span><span class='value'>${fecha}</span></div>\n  <div class='seal'>Este comprobante certifica la transacción realizada en La Roca Comercial.<br/>Conserve este documento para cualquier gestión de garantía.</div>\n  <div class='footer'>La Roca Comercial © 2024 · Comayagua, Honduras · Distribuidores oficiales MOVESA y Olympia</div>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    htmlContent,\n    folio,\n    fecha,\n    contacto: ct,\n    vendedor: vd,\n    tarjeta_id: data.id\n  }\n}];"
+      }
+    },
+    {
+      "id": "f4a00004-0000-0000-0000-000000000004",
+      "name": "Generar PDF con API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [960, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.html2pdf.app/v1/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Content-Type", "value": "application/json" }]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "html": "={{ $json.htmlContent }}",
+          "apiKey": "TU_HTML2PDF_API_KEY",
+          "landscape": false,
+          "marginTop": "20px",
+          "marginBottom": "20px"
+        },
+        "options": {
+          "response": { "response": { "responseFormat": "file" } }
+        }
+      }
+    },
+    {
+      "id": "f4a00005-0000-0000-0000-000000000005",
+      "name": "Subir PDF a Supabase Storage",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1200, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/storage/v1/object/contratos/contrato-{{ $('Generar HTML Contrato').item.json.folio }}.pdf",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/pdf" },
+            { "name": "x-upsert", "value": "true" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data"
+      }
+    },
+    {
+      "id": "f4a00006-0000-0000-0000-000000000006",
+      "name": "Construir URL Publica PDF",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 300],
+      "parameters": {
+        "jsCode": "const folio = $('Generar HTML Contrato').item.json.folio;\nconst telefono = $('Generar HTML Contrato').item.json.contacto.telefono;\nconst nombre = $('Generar HTML Contrato').item.json.contacto.nombre;\n\nconst pdfUrl = `https://upaenjotkocmdvfuobii.supabase.co/storage/v1/object/public/contratos/contrato-${folio}.pdf`;\n\nreturn [{\n  json: { pdfUrl, folio, telefono, nombre }\n}];"
+      }
+    },
+    {
+      "id": "f4a00007-0000-0000-0000-000000000007",
+      "name": "Twilio Enviar Contrato WhatsApp",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1680, 300],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $json.telefono }}",
+        "message": "=¡Felicidades por tu compra, {{ $json.nombre }}! 🎉 Adjunto encuentras el comprobante digital de tu transacción en La Roca Comercial.\n\n📄 {{ $json.pdfUrl }}\n\n¡Gracias por confiar en nosotros! Recuerda que tienes garantía incluida. 💪"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Kanban Entregado": { "main": [[{ "node": "Supabase Obtener Datos Completos", "type": "main", "index": 0 }]] },
+    "Supabase Obtener Datos Completos": { "main": [[{ "node": "Generar HTML Contrato", "type": "main", "index": 0 }]] },
+    "Generar HTML Contrato": { "main": [[{ "node": "Generar PDF con API", "type": "main", "index": 0 }]] },
+    "Generar PDF con API": { "main": [[{ "node": "Subir PDF a Supabase Storage", "type": "main", "index": 0 }]] },
+    "Subir PDF a Supabase Storage": { "main": [[{ "node": "Construir URL Publica PDF", "type": "main", "index": 0 }]] },
+    "Construir URL Publica PDF": { "main": [[{ "node": "Twilio Enviar Contrato WhatsApp", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": {
+    "instanceId": "laroca-crm",
+    "notes": "SETUP REQUERIDO: 1) Crear bucket 'contratos' en Supabase Storage (público). 2) Obtener API Key en html2pdf.app (plan gratuito disponible). 3) Configurar credencial Twilio. Webhook URL: /webhook/kanban-entregado"
+  }
+}

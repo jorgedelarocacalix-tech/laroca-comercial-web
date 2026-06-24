@@ -1,0 +1,157 @@
+{
+  "name": "La Roca CRM — Flujo 3: Seguimiento Pasivo Cron 9AM",
+  "nodes": [
+    {
+      "id": "f3a00001-0000-0000-0000-000000000001",
+      "name": "Schedule 9AM Honduras",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1-6"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f3a00002-0000-0000-0000-000000000002",
+      "name": "Supabase Buscar Tarjetas 48h Sin Movimiento",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/kanban_tarjetas",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "columna", "value": "=eq.en_gestion" },
+            { "name": "actualizado_en", "value": "=lt.{{ new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString() }}" },
+            { "name": "select", "value": "id,contacto_id,contactos(nombre,telefono,bot_activo)" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Accept", "value": "application/json" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f3a00003-0000-0000-0000-000000000003",
+      "name": "IF Hay Tarjetas Para Seguimiento",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-cards",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "gt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f3a00004-0000-0000-0000-000000000004",
+      "name": "Split en Items Individuales",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [960, 240],
+      "parameters": { "batchSize": 1, "options": {} }
+    },
+    {
+      "id": "f3a00005-0000-0000-0000-000000000005",
+      "name": "IF Bot Activo Para Seguimiento",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1200, 240],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "bot-off",
+              "leftValue": "={{ $json.contactos.bot_activo }}",
+              "rightValue": false,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f3a00006-0000-0000-0000-000000000006",
+      "name": "Twilio Mensaje Reenganche",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1440, 200],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $json.contactos.telefono }}",
+        "message": "=Hola {{ $json.contactos.nombre || 'estimado/a' }}, un gusto saludarte. ¿Pudiste revisar la información que te compartió mi compañero sobre tu cotización? Quedo a la orden. 😊"
+      }
+    },
+    {
+      "id": "f3a00007-0000-0000-0000-000000000007",
+      "name": "Supabase Update Fecha Seguimiento",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1680, 200],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/kanban_tarjetas?id=eq.{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": { "actualizado_en": "={{ new Date().toISOString() }}" }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule 9AM Honduras": { "main": [[{ "node": "Supabase Buscar Tarjetas 48h Sin Movimiento", "type": "main", "index": 0 }]] },
+    "Supabase Buscar Tarjetas 48h Sin Movimiento": { "main": [[{ "node": "IF Hay Tarjetas Para Seguimiento", "type": "main", "index": 0 }]] },
+    "IF Hay Tarjetas Para Seguimiento": {
+      "main": [
+        [{ "node": "Split en Items Individuales", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Split en Items Individuales": { "main": [[{ "node": "IF Bot Activo Para Seguimiento", "type": "main", "index": 0 }]] },
+    "IF Bot Activo Para Seguimiento": {
+      "main": [
+        [],
+        [{ "node": "Twilio Mensaje Reenganche", "type": "main", "index": 0 }]
+      ]
+    },
+    "Twilio Mensaje Reenganche": { "main": [[{ "node": "Supabase Update Fecha Seguimiento", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": {
+    "instanceId": "laroca-crm",
+    "notes": "Cron: 0 9 * * 1-6 = Lunes a Sábado a las 9:00 AM. Solo envía mensaje a contactos con bot_activo=false que llevan más de 48h sin actualización en columna en_gestion. Actualiza la fecha para evitar doble envío."
+  }
+}

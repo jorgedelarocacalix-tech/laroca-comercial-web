@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CRM Live · La Roca Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pk:#E8195A;--pkd:#c4124a;
+  --nb:#1B2F8A;
+  --bg:#0a0f1e;--s1:#111827;--s2:#1e2433;--s3:#252d3f;
+  --t1:#f1f5f9;--t2:rgba(241,245,249,.62);--t3:rgba(241,245,249,.35);
+  --ln:rgba(255,255,255,.08);
+  --c-new:#3b82f6;--c-advisor:#f59e0b;--c-managing:#10b981;--c-done:#8b5cf6;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── LOCK SCREEN ── */
+.lock{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px}
+.lock-card{background:var(--s2);border:1px solid var(--ln);border-radius:16px;padding:40px;width:340px;text-align:center}
+.lock-logo{font-size:1.2rem;font-weight:800;margin-bottom:8px;color:var(--t1)}.lock-logo span{color:var(--pk)}
+.lock-sub{font-size:.78rem;color:var(--t3);margin-bottom:28px}
+.lock-inp{width:100%;padding:12px 16px;background:var(--s3);border:1px solid var(--ln);border-radius:8px;color:var(--t1);font-size:.9rem;outline:none;font-family:inherit;transition:border-color .2s;margin-bottom:10px}
+.lock-inp:focus{border-color:rgba(255,255,255,.3)}
+.lock-btn{width:100%;padding:12px;background:var(--pk);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s}
+.lock-btn:hover{background:var(--pkd)}
+.lock-err{font-size:.75rem;color:var(--pk);min-height:18px;margin-top:4px}
+.lock.hidden{display:none}
+
+/* ── HEADER ── */
+.hdr{background:var(--s1);border-bottom:1px solid var(--ln);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px}
+.hdr-left{display:flex;align-items:center;gap:16px}
+.brand{font-size:.95rem;font-weight:800;color:var(--t1);white-space:nowrap}.brand span{color:var(--pk)}
+.crm-badge{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(232,25,90,.15);color:var(--pk);border:1px solid rgba(232,25,90,.3);padding:3px 9px;border-radius:20px}
+.conn-dot{display:flex;align-items:center;gap:6px;font-size:.73rem;color:var(--t3)}
+.conn-dot .dot{width:7px;height:7px;border-radius:50%;background:#6b7280;transition:background .3s}
+.conn-dot.live .dot{background:#10b981;box-shadow:0 0 6px rgba(16,185,129,.5);animation:pulse 2s infinite}
+.conn-dot.live{color:#10b981}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.srch-wrap{display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--ln);border-radius:7px;padding:8px 12px;width:220px;transition:border-color .2s}
+.srch-wrap:focus-within{border-color:rgba(255,255,255,.25)}
+.srch-wrap i{color:var(--t3);font-size:.8rem}
+.srch-wrap input{background:none;border:none;outline:none;color:var(--t1);font-size:.82rem;width:100%;font-family:inherit}
+.srch-wrap input::placeholder{color:var(--t3)}
+.filter-sel{background:var(--s2);border:1px solid var(--ln);border-radius:7px;color:var(--t2);font-size:.78rem;padding:8px 10px;outline:none;font-family:inherit;cursor:pointer}
+.filter-sel option{background:var(--s2)}
+.icon-btn{width:34px;height:34px;border-radius:7px;border:1px solid var(--ln);background:var(--s2);color:var(--t2);font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.icon-btn:hover{background:var(--s3);color:var(--t1)}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--t3);text-decoration:none;transition:color .2s;padding:6px 10px;border:1px solid var(--ln);border-radius:7px;background:var(--s2)}
+.back-btn:hover{color:var(--t1)}
+
+/* ── STATS ROW ── */
+.stats{display:flex;gap:0;background:var(--s1);border-bottom:1px solid var(--ln)}
+.stat{flex:1;padding:14px 20px;border-right:1px solid var(--ln);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-size:1.6rem;font-weight:800;letter-spacing:-.04em;color:var(--t1)}
+.stat-l{font-size:.65rem;color:var(--t3);font-weight:500;margin-top:2px;text-transform:uppercase;letter-spacing:.07em}
+.stat.s-new .stat-n{color:var(--c-new)}
+.stat.s-adv .stat-n{color:var(--c-advisor)}
+.stat.s-mng .stat-n{color:var(--c-managing)}
+.stat.s-don .stat-n{color:var(--c-done)}
+
+/* ── KANBAN BOARD ── */
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:0;height:calc(100vh - 56px - 52px);overflow:hidden}
+.col{display:flex;flex-direction:column;border-right:1px solid var(--ln);overflow:hidden}
+.col:last-child{border-right:none}
+.col-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--ln);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.col-title{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--t1)}
+.col-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.col-count{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--s3)}
+.col-cards{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+
+/* ── KANBAN CARD ── */
+.card{background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:13px;cursor:default;transition:border-color .2s,box-shadow .2s;position:relative}
+.card:hover{border-color:rgba(255,255,255,.18);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.card-name{font-size:.84rem;font-weight:700;color:var(--t1);line-height:1.3}
+.card-phone{font-size:.72rem;color:var(--t3);margin-top:2px;font-family:monospace}
+.origin-badge{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.origin-wa{background:rgba(37,211,102,.15);color:#25D366}
+.origin-gc{background:rgba(66,133,244,.15);color:#4285F4}
+.card-seller{display:flex;align-items:center;gap:6px;margin-bottom:9px}
+.seller-chip{font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:12px;background:rgba(27,47,138,.25);color:#93c5fd;border:1px solid rgba(59,130,246,.2)}
+.branch-chip{font-size:.62rem;color:var(--t3);display:flex;align-items:center;gap:3px}
+.card-ai{background:var(--s3);border-radius:7px;padding:8px 10px;margin-bottom:9px;display:flex;flex-direction:column;gap:4px}
+.ai-row{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.ai-label{font-size:.62rem;color:var(--t3);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.ai-val{font-size:.72rem;color:var(--t2);font-weight:600;text-align:right}
+.product-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pt-motos{background:rgba(232,25,90,.12);color:#f9a8d4}
+.pt-camas{background:rgba(16,185,129,.12);color:#6ee7b7}
+.pt-muebles{background:rgba(245,158,11,.12);color:#fcd34d}
+.pt-unknown{background:rgba(255,255,255,.06);color:var(--t3)}
+.pay-tag{font-size:.64rem;padding:2px 7px;border-radius:10px;font-weight:600}
+.pay-credito{background:rgba(139,92,246,.12);color:#c4b5fd}
+.pay-contado{background:rgba(16,185,129,.12);color:#6ee7b7}
+.pay-unknown{background:rgba(255,255,255,.06);color:var(--t3)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.card-time{font-size:.63rem;color:var(--t3);display:flex;align-items:center;gap:4px}
+.bot-status{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:10px}
+.bot-on{background:rgba(16,185,129,.12);color:#10b981}
+.bot-off{background:rgba(255,255,255,.06);color:var(--t3)}
+.card-actions{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+.action-btn{flex:1;min-width:0;padding:6px 8px;border-radius:6px;border:1px solid var(--ln);background:transparent;color:var(--t3);font-size:.65rem;font-weight:600;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-family:inherit}
+.action-btn:hover{background:var(--s3);color:var(--t1);border-color:rgba(255,255,255,.2)}
+.action-btn.bot-pause{color:var(--pk);border-color:rgba(232,25,90,.25);background:rgba(232,25,90,.06)}
+.action-btn.bot-pause:hover{background:rgba(232,25,90,.14);border-color:rgba(232,25,90,.4)}
+.action-btn.bot-reactivate{color:#10b981;border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.06)}
+.action-btn.bot-reactivate:hover{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.4)}
+.action-btn.move-btn{color:var(--c-advisor)}
+.action-btn.move-done{color:var(--c-done)}
+.action-btn.wa-btn{color:#25D366;border-color:rgba(37,211,102,.25);background:rgba(37,211,102,.06)}
+.action-btn.wa-btn:hover{background:rgba(37,211,102,.14);border-color:rgba(37,211,102,.4)}
+
+/* Column-specific accent borders */
+.col-nuevo .col-hdr{border-top:2px solid var(--c-new)}
+.col-contactar .col-hdr{border-top:2px solid var(--c-advisor)}
+.col-gestion .col-hdr{border-top:2px solid var(--c-managing)}
+.col-entregado .col-hdr{border-top:2px solid var(--c-done)}
+
+/* ── EMPTY STATE ── */
+.empty-col{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;opacity:.35;padding:24px;text-align:center}
+.empty-col i{font-size:1.8rem}
+.empty-col p{font-size:.75rem;color:var(--t3)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--s2);border:1px solid rgba(255,255,255,.12);color:var(--t1);padding:10px 18px;border-radius:8px;font-weight:600;font-size:.8rem;z-index:3000;white-space:nowrap;animation:tin .2s ease,tout .3s ease 2.2s forwards}
+@keyframes tin{from{opacity:0;transform:translateX(-50%) translateY(6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes tout{to{opacity:0;transform:translateX(-50%) translateY(6px)}}
+
+/* ── LOADING ── */
+.loading{display:flex;align-items:center;justify-content:center;height:200px;font-size:.82rem;color:var(--t3);gap:8px}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--pk);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1200px){.board{grid-template-columns:repeat(2,1fr)}.col:nth-child(2){border-right:none}.col:nth-child(3){border-top:1px solid var(--ln)}.col:nth-child(4){border-top:1px solid var(--ln)}}
+@media(max-width:700px){.board{grid-template-columns:1fr;height:auto;overflow:visible}.col{height:auto;border-right:none;border-bottom:1px solid var(--ln)}.stats{flex-wrap:wrap}.stat{min-width:50%}.srch-wrap{width:150px}.filter-sel{display:none}}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div class="lock" id="lock">
+  <div class="lock-card">
+    <div class="lock-logo"><span>LA ROCA</span> COMERCIAL</div>
+    <div class="lock-sub">CRM interno · Solo personal autorizado</div>
+    <input class="lock-inp" type="password" id="lock-inp" placeholder="Contraseña de acceso" onkeydown="if(event.key==='Enter')unlock()"/>
+    <button class="lock-btn" onclick="unlock()">Acceder al CRM</button>
+    <div class="lock-err" id="lock-err"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr" id="app-hdr" style="display:none">
+  <div class="hdr-left">
+    <a class="back-btn" href="index.html"><i class="fas fa-arrow-left"></i> Tienda</a>
+    <div class="brand"><span>LA ROCA</span> COMERCIAL</div>
+    <div class="crm-badge">CRM LIVE</div>
+    <div class="conn-dot" id="conn-dot"><div class="dot"></div><span id="conn-txt">Conectando…</span></div>
+  </div>
+  <div class="hdr-right">
+    <div class="srch-wrap"><i class="fas fa-search"></i><input type="text" id="search-inp" placeholder="Buscar cliente…" oninput="renderBoard()"/></div>
+    <select class="filter-sel" id="vendor-filter" onchange="renderBoard()">
+      <option value="">Todos los vendedores</option>
+    </select>
+    <button class="icon-btn" onclick="loadBoard()" title="Recargar"><i class="fas fa-sync-alt"></i></button>
+  </div>
+</header>
+
+<!-- STATS ROW -->
+<div class="stats" id="app-stats" style="display:none">
+  <div class="stat s-new"><div class="stat-n" id="st-new">0</div><div class="stat-l">Nuevos</div></div>
+  <div class="stat s-adv"><div class="stat-n" id="st-adv">0</div><div class="stat-l">Por contactar</div></div>
+  <div class="stat s-mng"><div class="stat-n" id="st-mng">0</div><div class="stat-l">En gestión</div></div>
+  <div class="stat s-don"><div class="stat-n" id="st-don">0</div><div class="stat-l">Entregados</div></div>
+</div>
+
+<!-- KANBAN BOARD -->
+<div class="board" id="board" style="display:none">
+  <!-- Column: Nuevo -->
+  <div class="col col-nuevo">
+    <div class="col-hdr">
+      <div class="col-title"><div class="col-dot" style="background:var(--c-new)"></div>Nuevos</div>
+      <span class="col-count" id="cnt-nuevo" style="color:var(--c-new)">0</span>
+    </div>
+    <div class="col-cards" id="col-nuevo"></div>
+  </div>
+  <!-- Column: Contactar Asesor -->
+  <div class="col col-contactar">
+    <div class="col-hdr">
+      <div class="col-title"><div class="col-dot" style="background:var(--c-advisor)"></div>Contactar Asesor</div>
+      <span class="col-count" id="cnt-contactar" style="color:var(--c-advisor)">0</span>
+    </div>
+    <div class="col-cards" id="col-contactar_asesor"></div>
+  </div>
+  <!-- Column: En Gestión -->
+  <div class="col col-gestion">
+    <div class="col-hdr">
+      <div class="col-title"><div class="col-dot" style="background:var(--c-managing)"></div>En Gestión</div>
+      <span class="col-count" id="cnt-gestion" style="color:var(--c-managing)">0</span>
+    </div>
+    <div class="col-cards" id="col-en_gestion"></div>
+  </div>
+  <!-- Column: Entregado -->
+  <div class="col col-entregado">
+    <div class="col-hdr">
+      <div class="col-title"><div class="col-dot" style="background:var(--c-done)"></div>Entregados</div>
+      <span class="col-count" id="cnt-entregado" style="color:var(--c-done)">0</span>
+    </div>
+    <div class="col-cards" id="col-entregado"></div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const SUPABASE_URL  = 'https://upaenjotkocmdvfuobii.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8';
+const CRM_PASS      = 'LaRoca2024!';  // cambiar tras primer despliegue
+const COLS          = ['nuevo','contactar_asesor','en_gestion','entregado'];
+const COL_LABELS    = {nuevo:'nuevo',contactar_asesor:'contactar_asesor',en_gestion:'en_gestion',entregado:'entregado'};
+const COL_NEXT      = {nuevo:'contactar_asesor',contactar_asesor:'en_gestion',en_gestion:'entregado'};
+
+let { createClient } = supabase;
+let sb, channel;
+let allCards = [];
+
+// ── AUTH ─────────────────────────────────────────────────────
+function unlock() {
+  const val = document.getElementById('lock-inp').value;
+  if (val === CRM_PASS) {
+    sessionStorage.setItem('crm_auth', '1');
+    document.getElementById('lock').classList.add('hidden');
+    document.getElementById('app-hdr').style.display = '';
+    document.getElementById('app-stats').style.display = '';
+    document.getElementById('board').style.display = '';
+    initCRM();
+  } else {
+    document.getElementById('lock-err').textContent = 'Contraseña incorrecta. Intenta de nuevo.';
+    document.getElementById('lock-inp').value = '';
+  }
+}
+
+window.onload = () => {
+  if (sessionStorage.getItem('crm_auth') === '1') {
+    document.getElementById('lock').classList.add('hidden');
+    document.getElementById('app-hdr').style.display = '';
+    document.getElementById('app-stats').style.display = '';
+    document.getElementById('board').style.display = '';
+    initCRM();
+  }
+};
+
+// ── INIT ──────────────────────────────────────────────────────
+async function initCRM() {
+  sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+  await loadBoard();
+  subscribeRealtime();
+}
+
+// ── LOAD BOARD ────────────────────────────────────────────────
+async function loadBoard() {
+  showLoading();
+  const { data, error } = await sb
+    .from('kanban_tarjetas')
+    .select(`
+      id, columna, detalles_ia, actualizado_en,
+      contactos ( id, telefono, nombre, bot_activo, interes_principal,
+                  tipo_pago_preferido, origen_contacto, created_at ),
+      vendedores ( nombre, sucursal )
+    `)
+    .order('actualizado_en', { ascending: false });
+
+  if (error) { toast('⚠ Error al cargar datos'); console.error(error); return; }
+  allCards = data || [];
+  populateVendorFilter(allCards);
+  renderBoard();
+}
+
+function showLoading() {
+  COLS.forEach(col => {
+    const el = document.getElementById('col-' + col);
+    if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div> Cargando…</div>';
+  });
+}
+
+// ── VENDOR FILTER ─────────────────────────────────────────────
+function populateVendorFilter(cards) {
+  const sel = document.getElementById('vendor-filter');
+  const existing = new Set();
+  sel.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+  cards.forEach(c => {
+    const v = c.vendedores?.nombre;
+    if (v && !existing.has(v)) {
+      existing.add(v);
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
+    }
+  });
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function renderBoard() {
+  const search  = (document.getElementById('search-inp')?.value || '').toLowerCase().trim();
+  const vendor  = document.getElementById('vendor-filter')?.value || '';
+  const counts  = {nuevo:0, contactar_asesor:0, en_gestion:0, entregado:0};
+
+  COLS.forEach(col => {
+    const el = document.getElementById('col-' + col);
+    if (!el) return;
+    let cards = allCards.filter(c => c.columna === col);
+
+    if (search) cards = cards.filter(c => {
+      const nombre  = (c.contactos?.nombre  || '').toLowerCase();
+      const telefono= (c.contactos?.telefono|| '').toLowerCase();
+      return nombre.includes(search) || telefono.includes(search);
+    });
+    if (vendor) cards = cards.filter(c => c.vendedores?.nombre === vendor);
+
+    counts[col] = cards.length;
+    el.innerHTML = cards.length
+      ? cards.map(card => buildCardHTML(card)).join('')
+      : '<div class="empty-col"><i class="fas fa-inbox"></i><p>Sin tarjetas</p></div>';
+  });
+
+  // Update counts
+  document.getElementById('cnt-nuevo').textContent     = counts.nuevo;
+  document.getElementById('cnt-contactar').textContent  = counts.contactar_asesor;
+  document.getElementById('cnt-gestion').textContent    = counts.en_gestion;
+  document.getElementById('cnt-entregado').textContent  = counts.entregado;
+  document.getElementById('st-new').textContent = counts.nuevo;
+  document.getElementById('st-adv').textContent = counts.contactar_asesor;
+  document.getElementById('st-mng').textContent = counts.en_gestion;
+  document.getElementById('st-don').textContent = counts.entregado;
+}
+
+// ── CARD HTML ─────────────────────────────────────────────────
+function buildCardHTML(c) {
+  const ct  = c.contactos || {};
+  const vd  = c.vendedores || {};
+  const ia  = c.detalles_ia || {};
+  const prod= ia.producto || ct.interes_principal || 'desconocido';
+  const pago= ia.metodo_pago || ct.tipo_pago_preferido || 'desconocido';
+  const orig= ct.origen_contacto || 'whatsapp_inbound';
+  const isWA= orig === 'whatsapp_inbound';
+
+  const prodTag = `<span class="product-tag ${prodClass(prod)}">${prodIcon(prod)} ${prod}</span>`;
+  const pagTag  = `<span class="pay-tag ${pagoClass(pago)}">${pago}</span>`;
+
+  const now     = Date.now();
+  const created = new Date(ct.created_at || c.actualizado_en).getTime();
+  const ago     = timeAgo(now - created);
+
+  const nextCol = COL_NEXT[c.columna];
+  const moveBtn = nextCol
+    ? `<button class="action-btn move-btn" onclick="moveCard('${c.id}','${nextCol}')"><i class="fas fa-arrow-right"></i> ${colLabel(nextCol)}</button>`
+    : '';
+
+  const botBtn = ct.bot_activo
+    ? `<button class="action-btn bot-pause" onclick="pauseBot('${ct.id}')"><i class="fas fa-pause"></i> Pausar Bot</button>`
+    : `<button class="action-btn bot-reactivate" onclick="reactivateBot('${ct.id}')"><i class="fas fa-play"></i> Reactivar</button>`;
+
+  return `
+<div class="card" id="card-${c.id}">
+  <div class="card-top">
+    <div>
+      <div class="card-name">${ct.nombre || 'Cliente Nuevo'}</div>
+      <div class="card-phone">${ct.telefono || '—'}</div>
+    </div>
+    <div class="origin-badge ${isWA?'origin-wa':'origin-gc'}" title="${isWA?'WhatsApp Inbound':'Google Contacts'}">
+      <i class="${isWA?'fab fa-whatsapp':'fab fa-google'}"></i>
+    </div>
+  </div>
+  ${vd.nombre?`<div class="card-seller">
+    <span class="seller-chip"><i class="fas fa-user-tie" style="font-size:.6rem"></i> ${vd.nombre}</span>
+    <span class="branch-chip"><i class="fas fa-map-marker-alt"></i> ${vd.sucursal}</span>
+  </div>`:'<div class="card-seller"><span class="branch-chip">Sin vendedor asignado</span></div>'}
+  <div class="card-ai">
+    <div class="ai-row"><span class="ai-label">Producto</span>${prodTag}</div>
+    <div class="ai-row"><span class="ai-label">Pago</span>${pagTag}</div>
+  </div>
+  <div class="card-footer">
+    <div class="card-time"><i class="fas fa-clock"></i>${ago}</div>
+    <div class="bot-status ${ct.bot_activo?'bot-on':'bot-off'}">
+      <i class="fas fa-robot"></i>${ct.bot_activo?'Bot ON':'Bot OFF'}
+    </div>
+  </div>
+  <div class="card-actions">
+    <a class="action-btn wa-btn" href="https://wa.me/${whatsappNum(ct.telefono)}" target="_blank"><i class="fab fa-whatsapp"></i> Chat</a>
+    ${botBtn}
+    ${moveBtn}
+  </div>
+</div>`;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function whatsappNum(tel) { return (tel||'').replace(/\D/g,''); }
+function colLabel(col) {
+  return {nuevo:'Nuevo',contactar_asesor:'Asesor',en_gestion:'Gestión',entregado:'Entregado'}[col]||col;
+}
+function prodClass(p) {
+  if(!p||p==='desconocido')return'pt-unknown';
+  if(p.includes('moto'))return'pt-motos';
+  if(p.includes('cama'))return'pt-camas';
+  return'pt-muebles';
+}
+function prodIcon(p) {
+  if(!p||p==='desconocido')return'?';
+  if(p.includes('moto'))return'🏍️';
+  if(p.includes('cama'))return'🛏️';
+  return'🛋️';
+}
+function pagoClass(p) {
+  if(!p||p==='desconocido')return'pay-unknown';
+  if(p.includes('cred'))return'pay-credito';
+  if(p.includes('cont'))return'pay-contado';
+  return'pay-unknown';
+}
+function timeAgo(ms) {
+  const s=ms/1000,m=s/60,h=m/60,d=h/24;
+  if(s<60)return'Ahora';if(m<60)return`${Math.floor(m)}m`;
+  if(h<24)return`${Math.floor(h)}h`;return`${Math.floor(d)}d`;
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────
+async function moveCard(cardId, newCol) {
+  const { error } = await sb
+    .from('kanban_tarjetas')
+    .update({ columna: newCol, actualizado_en: new Date().toISOString() })
+    .eq('id', cardId);
+  if (error) { toast('⚠ Error al mover tarjeta'); return; }
+  const card = allCards.find(c => c.id === cardId);
+  if (card) card.columna = newCol;
+  renderBoard();
+  toast(`✓ Movido a ${colLabel(newCol)}`);
+}
+
+async function pauseBot(contactoId) {
+  const { error } = await sb
+    .from('contactos')
+    .update({ bot_activo: false })
+    .eq('id', contactoId);
+  if (error) { toast('⚠ Error al pausar bot'); return; }
+  const card = allCards.find(c => c.contactos?.id === contactoId);
+  if (card && card.contactos) card.contactos.bot_activo = false;
+  renderBoard();
+  toast('⏸ Bot pausado');
+}
+
+async function reactivateBot(contactoId) {
+  const { error } = await sb
+    .from('contactos')
+    .update({ bot_activo: true, interes_principal: null })
+    .eq('id', contactoId);
+  if (error) { toast('⚠ Error al reactivar'); return; }
+  const card = allCards.find(c => c.contactos?.id === contactoId);
+  if (card && card.contactos) { card.contactos.bot_activo = true; card.contactos.interes_principal = null; }
+  renderBoard();
+  toast('▶ Bot reactivado');
+}
+
+// ── REALTIME SUBSCRIPTION ─────────────────────────────────────
+function subscribeRealtime() {
+  channel = sb.channel('crm-live-kanban')
+    .on('postgres_changes',
+      { event: '*', schema: 'public', table: 'kanban_tarjetas' },
+      (payload) => {
+        // ANTI-LOOP: solo re-renderizar si la columna realmente cambió
+        if (
+          payload.eventType === 'UPDATE' &&
+          payload.new.columna === payload.old.columna
+        ) {
+          // Actualizar solo detalles_ia localmente sin mover la tarjeta
+          const card = allCards.find(c => c.id === payload.new.id);
+          if (card) {
+            card.detalles_ia = payload.new.detalles_ia;
+            card.actualizado_en = payload.new.actualizado_en;
+          }
+          return;
+        }
+        // Cambio real de columna o inserción/eliminación: recargar
+        loadBoard();
+      }
+    )
+    .on('postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'contactos' },
+      (payload) => {
+        // Actualizar bot_activo en estado local sin recargar todo el tablero
+        const card = allCards.find(c => c.contactos?.id === payload.new.id);
+        if (card && card.contactos) {
+          card.contactos.bot_activo  = payload.new.bot_activo;
+          card.contactos.interes_principal = payload.new.interes_principal;
+          card.contactos.tipo_pago_preferido = payload.new.tipo_pago_preferido;
+        }
+        renderBoard();
+      }
+    )
+    .subscribe((status) => {
+      const dot = document.getElementById('conn-dot');
+      const txt = document.getElementById('conn-txt');
+      if (status === 'SUBSCRIBED') {
+        dot.classList.add('live');
+        txt.textContent = 'En vivo';
+      } else {
+        dot.classList.remove('live');
+        txt.textContent = 'Reconectando…';
+      }
+    });
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function toast(msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2600);
+}
+</script>
+</body>
+</html>

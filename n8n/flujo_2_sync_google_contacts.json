@@ -1,0 +1,133 @@
+{
+  "name": "La Roca CRM — Flujo 2: Sincronización Google Contacts",
+  "nodes": [
+    {
+      "id": "f2a00001-0000-0000-0000-000000000001",
+      "name": "Google Contacts Trigger",
+      "type": "n8n-nodes-base.googleContactsTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "credentials": {
+        "googleContactsOAuth2Api": { "id": "GOOGLE_CONTACTS_CREDENTIAL_ID", "name": "Google Contacts OAuth2" }
+      },
+      "parameters": {
+        "event": "contactAdded",
+        "options": {}
+      }
+    },
+    {
+      "id": "f2a00002-0000-0000-0000-000000000002",
+      "name": "Formatear Datos Contacto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 300],
+      "parameters": {
+        "jsCode": "const contact = $json;\n\n// Extraer teléfono en formato internacional\nlet telefono = '';\nif (contact.phoneNumbers && contact.phoneNumbers.length > 0) {\n  telefono = contact.phoneNumbers[0].value || '';\n  telefono = telefono.replace(/\\s|-|\\(|\\)/g, '');\n  if (!telefono.startsWith('+')) {\n    // Asumir número hondureño si no tiene código de país\n    if (telefono.length === 8) telefono = '+504' + telefono;\n    else telefono = '+' + telefono;\n  }\n}\n\nconst nombre = contact.names && contact.names.length > 0\n  ? contact.names[0].displayName || 'Contacto Google'\n  : 'Contacto Google';\n\nconst email = contact.emailAddresses && contact.emailAddresses.length > 0\n  ? contact.emailAddresses[0].value\n  : null;\n\nreturn [{\n  json: {\n    telefono,\n    nombre,\n    email,\n    bot_activo: false,\n    origen_contacto: 'google_contacts_sync',\n    valido: telefono.length >= 8\n  }\n}];"
+      }
+    },
+    {
+      "id": "f2a00003-0000-0000-0000-000000000003",
+      "name": "IF Telefono Valido",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "phone-valid",
+              "leftValue": "={{ $json.valido }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f2a00004-0000-0000-0000-000000000004",
+      "name": "Obtener Vendedor para Asignar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [960, 240],
+      "parameters": {
+        "method": "GET",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/vendedores",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "activo", "value": "=eq.true" },
+            { "name": "order", "value": "ultima_asignacion.asc" },
+            { "name": "limit", "value": "1" },
+            { "name": "select", "value": "id" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f2a00005-0000-0000-0000-000000000005",
+      "name": "Supabase Upsert Contacto Google",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1200, 240],
+      "parameters": {
+        "method": "POST",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/contactos",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates,return=representation" }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [{ "name": "on_conflict", "value": "telefono" }]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "telefono": "={{ $('Formatear Datos Contacto').item.json.telefono }}",
+          "nombre": "={{ $('Formatear Datos Contacto').item.json.nombre }}",
+          "bot_activo": false,
+          "origen_contacto": "google_contacts_sync",
+          "vendedor_id": "={{ $json[0].id }}"
+        }
+      }
+    },
+    {
+      "id": "f2a00006-0000-0000-0000-000000000006",
+      "name": "Log Telefono Invalido",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [960, 420],
+      "parameters": {
+        "jsCode": "console.log('Contacto de Google sin teléfono válido:', $json.nombre);\nreturn [{ json: { skipped: true, nombre: $json.nombre } }];"
+      }
+    }
+  ],
+  "connections": {
+    "Google Contacts Trigger": { "main": [[{ "node": "Formatear Datos Contacto", "type": "main", "index": 0 }]] },
+    "Formatear Datos Contacto": { "main": [[{ "node": "IF Telefono Valido", "type": "main", "index": 0 }]] },
+    "IF Telefono Valido": {
+      "main": [
+        [{ "node": "Obtener Vendedor para Asignar", "type": "main", "index": 0 }],
+        [{ "node": "Log Telefono Invalido", "type": "main", "index": 0 }]
+      ]
+    },
+    "Obtener Vendedor para Asignar": { "main": [[{ "node": "Supabase Upsert Contacto Google", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "instanceId": "laroca-crm", "notes": "El trigger de Supabase crea la tarjeta Kanban automáticamente (columna: nuevo, bot_activo: false) al insertar el contacto." }
+}

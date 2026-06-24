@@ -1,0 +1,515 @@
+{
+  "name": "La Roca CRM — Flujo 1: Inbound WhatsApp",
+  "nodes": [
+    {
+      "id": "f1a00001-0000-0000-0000-000000000001",
+      "name": "Webhook Twilio Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "path": "twilio-whatsapp-inbound",
+        "httpMethod": "POST",
+        "responseMode": "lastNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "f1a00002-0000-0000-0000-000000000002",
+      "name": "Wait 4s Debounce",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [480, 300],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 4,
+        "unit": "seconds"
+      },
+      "webhookId": "debounce-whatsapp"
+    },
+    {
+      "id": "f1a00003-0000-0000-0000-000000000003",
+      "name": "Limpiar Telefono JS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "parameters": {
+        "jsCode": "let rawPhone = $input.item.json.body?.From || $input.item.json.From || '';\nlet cleanPhone = rawPhone.replace('whatsapp:', '').trim();\nif (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;\n\nconst texto = ($input.item.json.body?.Body || $input.item.json.Body || '').trim();\nconst numMedia = parseInt($input.item.json.body?.NumMedia || $input.item.json.NumMedia || '0');\nconst profileName = $input.item.json.body?.ProfileName || $input.item.json.ProfileName || 'Cliente Nuevo';\nconst mediaUrl = $input.item.json.body?.MediaUrl0 || $input.item.json.MediaUrl0 || null;\nconst mediaType = $input.item.json.body?.MediaContentType0 || $input.item.json.MediaContentType0 || null;\n\nreturn [{\n  json: {\n    telefono: cleanPhone,\n    texto,\n    numMedia,\n    esAudio: mediaType ? mediaType.startsWith('audio') : false,\n    mediaUrl,\n    mediaType,\n    nombre: profileName\n  }\n}];"
+      }
+    },
+    {
+      "id": "f1a00004-0000-0000-0000-000000000004",
+      "name": "Supabase Buscar Telefono",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [960, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/contactos",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "telefono", "value": "=eq.{{ $json.telefono }}" },
+            { "name": "select", "value": "id,nombre,bot_activo,vendedor_id,interes_principal,tipo_pago_preferido" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Accept", "value": "application/json" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f1a00005-0000-0000-0000-000000000005",
+      "name": "IF Contacto Existe",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1200, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "exists-check",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "gt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f1a00006-0000-0000-0000-000000000006",
+      "name": "Supabase Ruleta Round Robin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1440, 120],
+      "parameters": {
+        "method": "GET",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/vendedores",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "activo", "value": "=eq.true" },
+            { "name": "order", "value": "ultima_asignacion.asc" },
+            { "name": "limit", "value": "1" },
+            { "name": "select", "value": "id,nombre,sucursal,ultima_asignacion" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f1a00007-0000-0000-0000-000000000007",
+      "name": "Supabase Insert Contacto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1680, 120],
+      "parameters": {
+        "method": "POST",
+        "url": "https://upaenjotkocmdvfuobii.supabase.co/rest/v1/contactos",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=representation" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "telefono": "={{ $('Limpiar Telefono JS').item.json.telefono }}",
+          "nombre": "={{ $('Limpiar Telefono JS').item.json.nombre }}",
+          "bot_activo": true,
+          "vendedor_id": "={{ $json[0].id }}",
+          "origen_contacto": "whatsapp_inbound"
+        }
+      }
+    },
+    {
+      "id": "f1a00008-0000-0000-0000-000000000008",
+      "name": "Supabase Update Vendedor Ruleta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1920, 120],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/vendedores?id=eq.{{ $('Supabase Ruleta Round Robin').item.json[0].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": { "ultima_asignacion": "={{ new Date().toISOString() }}" }
+      }
+    },
+    {
+      "id": "f1a00009-0000-0000-0000-000000000009",
+      "name": "Twilio Mensaje Bienvenida",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [2160, 120],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $('Limpiar Telefono JS').item.json.telefono }}",
+        "message": "¡Hola! Bienvenido a nuestra tienda. Te saluda la asistente virtual. 👋 Nos alegra mucho que nos escribas. Veo que te interesan nuestras grandes promociones de temporada. Contame, ¿estás buscando opciones para motocicletas o preferís ver las ofertas en muebles y camas para el hogar?"
+      }
+    },
+    {
+      "id": "f1a00010-0000-0000-0000-000000000010",
+      "name": "IF Bot Activo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1440, 480],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "bot-active-check",
+              "leftValue": "={{ $json[0].bot_activo }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f1a00011-0000-0000-0000-000000000011",
+      "name": "HTTP Forward Chat Vivo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1680, 600],
+      "parameters": {
+        "method": "POST",
+        "url": "https://TU_CRM_CHAT_VIVO_API/message",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Content-Type", "value": "application/json" }]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "telefono": "={{ $('Limpiar Telefono JS').item.json.telefono }}",
+          "mensaje": "={{ $('Limpiar Telefono JS').item.json.texto }}",
+          "contacto_id": "={{ $('Supabase Buscar Telefono').item.json[0].id }}"
+        }
+      }
+    },
+    {
+      "id": "f1a00012-0000-0000-0000-000000000012",
+      "name": "IF Es Audio",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1680, 420],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "audio-check",
+              "leftValue": "={{ $('Limpiar Telefono JS').item.json.esAudio }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equal" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "f1a00013-0000-0000-0000-000000000013",
+      "name": "OpenAI Whisper Transcripcion",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [1920, 360],
+      "credentials": { "openAiApi": { "id": "OPENAI_CREDENTIAL_ID", "name": "OpenAI API" } },
+      "parameters": {
+        "operation": "audio",
+        "resource": "audio",
+        "audioFileUrl": "={{ $('Limpiar Telefono JS').item.json.mediaUrl }}",
+        "language": "es",
+        "model": "whisper-1"
+      }
+    },
+    {
+      "id": "f1a00014-0000-0000-0000-000000000014",
+      "name": "Preparar Texto para IA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2160, 420],
+      "parameters": {
+        "jsCode": "const esAudio = $('Limpiar Telefono JS').item.json.esAudio;\nlet textoFinal;\n\nif (esAudio) {\n  textoFinal = $('OpenAI Whisper Transcripcion').item.json.text || '';\n} else {\n  textoFinal = $('Limpiar Telefono JS').item.json.texto;\n}\n\nreturn [{ json: { texto_procesado: textoFinal } }];"
+      }
+    },
+    {
+      "id": "f1a00015-0000-0000-0000-000000000015",
+      "name": "AI Agent Neuroventas",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1,
+      "position": [2400, 420],
+      "parameters": {
+        "systemMessage": "Eres el asistente virtual experto en neuroventas de una empresa de retail en Honduras que vende motocicletas (Italika, Bajaj, Honda) y muebles/camas para el hogar. Tu objetivo es procesar las respuestas de los clientes y responder con empatía y cortesía hondureña.\n\nREGLAS DE EVALUACIÓN Y COMPORTAMIENTO:\n1. Si el cliente tiene dudas o pone objeciones (\"lo voy a pensar\", \"está caro\", \"no sé si califique al crédito\"), NO lo presiones. Usa el campo 'respuesta_gentil_bot' para hacerle una pregunta abierta de apoyo (Ej: 'Comprendo perfectamente, estimad@. ¿Hay algo en lo que podamos ayudarle para que tome la mejor decisión para su hogar?'). El bot continuará encendido (bot_activo = true).\n2. Si el cliente expresa interés claro y directo en comprar (\"quiero aplicar al crédito\" o \"lo quiero de contado\"), clasifica el método y activa la transferencia de columna.\n3. FILTRO DE FALLBACK Y EMERGENCIAS AUTOMÁTICO: Si el cliente cambia radicalmente de tema, hace un reclamo, queja compleja, o envía un mensaje confuso/en un idioma no programado que no entiendes, debes forzar de inmediato: 'metodo_pago': 'desconocido', 'interes_principal': 'requiere_asesor_urgente' e 'interesado': true.\n\nDebes responder ÚNICAMENTE con un objeto JSON plano, sin formato markdown, sin envolver en bloques de código ```json:\n{\n  \"interesado\": true,\n  \"producto\": \"camas\" | \"motos\" | \"muebles\" | \"desconocido\",\n  \"metodo_pago\": \"credito\" | \"contado\" | \"desconocido\",\n  \"respuesta_gentil_bot\": \"Tu respuesta empática generada aquí si hay objeción o duda. Si pasas a un asesor por interés claro o por emergencia, déjalo vacío.\"\n}",
+        "promptType": "define",
+        "text": "={{ $json.texto_procesado }}"
+      }
+    },
+    {
+      "id": "f1a00016-0000-0000-0000-000000000016",
+      "name": "Parsear Veredicto IA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2640, 420],
+      "parameters": {
+        "jsCode": "let rawOutput = $json.output || $json.text || '{}';\n// Limpiar posibles bloques markdown\nrawOutput = rawOutput.replace(/```json/g,'').replace(/```/g,'').trim();\n\nlet verdict;\ntry {\n  verdict = JSON.parse(rawOutput);\n} catch(e) {\n  // Fallback si el LLM no devuelve JSON válido\n  verdict = { interesado: true, producto: 'desconocido', metodo_pago: 'desconocido', respuesta_gentil_bot: '' };\n}\n\nconst telefono = $('Limpiar Telefono JS').item.json.telefono;\nconst contactoId = $('Supabase Buscar Telefono').item.json[0].id;\n\n// Determinar ruta\nlet ruta = 'duda'; // default\nif (verdict.interesado && (verdict.metodo_pago === 'credito' || verdict.metodo_pago === 'contado')) {\n  ruta = 'interes_claro';\n} else if (verdict.interesado && verdict.metodo_pago === 'desconocido') {\n  ruta = 'emergencia';\n} else if (!verdict.interesado || verdict.respuesta_gentil_bot) {\n  ruta = 'duda';\n}\n\nreturn [{ json: { ...verdict, ruta, telefono, contactoId } }];"
+      }
+    },
+    {
+      "id": "f1a00017-0000-0000-0000-000000000017",
+      "name": "Switch Veredicto",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [2880, 420],
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "rules": [
+            {
+              "conditions": {
+                "conditions": [{ "leftValue": "={{ $json.ruta }}", "rightValue": "interes_claro", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true, "outputKey": "Interés Claro"
+            },
+            {
+              "conditions": {
+                "conditions": [{ "leftValue": "={{ $json.ruta }}", "rightValue": "duda", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true, "outputKey": "Duda / Objeción"
+            },
+            {
+              "conditions": {
+                "conditions": [{ "leftValue": "={{ $json.ruta }}", "rightValue": "emergencia", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true, "outputKey": "Emergencia"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f1a00018-0000-0000-0000-000000000018",
+      "name": "Supabase Apagar Bot Interes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [3120, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/contactos?id=eq.{{ $json.contactoId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "bot_activo": false,
+          "interes_principal": "={{ $json.producto }}",
+          "tipo_pago_preferido": "={{ $json.metodo_pago }}"
+        }
+      }
+    },
+    {
+      "id": "f1a00019-0000-0000-0000-000000000019",
+      "name": "Supabase Mover Kanban Interes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [3360, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/kanban_tarjetas?contacto_id=eq.{{ $('Parsear Veredicto IA').item.json.contactoId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "columna": "contactar_asesor",
+          "actualizado_en": "={{ new Date().toISOString() }}",
+          "detalles_ia": "={{ JSON.stringify({ producto: $('Parsear Veredicto IA').item.json.producto, pago: $('Parsear Veredicto IA').item.json.metodo_pago }) }}"
+        }
+      }
+    },
+    {
+      "id": "f1a00020-0000-0000-0000-000000000020",
+      "name": "Twilio Transicion Asesor",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [3600, 300],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $('Parsear Veredicto IA').item.json.telefono }}",
+        "message": "Para darte la información exacta y brindarte la mejor atención, en este momento voy a transferir nuestro chat directamente a uno de nuestros asesores humanos. ¡Ya está revisando tu caso y te escribirá aquí mismo en un instante! 👍"
+      }
+    },
+    {
+      "id": "f1a00021-0000-0000-0000-000000000021",
+      "name": "Twilio Respuesta Gentil Bot",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [3120, 480],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $json.telefono }}",
+        "message": "={{ $json.respuesta_gentil_bot }}"
+      }
+    },
+    {
+      "id": "f1a00022-0000-0000-0000-000000000022",
+      "name": "Supabase Apagar Bot Emergencia",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [3120, 600],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/contactos?id=eq.{{ $json.contactoId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "bot_activo": false,
+          "interes_principal": "requiere_asesor_urgente",
+          "tipo_pago_preferido": "desconocido"
+        }
+      }
+    },
+    {
+      "id": "f1a00023-0000-0000-0000-000000000023",
+      "name": "Supabase Mover Kanban Emergencia",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [3360, 600],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://upaenjotkocmdvfuobii.supabase.co/rest/v1/kanban_tarjetas?contacto_id=eq.{{ $('Parsear Veredicto IA').item.json.contactoId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwYWVuam90a29jbWR2ZnVvYmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NjQzMzUsImV4cCI6MjA5NDQ0MDMzNX0.am0lcEwz4-HK0KvrPBtv1QB7joNYDpOuQNhbc1HjwZ8" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "columna": "contactar_asesor",
+          "actualizado_en": "={{ new Date().toISOString() }}",
+          "detalles_ia": "{\"alerta\":\"requiere_asesor_urgente\",\"producto\":\"desconocido\"}"
+        }
+      }
+    },
+    {
+      "id": "f1a00024-0000-0000-0000-000000000024",
+      "name": "Twilio Mensaje Emergencia",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [3600, 600],
+      "credentials": { "twilioApi": { "id": "TWILIO_CREDENTIAL_ID", "name": "Twilio API" } },
+      "parameters": {
+        "operation": "send",
+        "from": "whatsapp:+14155238886",
+        "to": "=whatsapp:{{ $('Parsear Veredicto IA').item.json.telefono }}",
+        "message": "Para darte la información exacta y brindarte la mejor atención, en este momento voy a transferir nuestro chat directamente a uno de nuestros asesores humanos. ¡Ya está revisando tu caso y te escribirá aquí mismo en un instante! 👍"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Twilio Inbound": { "main": [[{ "node": "Wait 4s Debounce", "type": "main", "index": 0 }]] },
+    "Wait 4s Debounce": { "main": [[{ "node": "Limpiar Telefono JS", "type": "main", "index": 0 }]] },
+    "Limpiar Telefono JS": { "main": [[{ "node": "Supabase Buscar Telefono", "type": "main", "index": 0 }]] },
+    "Supabase Buscar Telefono": { "main": [[{ "node": "IF Contacto Existe", "type": "main", "index": 0 }]] },
+    "IF Contacto Existe": {
+      "main": [
+        [{ "node": "IF Bot Activo", "type": "main", "index": 0 }],
+        [{ "node": "Supabase Ruleta Round Robin", "type": "main", "index": 0 }]
+      ]
+    },
+    "Supabase Ruleta Round Robin": { "main": [[{ "node": "Supabase Insert Contacto", "type": "main", "index": 0 }]] },
+    "Supabase Insert Contacto": { "main": [[{ "node": "Supabase Update Vendedor Ruleta", "type": "main", "index": 0 }]] },
+    "Supabase Update Vendedor Ruleta": { "main": [[{ "node": "Twilio Mensaje Bienvenida", "type": "main", "index": 0 }]] },
+    "IF Bot Activo": {
+      "main": [
+        [{ "node": "IF Es Audio", "type": "main", "index": 0 }],
+        [{ "node": "HTTP Forward Chat Vivo", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF Es Audio": {
+      "main": [
+        [{ "node": "OpenAI Whisper Transcripcion", "type": "main", "index": 0 }],
+        [{ "node": "Preparar Texto para IA", "type": "main", "index": 0 }]
+      ]
+    },
+    "OpenAI Whisper Transcripcion": { "main": [[{ "node": "Preparar Texto para IA", "type": "main", "index": 0 }]] },
+    "Preparar Texto para IA": { "main": [[{ "node": "AI Agent Neuroventas", "type": "main", "index": 0 }]] },
+    "AI Agent Neuroventas": { "main": [[{ "node": "Parsear Veredicto IA", "type": "main", "index": 0 }]] },
+    "Parsear Veredicto IA": { "main": [[{ "node": "Switch Veredicto", "type": "main", "index": 0 }]] },
+    "Switch Veredicto": {
+      "main": [
+        [{ "node": "Supabase Apagar Bot Interes", "type": "main", "index": 0 }],
+        [{ "node": "Twilio Respuesta Gentil Bot", "type": "main", "index": 0 }],
+        [{ "node": "Supabase Apagar Bot Emergencia", "type": "main", "index": 0 }]
+      ]
+    },
+    "Supabase Apagar Bot Interes": { "main": [[{ "node": "Supabase Mover Kanban Interes", "type": "main", "index": 0 }]] },
+    "Supabase Mover Kanban Interes": { "main": [[{ "node": "Twilio Transicion Asesor", "type": "main", "index": 0 }]] },
+    "Supabase Apagar Bot Emergencia": { "main": [[{ "node": "Supabase Mover Kanban Emergencia", "type": "main", "index": 0 }]] },
+    "Supabase Mover Kanban Emergencia": { "main": [[{ "node": "Twilio Mensaje Emergencia", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "instanceId": "laroca-crm", "notes": "IMPORTANTE: Configurar credenciales Twilio y OpenAI antes de activar. Webhook URL: /webhook/twilio-whatsapp-inbound" }
+}
