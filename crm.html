@@ -169,69 +169,82 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .detail-col-btn:hover{border-color:rgba(255,255,255,.25);color:var(--t1)}
 .detail-col-btn.active-col{border-color:var(--pk);color:var(--pk);background:rgba(232,25,90,.06)}
 
-/* ── MOBILE TABS ── */
-.mob-tabs{display:none}
+/* ── MOBILE LIST VIEW (default hidden) ── */
+#mob-view{display:none}
+.mob-view{flex-direction:column;overflow:hidden}
+.mob-pills{
+  display:flex;gap:8px;padding:10px 14px;overflow-x:auto;flex-shrink:0;
+  background:var(--s1);border-bottom:1px solid var(--ln);scrollbar-width:none
+}
+.mob-pills::-webkit-scrollbar{display:none}
+.mob-pill{
+  flex-shrink:0;padding:7px 14px;border-radius:20px;border:1px solid var(--ln);
+  background:transparent;color:var(--t3);font-size:.76rem;font-weight:700;
+  cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .18s;
+  -webkit-tap-highlight-color:transparent
+}
+.mob-pill.active{background:var(--pk);color:#fff;border-color:var(--pk)}
+.mob-pill-n{font-size:.68rem;opacity:.8}
+.mob-list{
+  flex:1;overflow-y:auto;padding:10px 12px 24px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.1) transparent
+}
+.mob-row{
+  display:flex;align-items:center;gap:12px;background:var(--s2);
+  border:1px solid var(--ln);border-radius:14px;padding:13px;
+  margin-bottom:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:border-color .15s,background .15s
+}
+.mob-row:active{border-color:rgba(255,255,255,.22);background:var(--s3)}
+.mob-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:800
+}
+.mob-info{flex:1;min-width:0}
+.mob-name{
+  font-size:.9rem;font-weight:700;color:var(--t1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.mob-meta{font-size:.72rem;color:var(--t3);margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mob-tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.mob-col-tag{font-size:.61rem;font-weight:700;padding:2px 9px;border-radius:10px}
+.mob-prod-tag{
+  font-size:.61rem;padding:2px 9px;border-radius:10px;
+  background:rgba(255,255,255,.07);color:var(--t3);font-weight:600
+}
+.mob-wa-btn{
+  width:42px;height:42px;border-radius:50%;background:rgba(37,211,102,.12);
+  color:#25D366;border:none;display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  text-decoration:none
+}
+.mob-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:60px 0;opacity:.4;text-align:center
+}
+.mob-empty i{font-size:2rem}
+.mob-empty p{font-size:.8rem;color:var(--t3)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1200px){.board{grid-template-columns:repeat(2,1fr)}.col:nth-child(2){border-right:none}.col:nth-child(3){border-top:1px solid var(--ln)}.col:nth-child(4){border-top:1px solid var(--ln)}}
 @media(max-width:768px){
-  /* ── Header ── */
+  /* Header */
   .hdr{padding:0 12px;height:50px}
   .brand{font-size:.82rem}.crm-badge{display:none}
   .back-btn{padding:5px 8px;font-size:.72rem}
   .srch-wrap{width:140px;padding:6px 10px}
   .filter-sel{display:none}
-  /* ── Stats: ocultar en móvil; los badges de las pestañas reemplazan los conteos ── */
+  /* Ocultar stats y kanban desktop; mostrar lista móvil */
   #app-stats{display:none!important}
-  /* ── Board: ocupa todo el espacio entre header y tabs ── */
-  .board{
-    display:block;          /* salir del grid, el col activo es block flex */
-    height:calc(100dvh - 50px - 54px);  /* dvh = altura real sin chrome del browser */
-    height:calc(100vh - 50px - 54px);   /* fallback para browsers sin dvh */
-    overflow:hidden
-  }
-  .col{display:none;height:100%;border:none;flex-direction:column}
-  .col.mob-active{display:flex}
-  .col-cards{
-    flex:1;overflow-y:auto;overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;  /* scroll inercial iOS */
-    padding:10px 10px 70px;            /* padding-bottom evita que el último card quede bajo las tabs */
-    scrollbar-width:none
-  }
-  .col-cards::-webkit-scrollbar{display:none}
-  /* ── Bottom tabs ── */
-  .mob-tabs{
-    display:flex;position:fixed;bottom:0;left:0;right:0;
-    height:54px;background:var(--s1);border-top:1px solid var(--ln);
-    z-index:200;
-    /* safe-area-inset para iPhone con notch/Dynamic Island */
-    padding-bottom:env(safe-area-inset-bottom,0)
-  }
-  .mob-tab{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:3px;background:none;border:none;color:var(--t3);cursor:pointer;
-    font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-    padding:6px 4px;position:relative;transition:color .18s;font-family:inherit;
-    -webkit-tap-highlight-color:transparent
-  }
-  .mob-tab i{font-size:1.05rem}
-  .mob-tab.active{color:var(--pk)}
-  .mob-tab.active::after{
-    content:'';position:absolute;top:0;left:18%;right:18%;
-    height:2px;background:var(--pk);border-radius:0 0 3px 3px
-  }
-  .mob-tab-badge{
-    position:absolute;top:4px;right:calc(50% - 18px);
-    background:var(--pk);color:#fff;font-size:.5rem;font-weight:800;
-    min-width:16px;height:16px;border-radius:8px;display:flex;
-    align-items:center;justify-content:center;padding:0 4px;line-height:1
-  }
-  .mob-tab-badge.hidden{display:none}
-  /* ── Detail sheet ── */
-  .detail-sheet{border-radius:16px 16px 0 0;max-height:90dvh;max-height:90vh}
-  /* ── Cards ── */
-  .card{padding:14px}
-  .action-btn{padding:10px 8px;font-size:.73rem}
+  #board{display:none!important}
+  #mob-view{display:flex!important;height:calc(100dvh - 50px);height:calc(100vh - 50px)}
+  /* Lock card más angosto */
+  .lock-card{width:calc(100vw - 40px);padding:32px 22px}
+  /* Detail sheet desde abajo */
+  .detail-sheet{border-radius:16px 16px 0 0;max-height:92dvh;max-height:92vh}
 }
 </style>
 </head>
@@ -276,7 +289,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 <!-- KANBAN BOARD -->
 <div class="board" id="board" style="display:none">
   <!-- Column: Nuevo -->
-  <div class="col col-nuevo mob-active">
+  <div class="col col-nuevo">
     <div class="col-hdr">
       <div class="col-title"><div class="col-dot" style="background:var(--c-new)"></div>Nuevos</div>
       <span class="col-count" id="cnt-nuevo" style="color:var(--c-new)">0</span>
@@ -352,25 +365,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
   </div>
 </div>
 
-<!-- ── MOBILE COLUMN TABS ── -->
-<nav class="mob-tabs" id="mob-tabs">
-  <button class="mob-tab active" id="mtab-nuevo" onclick="switchMobCol('nuevo',this)">
-    <span class="mob-tab-badge hidden" id="mbadge-nuevo">0</span>
-    <i class="fas fa-plus-circle"></i>Nuevo
-  </button>
-  <button class="mob-tab" id="mtab-contactar" onclick="switchMobCol('contactar_asesor',this)">
-    <span class="mob-tab-badge hidden" id="mbadge-contactar">0</span>
-    <i class="fas fa-user-tie"></i>Asesor
-  </button>
-  <button class="mob-tab" id="mtab-gestion" onclick="switchMobCol('en_gestion',this)">
-    <span class="mob-tab-badge hidden" id="mbadge-gestion">0</span>
-    <i class="fas fa-tasks"></i>Gestión
-  </button>
-  <button class="mob-tab" id="mtab-entregado" onclick="switchMobCol('entregado',this)">
-    <span class="mob-tab-badge hidden" id="mbadge-entregado">0</span>
-    <i class="fas fa-check-circle"></i>Entregado
-  </button>
-</nav>
+<!-- ── MOBILE LIST VIEW ── -->
+<div class="mob-view" id="mob-view" style="display:none">
+  <div class="mob-pills">
+    <button class="mob-pill active" onclick="filterMob('all',this)">Todos <span class="mob-pill-n" id="mpn-all">0</span></button>
+    <button class="mob-pill" onclick="filterMob('nuevo',this)">Nuevos <span class="mob-pill-n" id="mpn-nuevo">0</span></button>
+    <button class="mob-pill" onclick="filterMob('contactar_asesor',this)">Asesor <span class="mob-pill-n" id="mpn-contactar">0</span></button>
+    <button class="mob-pill" onclick="filterMob('en_gestion',this)">Gestión <span class="mob-pill-n" id="mpn-gestion">0</span></button>
+    <button class="mob-pill" onclick="filterMob('entregado',this)">Entregado <span class="mob-pill-n" id="mpn-entregado">0</span></button>
+  </div>
+  <div class="mob-list" id="mob-list">
+    <div class="loading"><div class="spinner"></div> Cargando…</div>
+  </div>
+</div>
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
@@ -395,6 +402,7 @@ function unlock() {
     document.getElementById('app-hdr').style.display = '';
     document.getElementById('app-stats').style.display = '';
     document.getElementById('board').style.display = '';
+    document.getElementById('mob-view').style.display = '';
     initCRM();
   } else {
     document.getElementById('lock-err').textContent = 'Contraseña incorrecta. Intenta de nuevo.';
@@ -408,6 +416,7 @@ window.onload = () => {
     document.getElementById('app-hdr').style.display = '';
     document.getElementById('app-stats').style.display = '';
     document.getElementById('board').style.display = '';
+    document.getElementById('mob-view').style.display = '';
     initCRM();
   }
 };
@@ -494,7 +503,7 @@ function renderBoard() {
   document.getElementById('st-adv').textContent = counts.contactar_asesor;
   document.getElementById('st-mng').textContent = counts.en_gestion;
   document.getElementById('st-don').textContent = counts.entregado;
-  updateMobBadges(counts);
+  renderMobList();
 }
 
 // ── CARD HTML ─────────────────────────────────────────────────
@@ -681,37 +690,71 @@ function toast(msg) {
   setTimeout(() => t.remove(), 2600);
 }
 
-// ── MOBILE TABS ───────────────────────────────────────────────
-const MOB_COL_CLASS = {
-  nuevo:'col-nuevo', contactar_asesor:'col-contactar',
-  en_gestion:'col-gestion', entregado:'col-entregado'
-};
-const MOB_TAB_ID = {
-  nuevo:'mtab-nuevo', contactar_asesor:'mtab-contactar',
-  en_gestion:'mtab-gestion', entregado:'mtab-entregado'
-};
+// ── MOBILE LIST VIEW ──────────────────────────────────────────
+let mobFilter = 'all';
 
-function switchMobCol(col, el) {
-  document.querySelectorAll('.col').forEach(c => c.classList.remove('mob-active'));
-  const target = document.querySelector('.' + MOB_COL_CLASS[col]);
-  if (target) target.classList.add('mob-active');
-  document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('active'));
+function filterMob(col, el) {
+  mobFilter = col;
+  document.querySelectorAll('.mob-pill').forEach(p => p.classList.remove('active'));
   if (el) el.classList.add('active');
+  renderMobList();
 }
 
-function updateMobBadges(counts) {
-  const pairs = [
-    ['mbadge-nuevo', counts.nuevo],
-    ['mbadge-contactar', counts.contactar_asesor],
-    ['mbadge-gestion', counts.en_gestion],
-    ['mbadge-entregado', counts.entregado]
-  ];
-  pairs.forEach(([id, n]) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = n;
-    el.classList.toggle('hidden', n === 0);
+function renderMobList() {
+  const list = document.getElementById('mob-list');
+  if (!list) return;
+  const search = (document.getElementById('search-inp')?.value || '').toLowerCase().trim();
+
+  // Pill counts (always from all cards, not filtered)
+  const counts = {nuevo:0, contactar_asesor:0, en_gestion:0, entregado:0};
+  allCards.forEach(c => { if (counts[c.columna] !== undefined) counts[c.columna]++; });
+  const pmap = {all:allCards.length, nuevo:counts.nuevo, contactar:counts.contactar_asesor, gestion:counts.en_gestion, entregado:counts.entregado};
+  Object.entries(pmap).forEach(([k,v]) => {
+    const el = document.getElementById('mpn-' + k);
+    if (el) el.textContent = v;
   });
+
+  let cards = mobFilter === 'all' ? [...allCards] : allCards.filter(c => c.columna === mobFilter);
+  if (search) cards = cards.filter(c => {
+    const n = (c.contactos?.nombre   || '').toLowerCase();
+    const t = (c.contactos?.telefono || '').toLowerCase();
+    return n.includes(search) || t.includes(search);
+  });
+
+  if (!cards.length) {
+    list.innerHTML = '<div class="mob-empty"><i class="fas fa-inbox"></i><p>Sin contactos</p></div>';
+    return;
+  }
+  list.innerHTML = cards.map(c => buildMobRow(c)).join('');
+}
+
+function buildMobRow(c) {
+  const ct = c.contactos || {};
+  const vd = c.vendedores || {};
+  const ia = c.detalles_ia || {};
+  const name = ct.nombre || 'Cliente Nuevo';
+  const initials = name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const colColor = {nuevo:'var(--c-new)',contactar_asesor:'var(--c-advisor)',en_gestion:'var(--c-managing)',entregado:'var(--c-done)'}[c.columna]||'var(--t3)';
+  const prod = ia.producto || ct.interes_principal || '';
+  const meta = [ct.telefono, vd.nombre].filter(Boolean).join(' · ');
+  const botDot = ct.bot_activo
+    ? `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-left:5px;vertical-align:middle"></span>`
+    : '';
+  return `
+<div class="mob-row" onclick="openDetail('${c.id}')">
+  <div class="mob-avatar" style="background:${colColor}22;color:${colColor}">${initials}</div>
+  <div class="mob-info">
+    <div class="mob-name">${name}${botDot}</div>
+    <div class="mob-meta">${meta||'—'}</div>
+    <div class="mob-tags">
+      <span class="mob-col-tag" style="background:${colColor}1a;color:${colColor}">${colLabel(c.columna)}</span>
+      ${prod?`<span class="mob-prod-tag">${prod}</span>`:''}
+    </div>
+  </div>
+  <a class="mob-wa-btn" href="https://wa.me/${whatsappNum(ct.telefono)}" target="_blank" onclick="event.stopPropagation()" rel="noopener">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>`;
 }
 
 // ── DETAIL MODAL ──────────────────────────────────────────────
