@@ -77,7 +77,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .col-cards{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
 
 /* ── KANBAN CARD ── */
-.card{background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:13px;cursor:default;transition:border-color .2s,box-shadow .2s;position:relative}
+.card{background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:13px;cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative}
 .card:hover{border-color:rgba(255,255,255,.18);box-shadow:0 4px 16px rgba(0,0,0,.3)}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
 .card-name{font-size:.84rem;font-weight:700;color:var(--t1);line-height:1.3}
@@ -139,9 +139,82 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--pk);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── DETAIL MODAL ── */
+.detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:500;opacity:0;pointer-events:none;transition:opacity .25s;display:flex;align-items:flex-end;justify-content:center}
+.detail-overlay.open{opacity:1;pointer-events:all}
+.detail-sheet{background:var(--s1);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;padding:0 0 32px;transform:translateY(30px);transition:transform .28s cubic-bezier(.4,0,.2,1);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+.detail-overlay.open .detail-sheet{transform:translateY(0)}
+.detail-drag{width:40px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:12px auto 0}
+.detail-hdr{padding:18px 20px 14px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;background:var(--s1);z-index:2}
+.detail-name{font-size:1.05rem;font-weight:800;color:var(--t1)}
+.detail-phone{font-size:.78rem;color:var(--t3);font-family:monospace;margin-top:2px}
+.detail-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--ln);background:var(--s2);color:var(--t2);font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.detail-body{padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.detail-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;padding:13px;border-radius:10px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s}
+.detail-wa:hover{background:#1db954}
+.detail-section{background:var(--s2);border-radius:10px;padding:14px}
+.detail-section-title{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
+.detail-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--ln)}
+.detail-row:last-child{border-bottom:none}
+.detail-row-label{font-size:.75rem;color:var(--t3)}
+.detail-row-val{font-size:.78rem;color:var(--t1);font-weight:600;text-align:right}
+.detail-bot-toggle{display:flex;gap:8px}
+.detail-bot-btn{flex:1;padding:10px;border-radius:8px;border:none;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.dbb-pause{background:rgba(232,25,90,.1);color:var(--pk);border:1px solid rgba(232,25,90,.25)}
+.dbb-pause:hover{background:rgba(232,25,90,.2)}
+.dbb-react{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.25)}
+.dbb-react:hover{background:rgba(16,185,129,.2)}
+.detail-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.detail-col-btn{padding:10px 8px;border-radius:8px;border:1px solid var(--ln);background:var(--s3);color:var(--t3);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center}
+.detail-col-btn:hover{border-color:rgba(255,255,255,.25);color:var(--t1)}
+.detail-col-btn.active-col{border-color:var(--pk);color:var(--pk);background:rgba(232,25,90,.06)}
+
+/* ── MOBILE TABS ── */
+.mob-tabs{display:none}
+
 /* ── RESPONSIVE ── */
 @media(max-width:1200px){.board{grid-template-columns:repeat(2,1fr)}.col:nth-child(2){border-right:none}.col:nth-child(3){border-top:1px solid var(--ln)}.col:nth-child(4){border-top:1px solid var(--ln)}}
-@media(max-width:700px){.board{grid-template-columns:1fr;height:auto;overflow:visible}.col{height:auto;border-right:none;border-bottom:1px solid var(--ln)}.stats{flex-wrap:wrap}.stat{min-width:50%}.srch-wrap{width:150px}.filter-sel{display:none}}
+@media(max-width:700px){
+  .hdr{padding:0 14px;height:50px}
+  .brand{font-size:.82rem}.crm-badge{display:none}
+  .back-btn{padding:5px 8px;font-size:.72rem}
+  .srch-wrap{width:130px;padding:6px 10px}
+  .filter-sel{display:none}
+  .stats{display:grid;grid-template-columns:1fr 1fr}
+  .stat{padding:10px 8px}
+  .stat-n{font-size:1.3rem}
+  .stat-l{font-size:.58rem}
+  /* Board: una columna visible a la vez */
+  .board{grid-template-columns:1fr;height:calc(100vh - 50px - 48px - 54px);overflow:hidden}
+  .col{display:none;height:100%;border:none}
+  .col.mob-active{display:flex}
+  /* Tabs de columnas en la parte inferior */
+  .mob-tabs{
+    display:flex;position:fixed;bottom:0;left:0;right:0;height:54px;
+    background:var(--s1);border-top:1px solid var(--ln);z-index:200
+  }
+  .mob-tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:2px;background:none;border:none;color:var(--t3);cursor:pointer;
+    font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    padding:6px 4px;position:relative;transition:color .2s;font-family:inherit
+  }
+  .mob-tab i{font-size:.95rem}
+  .mob-tab.active{color:var(--pk)}
+  .mob-tab.active::after{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:var(--pk);border-radius:0 0 2px 2px}
+  .mob-tab-badge{
+    position:absolute;top:5px;right:calc(50% - 16px);
+    background:var(--pk);color:#fff;font-size:.5rem;font-weight:800;
+    min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;
+    justify-content:center;padding:0 4px;line-height:1
+  }
+  .mob-tab-badge.hidden{display:none}
+  /* Detail sheet fullscreen on mobile */
+  .detail-sheet{border-radius:16px 16px 0 0;max-height:88vh}
+  /* Cards bigger touch targets */
+  .card{padding:14px}
+  .action-btn{padding:9px 8px;font-size:.72rem}
+}
 </style>
 </head>
 <body>
@@ -185,7 +258,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 <!-- KANBAN BOARD -->
 <div class="board" id="board" style="display:none">
   <!-- Column: Nuevo -->
-  <div class="col col-nuevo">
+  <div class="col col-nuevo mob-active">
     <div class="col-hdr">
       <div class="col-title"><div class="col-dot" style="background:var(--c-new)"></div>Nuevos</div>
       <span class="col-count" id="cnt-nuevo" style="color:var(--c-new)">0</span>
@@ -218,6 +291,69 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
   </div>
 </div>
 
+<!-- ── DETAIL MODAL ── -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetail(event)">
+  <div class="detail-sheet" id="detail-sheet">
+    <div class="detail-drag"></div>
+    <div class="detail-hdr">
+      <div>
+        <div class="detail-name" id="det-name">—</div>
+        <div class="detail-phone" id="det-phone">—</div>
+      </div>
+      <button class="detail-close" onclick="closeDetail(null)"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="detail-body">
+      <a class="detail-wa" id="det-wa" href="#" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i> Abrir en WhatsApp
+      </a>
+      <div class="detail-section">
+        <div class="detail-section-title">Información del contacto</div>
+        <div class="detail-row"><span class="detail-row-label">Origen</span><span class="detail-row-val" id="det-origen">—</span></div>
+        <div class="detail-row"><span class="detail-row-label">Vendedor</span><span class="detail-row-val" id="det-vendedor">—</span></div>
+        <div class="detail-row"><span class="detail-row-label">Sucursal</span><span class="detail-row-val" id="det-sucursal">—</span></div>
+        <div class="detail-row"><span class="detail-row-label">Registrado</span><span class="detail-row-val" id="det-fecha">—</span></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Análisis IA</div>
+        <div class="detail-row"><span class="detail-row-label">Producto</span><span class="detail-row-val" id="det-prod">—</span></div>
+        <div class="detail-row"><span class="detail-row-label">Método de pago</span><span class="detail-row-val" id="det-pago">—</span></div>
+        <div class="detail-row"><span class="detail-row-label">Interés detectado</span><span class="detail-row-val" id="det-interes">—</span></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Control del Bot</div>
+        <div class="detail-bot-toggle">
+          <button class="detail-bot-btn dbb-pause" id="det-bot-pause" onclick="detBotAction('pause')"><i class="fas fa-pause"></i> Pausar Bot</button>
+          <button class="detail-bot-btn dbb-react" id="det-bot-react" onclick="detBotAction('react')"><i class="fas fa-play"></i> Reactivar</button>
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Mover tarjeta</div>
+        <div class="detail-cols" id="det-cols"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MOBILE COLUMN TABS ── -->
+<nav class="mob-tabs" id="mob-tabs">
+  <button class="mob-tab active" id="mtab-nuevo" onclick="switchMobCol('nuevo',this)">
+    <span class="mob-tab-badge hidden" id="mbadge-nuevo">0</span>
+    <i class="fas fa-plus-circle"></i>Nuevo
+  </button>
+  <button class="mob-tab" id="mtab-contactar" onclick="switchMobCol('contactar_asesor',this)">
+    <span class="mob-tab-badge hidden" id="mbadge-contactar">0</span>
+    <i class="fas fa-user-tie"></i>Asesor
+  </button>
+  <button class="mob-tab" id="mtab-gestion" onclick="switchMobCol('en_gestion',this)">
+    <span class="mob-tab-badge hidden" id="mbadge-gestion">0</span>
+    <i class="fas fa-tasks"></i>Gestión
+  </button>
+  <button class="mob-tab" id="mtab-entregado" onclick="switchMobCol('entregado',this)">
+    <span class="mob-tab-badge hidden" id="mbadge-entregado">0</span>
+    <i class="fas fa-check-circle"></i>Entregado
+  </button>
+</nav>
+
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
 const SUPABASE_URL  = 'https://upaenjotkocmdvfuobii.supabase.co';
@@ -230,6 +366,7 @@ const COL_NEXT      = {nuevo:'contactar_asesor',contactar_asesor:'en_gestion',en
 let { createClient } = supabase;
 let sb, channel;
 let allCards = [];
+let detailCardId = null;
 
 // ── AUTH ─────────────────────────────────────────────────────
 function unlock() {
@@ -339,6 +476,7 @@ function renderBoard() {
   document.getElementById('st-adv').textContent = counts.contactar_asesor;
   document.getElementById('st-mng').textContent = counts.en_gestion;
   document.getElementById('st-don').textContent = counts.entregado;
+  updateMobBadges(counts);
 }
 
 // ── CARD HTML ─────────────────────────────────────────────────
@@ -360,15 +498,15 @@ function buildCardHTML(c) {
 
   const nextCol = COL_NEXT[c.columna];
   const moveBtn = nextCol
-    ? `<button class="action-btn move-btn" onclick="moveCard('${c.id}','${nextCol}')"><i class="fas fa-arrow-right"></i> ${colLabel(nextCol)}</button>`
+    ? `<button class="action-btn move-btn" onclick="event.stopPropagation();moveCard('${c.id}','${nextCol}')"><i class="fas fa-arrow-right"></i> ${colLabel(nextCol)}</button>`
     : '';
 
   const botBtn = ct.bot_activo
-    ? `<button class="action-btn bot-pause" onclick="pauseBot('${ct.id}')"><i class="fas fa-pause"></i> Pausar Bot</button>`
-    : `<button class="action-btn bot-reactivate" onclick="reactivateBot('${ct.id}')"><i class="fas fa-play"></i> Reactivar</button>`;
+    ? `<button class="action-btn bot-pause" onclick="event.stopPropagation();pauseBot('${ct.id}')"><i class="fas fa-pause"></i> Pausar Bot</button>`
+    : `<button class="action-btn bot-reactivate" onclick="event.stopPropagation();reactivateBot('${ct.id}')"><i class="fas fa-play"></i> Reactivar</button>`;
 
   return `
-<div class="card" id="card-${c.id}">
+<div class="card" id="card-${c.id}" onclick="openDetail('${c.id}')">
   <div class="card-top">
     <div>
       <div class="card-name">${ct.nombre || 'Cliente Nuevo'}</div>
@@ -393,7 +531,7 @@ function buildCardHTML(c) {
     </div>
   </div>
   <div class="card-actions">
-    <a class="action-btn wa-btn" href="https://wa.me/${whatsappNum(ct.telefono)}" target="_blank"><i class="fab fa-whatsapp"></i> Chat</a>
+    <a class="action-btn wa-btn" href="https://wa.me/${whatsappNum(ct.telefono)}" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i> Chat</a>
     ${botBtn}
     ${moveBtn}
   </div>
@@ -523,6 +661,127 @@ function toast(msg) {
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2600);
+}
+
+// ── MOBILE TABS ───────────────────────────────────────────────
+const MOB_COL_CLASS = {
+  nuevo:'col-nuevo', contactar_asesor:'col-contactar',
+  en_gestion:'col-gestion', entregado:'col-entregado'
+};
+const MOB_TAB_ID = {
+  nuevo:'mtab-nuevo', contactar_asesor:'mtab-contactar',
+  en_gestion:'mtab-gestion', entregado:'mtab-entregado'
+};
+
+function switchMobCol(col, el) {
+  document.querySelectorAll('.col').forEach(c => c.classList.remove('mob-active'));
+  const target = document.querySelector('.' + MOB_COL_CLASS[col]);
+  if (target) target.classList.add('mob-active');
+  document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function updateMobBadges(counts) {
+  const pairs = [
+    ['mbadge-nuevo', counts.nuevo],
+    ['mbadge-contactar', counts.contactar_asesor],
+    ['mbadge-gestion', counts.en_gestion],
+    ['mbadge-entregado', counts.entregado]
+  ];
+  pairs.forEach(([id, n]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = n;
+    el.classList.toggle('hidden', n === 0);
+  });
+}
+
+// ── DETAIL MODAL ──────────────────────────────────────────────
+function openDetail(id) {
+  const card = allCards.find(c => c.id === id);
+  if (!card) return;
+  detailCardId = id;
+  const ct = card.contactos || {};
+  const vd = card.vendedores || {};
+  const ia = card.detalles_ia || {};
+
+  document.getElementById('det-name').textContent = ct.nombre || 'Cliente Nuevo';
+  document.getElementById('det-phone').textContent = ct.telefono || '—';
+  document.getElementById('det-wa').href = 'https://wa.me/' + whatsappNum(ct.telefono);
+
+  const origenMap = {whatsapp_inbound:'WhatsApp Inbound', google_contacts_sync:'Google Contacts'};
+  document.getElementById('det-origen').textContent = origenMap[ct.origen_contacto] || ct.origen_contacto || '—';
+  document.getElementById('det-vendedor').textContent = vd.nombre || 'Sin asignar';
+  document.getElementById('det-sucursal').textContent = vd.sucursal || '—';
+
+  const fecha = ct.created_at
+    ? new Date(ct.created_at).toLocaleDateString('es-HN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})
+    : '—';
+  document.getElementById('det-fecha').textContent = fecha;
+
+  const prod = ia.producto || ct.interes_principal || 'desconocido';
+  const pago = ia.metodo_pago || ct.tipo_pago_preferido || 'desconocido';
+  document.getElementById('det-prod').textContent = prod;
+  document.getElementById('det-pago').textContent = pago;
+
+  let interesStr = '—';
+  if (ia.interesado === true) interesStr = '✅ Interesado';
+  else if (ia.interesado === false) interesStr = '❌ No interesado';
+  document.getElementById('det-interes').textContent = interesStr;
+
+  refreshDetailBotBtns(ct.bot_activo);
+
+  // Column move buttons
+  const colsEl = document.getElementById('det-cols');
+  colsEl.innerHTML = COLS.map(col => {
+    const active = col === card.columna ? ' active-col' : '';
+    return `<button class="detail-col-btn${active}" onclick="detMoveCard('${card.id}','${col}')">${colLabel(col)}</button>`;
+  }).join('');
+
+  document.getElementById('detail-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail(event) {
+  if (event && event.target !== document.getElementById('detail-overlay')) return;
+  document.getElementById('detail-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  detailCardId = null;
+}
+
+function refreshDetailBotBtns(botActivo) {
+  const pauseBtn = document.getElementById('det-bot-pause');
+  const reactBtn = document.getElementById('det-bot-react');
+  if (!pauseBtn || !reactBtn) return;
+  pauseBtn.style.opacity = botActivo ? '1' : '.45';
+  pauseBtn.disabled = !botActivo;
+  reactBtn.style.opacity = botActivo ? '.45' : '1';
+  reactBtn.disabled = !!botActivo;
+}
+
+async function detBotAction(action) {
+  if (!detailCardId) return;
+  const card = allCards.find(c => c.id === detailCardId);
+  if (!card || !card.contactos) return;
+  if (action === 'pause') {
+    await pauseBot(card.contactos.id);
+  } else {
+    await reactivateBot(card.contactos.id);
+  }
+  refreshDetailBotBtns(card.contactos.bot_activo);
+}
+
+async function detMoveCard(cardId, newCol) {
+  const card = allCards.find(c => c.id === cardId);
+  if (!card || card.columna === newCol) return;
+  await moveCard(cardId, newCol);
+  // Refresh column button highlights
+  const colsEl = document.getElementById('det-cols');
+  if (colsEl) {
+    colsEl.querySelectorAll('.detail-col-btn').forEach((btn, i) => {
+      btn.classList.toggle('active-col', COLS[i] === newCol);
+    });
+  }
 }
 </script>
 </body>
