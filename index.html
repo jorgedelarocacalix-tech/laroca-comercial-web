@@ -877,11 +877,63 @@ footer{--t3:rgba(255,255,255,.4);--ln:rgba(255,255,255,.14)}
       </ul></div>
     </div>
     <div class="ft-btm">
-      <p>© 2024 La Roca Comercial. Todos los derechos reservados. Comayagua, Honduras. · <a href="crm.html" style="color:rgba(255,255,255,.2);font-size:.68rem;text-decoration:none" title="Acceso interno">CRM</a></p>
-      <div class="ft-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>4.8 · 120 reseñas</span></div>
+      <p>© 2025 La Roca Comercial. Todos los derechos reservados. Comayagua, Honduras. · <a href="crm.html" style="color:rgba(255,255,255,.2);font-size:.68rem;text-decoration:none" title="Acceso interno">CRM</a></p>
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
+        <a href="#" onclick="document.getElementById('modal-privacidad').style.display='flex';return false;" style="font-size:.72rem;color:rgba(255,255,255,.5);text-decoration:underline;">Política de Privacidad</a>
+        <a href="#" onclick="document.getElementById('modal-terminos').style.display='flex';return false;" style="font-size:.72rem;color:rgba(255,255,255,.5);text-decoration:underline;">Términos de Servicio</a>
+        <div class="ft-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>4.8 · 120 reseñas</span></div>
+      </div>
     </div>
   </div>
 </footer>
+
+<!-- Modal Política de Privacidad -->
+<div id="modal-privacidad" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:12px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h2 style="font-size:1.2rem;font-weight:800;color:#111827;">Política de Privacidad</h2>
+      <button onclick="document.getElementById('modal-privacidad').style.display='none'" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#6B7280;">✕</button>
+    </div>
+    <div style="font-size:.88rem;line-height:1.8;color:#374151;">
+      <p><strong>La Roca Comercial</strong>, con domicilio en Barrio Arriba, Comayagua, Honduras, se compromete a proteger la privacidad de sus clientes.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">1. Información que recopilamos</h3>
+      <p>Recopilamos nombre, número de teléfono, dirección y datos necesarios para procesar solicitudes de crédito y entrega de productos.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">2. Uso de la información</h3>
+      <p>La información se utiliza para procesar ventas y créditos, coordinar entregas, y brindar atención al cliente por WhatsApp.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">3. Protección de datos</h3>
+      <p>No vendemos ni compartimos su información personal con terceros. Sus datos son accesibles solo por personal autorizado.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">4. WhatsApp y comunicación</h3>
+      <p>Al contactarnos por WhatsApp al +504 2772-2660, acepta recibir información sobre nuestros productos. Puede solicitar en cualquier momento que no le enviemos más mensajes.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">5. Contacto</h3>
+      <p><strong>+504 2772-2660</strong> · Barrio Arriba, Comayagua, Honduras.</p>
+      <p style="margin-top:16px;color:#9CA3AF;font-size:.78rem;">Última actualización: junio 2025</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Términos de Servicio -->
+<div id="modal-terminos" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:12px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h2 style="font-size:1.2rem;font-weight:800;color:#111827;">Términos de Servicio</h2>
+      <button onclick="document.getElementById('modal-terminos').style.display='none'" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#6B7280;">✕</button>
+    </div>
+    <div style="font-size:.88rem;line-height:1.8;color:#374151;">
+      <p>Al utilizar el sitio web y los servicios de <strong>La Roca Comercial</strong>, usted acepta los siguientes términos.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">1. Servicios</h3>
+      <p>La Roca Comercial ofrece venta de salas, camas, motos, electrodomésticos y tecnología, con opción de crédito a domicilio en Comayagua y zonas aledañas, Honduras.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">2. Crédito</h3>
+      <p>Los créditos están sujetos a aprobación. La tasa es del 2% mensual. El incumplimiento puede resultar en cargos adicionales.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">3. Precios y disponibilidad</h3>
+      <p>Los precios son referenciales y pueden variar. La disponibilidad está sujeta a existencia en tienda.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">4. Devoluciones</h3>
+      <p>Se aceptan dentro de los 7 días posteriores a la compra, con el producto en perfectas condiciones y empaque original.</p>
+      <h3 style="margin:16px 0 8px;font-size:.95rem;">5. Contacto</h3>
+      <p><strong>La Roca Comercial</strong> · Barrio Arriba, Comayagua, Honduras · Tel: +504 2772-2660 · Lun–Sáb 8am–6pm</p>
+      <p style="margin-top:16px;color:#9CA3AF;font-size:.78rem;">Última actualización: junio 2025</p>
+    </div>
+  </div>
+</div>
 
 <a class="fab-wa" href="https://wa.me/50427722660?text=Hola%20La%20Roca%20Comercial!" target="_blank"><i class="fab fa-whatsapp"></i></a>
 <!-- SIDE BANNERS -->
